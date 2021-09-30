@@ -3,6 +3,20 @@ name = "pydantic-argparse"
 version = "0.1.0"
 description = "Typed Argument Parsing with Pydantic"
 authors = ["Hayden Richards <SupImDos@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+homepage = "https://github.com/SupImDos/pydantic-argparse"
+repository = "https://github.com/SupImDos/pydantic-argparse"
+keywords = [
+    "python",
+    "pydantic",
+    "argparse",
+    "typed",
+    "validation",
+]
+include = [
+    "LICENSE",
+]
 
 [tool.poetry.dependencies]
 python = "~3.9"
