@@ -36,24 +36,30 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
     """Custom Typed Argument Parser.
 
     Args:
-        prog (str): Program name for CLI.
-        description (str): Program description for CLI.
-        version (str): Program version string for CLI.
         model (type[PydanticModelT]): Pydantic argument model class.
+        prog (Optional[str]): Program name for CLI.
+        description (Optional[str]): Program description for CLI.
+        version (Optional[str]): Program version string for CLI.
+        epilog (Optional[str]): Optional text following argument descriptions.
+        exit_on_error (bool): Whether to exit on error.
     """
     def __init__(
         self,
-        prog: str,
-        description: str,
-        version: str,
         model: type[PydanticModelT],
+        prog: Optional[str]=None,
+        description: Optional[str]=None,
+        version: Optional[str]=None,
+        epilog: Optional[str]=None,
+        exit_on_error: bool=True,
         ) -> None:
         """Constructs Custom Argument Parser."""
         # Initialise Super Class
         super().__init__(
             prog=prog,
             description=description,
-            add_help=False,  # Disable the automatic help flag.
+            epilog=epilog,
+            exit_on_error=exit_on_error,
+            add_help=False,  # Always disable the automatic help flag.
         )
 
         # Set Version and Model
@@ -65,22 +71,12 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         self._optional_group = self.add_argument_group("optional arguments")
         self._help_group = self.add_argument_group("help")
 
+        # Add Help and Version Flags
+        self._add_help_flag()
+        self._add_version_flag()
+
         # Add Arguments from Model
         self._add_model(model)
-
-        # Add Help and Version Flags
-        self._help_group.add_argument(
-            "-h",
-            "--help",
-            action=argparse._HelpAction,
-            help="show this help message and exit",
-        )
-        self._help_group.add_argument(
-            "-v",
-            "--version",
-            action=argparse._VersionAction,
-            help="show program's version number and exit",
-        )
 
     def parse_typed_args(
         self,
@@ -109,6 +105,28 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
 
         # Return
         return model
+
+    def _add_help_flag(self) -> None:
+        """Adds help flag to argparser."""
+        # Add help flag
+        self._help_group.add_argument(
+            "-h",
+            "--help",
+            action=argparse._HelpAction,  # pylint: disable=protected-access
+            help="show this help message and exit",
+        )
+
+    def _add_version_flag(self) -> None:
+        """Adds version flag to argparser."""
+        # Check if version is set
+        if self.version:
+            # Add version flag
+            self._help_group.add_argument(
+                "-v",
+                "--version",
+                action=argparse._VersionAction,  # pylint: disable=protected-access
+                help="show program's version number and exit",
+            )
 
     def _add_model(self, model: type[PydanticModelT]) -> None:
         """Adds pydantic model to argument parser.
@@ -159,15 +177,38 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         Args:
             field (pydanic.fields.ModelField): Field to be added to parser.
         """
-        # Booleans are always treated as optional flags
-        self._optional_group.add_argument(
-            _argument_name(field.name),
-            action=argparse.BooleanOptionalAction,
-            default=bool(field.default),
-            help=field.field_info.description,
-            dest=field.name,
-            required=False,
-        )
+        # Boolean flags can be treated as required or optional
+        if field.required:
+            # Required
+            self._required_group.add_argument(
+                _argument_name(field.name),
+                action=argparse.BooleanOptionalAction,
+                help=field.field_info.description,
+                dest=field.name,
+                required=True,
+            )
+
+        elif field.default:
+            # Optional (Default True)
+            self._optional_group.add_argument(
+                _argument_name("no-" + field.name),
+                action=argparse._StoreFalseAction,  # pylint: disable=protected-access
+                default=bool(field.default),
+                help=field.field_info.description,
+                dest=field.name,
+                required=False,
+            )
+
+        else:
+            # Optional (Default False)
+            self._optional_group.add_argument(
+                _argument_name(field.name),
+                action=argparse._StoreTrueAction,  # pylint: disable=protected-access
+                default=bool(field.default),
+                help=field.field_info.description,
+                dest=field.name,
+                required=False,
+            )
 
     def _add_container_field(self, field: pydantic.fields.ModelField) -> None:
         """Adds container pydantic field to argument parser.
