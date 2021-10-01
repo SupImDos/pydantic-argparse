@@ -56,31 +56,31 @@ if __name__ == "__main__":
     main()
 ```
 
-```sh
+```console
 $ python3 example.py --help
 
-> usage: Example [-h] [-v] --aaa AAA --bbb BBB --ccc | --no-ccc [--ddd] [--no-eee]
->
-> Example Description
->
-> required arguments:
->   --aaa AAA          I'm a required string
->   --bbb BBB          I'm a required integer
->   --ccc, --no-ccc    I'm a required bool
->
-> optional arguments:
->   --ddd              I'm an optional bool (default False)
->   --no-eee           I'm an optional bool (default True)
->
-> help:
->   -h, --help         show this help message and exit
->   -v, --version      show program's version number and exit
->
-> Example Epilog
+usage: Example [-h] [-v] --aaa AAA --bbb BBB --ccc | --no-ccc [--ddd] [--no-eee]
+
+Example Description
+
+required arguments:
+  --aaa AAA          I'm a required string
+  --bbb BBB          I'm a required integer
+  --ccc, --no-ccc    I'm a required bool
+
+optional arguments:
+  --ddd              I'm an optional bool (default False)
+  --no-eee           I'm an optional bool (default True)
+
+help:
+  -h, --help         show this help message and exit
+  -v, --version      show program's version number and exit
+
+Example Epilog
 ```
 
-```sh
+```console
 $ python3 example.py --aaa hello --bbb 123 --no-ccc
 
-> aaa='hello' bbb=123 ccc=False ddd=False eee=True
+aaa='hello' bbb=123 ccc=False ddd=False eee=True
 ```
