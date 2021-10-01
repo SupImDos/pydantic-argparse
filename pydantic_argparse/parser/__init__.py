@@ -8,5 +8,4 @@ Exports sub-modules from package
 
 
 # Local
-from .cli import cli
 from .parser import ArgumentParser

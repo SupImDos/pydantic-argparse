@@ -9,4 +9,4 @@ Exports sub-modules from package
 
 # Local
 from .__pkginfo__ import __app__, __description__, __version__, __authors__
-from .cli import ArgumentParser, cli
+from .parser import ArgumentParser
