@@ -15,15 +15,15 @@ from __future__ import unicode_literals
 
 
 # Local
-from .parser import ArgumentParser, PydanticModel
+from .parser import ArgumentParser, PydanticModelT
 
 
 def cli(
     app: str,
     description: str,
     version: str,
-    model: type[PydanticModel],
-    ) -> ArgumentParser[PydanticModel]:
+    model: type[PydanticModelT],
+    ) -> ArgumentParser[PydanticModelT]:
     """Generates command line argument parser for application.
 
     Args:
