@@ -16,15 +16,17 @@ from __future__ import unicode_literals
 
 # Standard
 import argparse
-import collections
+from collections import deque
 import enum
+import json
+import sys
 
 # Third-Party
 import pydantic
 import typing_inspect
 
 # Typing
-from typing import Generic, Literal, Optional, TypeVar  # pylint: disable=wrong-import-order
+from typing import Generic, Literal, NoReturn, Optional, TypeVar  # pylint: disable=wrong-import-order
 
 
 # Constants
@@ -61,6 +63,9 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             exit_on_error=exit_on_error,
             add_help=False,  # Always disable the automatic help flag.
         )
+
+        # Set Exit on Error Flag
+        self.exit_on_error = exit_on_error
 
         # Set Version and Model
         self.version = version
@@ -101,10 +106,29 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         except pydantic.ValidationError as exc:
             # Catch exception, and use the ArgumentParser.error() method
             # to report it to the user
-            super().error(str(exc))
+            self.error(str(exc))
 
         # Return
         return model
+
+    def error(self, message: str) -> NoReturn:
+        """Prints a usage message to stderr and exits.
+
+        Args:
+            message (str): Message to print to the user.
+
+        Raises:
+            argparse.ArgumentError: Raised if not exiting on error.
+        """
+        # Print usage message
+        self.print_usage(sys.stderr)
+
+        # Check whether parser should exit
+        if self.exit_on_error:
+            self.exit(2, f"{self.prog}: error: {message}\n")
+
+        # Raise Error
+        raise argparse.ArgumentError(None, f"{self.prog}: error: {message}")
 
     def _add_help_flag(self) -> None:
         """Adds help flag to argparser."""
@@ -155,9 +179,13 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             # Add Boolean Field
             self._add_boolean_field(field)
 
-        elif field_origin in (collections.deque, frozenset, list, set, tuple):
+        elif field_origin in (list, tuple, set, frozenset, deque):
             # Add Container Field
             self._add_container_field(field)
+
+        elif field_origin is dict:
+            # Add Dictionary (JSON) Field
+            self._add_json_field(field)
 
         elif field_origin is Literal:
             # Add Literal Field
@@ -221,7 +249,8 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             # Required
             self._required_group.add_argument(
                 _argument_name(field.name),
-                action=argparse._AppendAction,  # pylint: disable=protected-access
+                action=argparse._StoreAction,  # pylint: disable=protected-access
+                nargs="+",
                 help=field.field_info.description,
                 dest=field.name,
                 required=True,
@@ -231,7 +260,38 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             # Optional
             self._optional_group.add_argument(
                 _argument_name(field.name),
-                action=argparse._AppendAction,  # pylint: disable=protected-access
+                action=argparse._StoreAction,  # pylint: disable=protected-access
+                nargs="+",
+                default=field.default,
+                help=field.field_info.description,
+                dest=field.name,
+                required=False,
+            )
+
+    def _add_json_field(self, field: pydantic.fields.ModelField) -> None:
+        """Adds json pydantic field to argument parser.
+
+        Args:
+            field (pydanic.fields.ModelField): Field to be added to parser.
+        """
+        # JSON (Dictionary)
+        if field.required:
+            # Required
+            self._required_group.add_argument(
+                _argument_name(field.name),
+                action=argparse._StoreAction,  # pylint: disable=protected-access
+                type=json.loads,
+                help=field.field_info.description,
+                dest=field.name,
+                required=True,
+            )
+
+        else:
+            # Optional
+            self._optional_group.add_argument(
+                _argument_name(field.name),
+                action=argparse._StoreAction,  # pylint: disable=protected-access
+                type=json.loads,
                 default=field.default,
                 help=field.field_info.description,
                 dest=field.name,
