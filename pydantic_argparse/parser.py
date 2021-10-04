@@ -43,6 +43,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         description (Optional[str]): Program description for CLI.
         version (Optional[str]): Program version string for CLI.
         epilog (Optional[str]): Optional text following argument descriptions.
+        add_help (bool): Whether to add a -h/--help flag.
         exit_on_error (bool): Whether to exit on error.
     """
     def __init__(
@@ -52,6 +53,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         description: Optional[str]=None,
         version: Optional[str]=None,
         epilog: Optional[str]=None,
+        add_help: bool=True,
         exit_on_error: bool=True,
         ) -> None:
         """Constructs Custom Argument Parser."""
@@ -64,7 +66,8 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             add_help=False,  # Always disable the automatic help flag.
         )
 
-        # Set Exit on Error Flag
+        # Set Add Help and Exit on Error Flag
+        self.add_help = add_help
         self.exit_on_error = exit_on_error
 
         # Set Version and Model
@@ -132,13 +135,15 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
 
     def _add_help_flag(self) -> None:
         """Adds help flag to argparser."""
-        # Add help flag
-        self._help_group.add_argument(
-            "-h",
-            "--help",
-            action=argparse._HelpAction,  # pylint: disable=protected-access
-            help="show this help message and exit",
-        )
+        # Check if add help is flagged
+        if self.add_help:
+            # Add help flag
+            self._help_group.add_argument(
+                "-h",
+                "--help",
+                action=argparse._HelpAction,  # pylint: disable=protected-access
+                help="show this help message and exit",
+            )
 
     def _add_version_flag(self) -> None:
         """Adds version flag to argparser."""
