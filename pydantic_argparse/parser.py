@@ -191,7 +191,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             # Add Literal Field
             self._add_literal_field(field)
 
-        elif isinstance(field_type, type) and issubclass(field_type, enum.Enum):
+        elif isinstance(field_type, enum.EnumMeta):
             # Add Enum Field
             self._add_enum_field(field)
 

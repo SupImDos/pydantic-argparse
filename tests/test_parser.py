@@ -278,7 +278,7 @@ def test_help_message(capsys: pytest.CaptureFixture[str]) -> None:
 
     # Check STDOUT
     captured = capsys.readouterr()
-    assert captured.out.strip() == textwrap.dedent(
+    assert captured.out == textwrap.dedent(
         """
         usage: AA [-h] [-v]
 
@@ -290,4 +290,4 @@ def test_help_message(capsys: pytest.CaptureFixture[str]) -> None:
 
         DD
         """
-    ).strip()
+    ).lstrip()
