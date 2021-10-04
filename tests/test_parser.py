@@ -291,3 +291,35 @@ def test_help_message(capsys: pytest.CaptureFixture[str]) -> None:
         DD
         """
     ).lstrip()
+
+
+def test_version_message(capsys: pytest.CaptureFixture[str]) -> None:
+    """Tests ArgumentParser Version Message.
+
+    Args:
+        capsys (pytest.CaptureFixture[str]): Fixture to capture STDOUT/STDERR.
+    """
+    # Dynamically Create Pydantic Model
+    model: Any = pydantic.create_model("model")
+
+    # Create ArgumentParser
+    parser = ArgumentParser(
+        model=model,
+        prog="AA",
+        description="BB",
+        version="CC",
+        epilog="DD",
+    )
+
+    # Assert Parser Exits
+    with pytest.raises(SystemExit):
+        # Ask for Version
+        parser.parse_typed_args(["--version"])
+
+    # Check STDOUT
+    captured = capsys.readouterr()
+    assert captured.out == textwrap.dedent(
+        """
+        CC
+        """
+    ).lstrip()
