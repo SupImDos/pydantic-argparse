@@ -221,7 +221,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             self._optional_group.add_argument(
                 _argument_name("no-" + field.name),
                 action=argparse._StoreFalseAction,  # pylint: disable=protected-access
-                default=bool(field.default),
+                default=field.default,
                 help=field.field_info.description,
                 dest=field.name,
                 required=False,
@@ -232,7 +232,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             self._optional_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreTrueAction,  # pylint: disable=protected-access
-                default=bool(field.default),
+                default=field.default,
                 help=field.field_info.description,
                 dest=field.name,
                 required=False,
