@@ -37,6 +37,47 @@ ArgumentT = TypeVar("ArgumentT")
 ExampleEnum = Enum("ExampleEnum", ("A", "B", "C"))
 
 
+@pytest.mark.parametrize(["prog"],          [("AA",), (None,)])
+@pytest.mark.parametrize(["description"],   [("BB",), (None,)])
+@pytest.mark.parametrize(["version"],       [("CC",), (None,)])
+@pytest.mark.parametrize(["epilog"],        [("DD",), (None,)])
+@pytest.mark.parametrize(["add_help"],      [(True,), (False,)])
+@pytest.mark.parametrize(["exit_on_error"], [(True,), (False,)])
+def test_create_argparser(
+    model: type[pydantic.BaseModel],
+    prog: Optional[str],
+    description: Optional[str],
+    version: Optional[str],
+    epilog: Optional[str],
+    add_help: bool,
+    exit_on_error: bool,
+    ) -> None:
+    """Tests Constructing the ArgumentParser.
+
+    Args:
+        model (type[pydantic.BaseModel]): Test Pydantic model as per fixture.
+        prog (Optional[str]): Program name for testing.
+        description (Optional[str]): Program description for testing.
+        version (Optional[str]): Program version for testing.
+        epilog (Optional[str]): Program epilog for testing.
+        add_help (bool): Whether to add help flag for testing.
+        exit_on_error (bool): Whether to exit on error for testing.
+    """
+    # Create ArgumentParser
+    parser = ArgumentParser(
+        model=model,
+        prog=prog,
+        description=description,
+        version=version,
+        epilog=epilog,
+        add_help=add_help,
+        exit_on_error=exit_on_error,
+    )
+
+    # Asserts
+    assert isinstance(parser, ArgumentParser)
+
+
 @pytest.mark.parametrize(
     [
         "argument_type",
@@ -155,7 +196,7 @@ def test_arguments(
     arguments: str,
     result: ArgumentT,
     ) -> None:
-    """Tests ArgumentParser.
+    """Tests ArgumentParser Valid Arguments.
 
     Args:
         argument_type (type[ArgumentT]): Type of the argument.
@@ -291,7 +332,7 @@ def test_invalid_arguments(
     exit_on_error: bool,
     error: type[Exception],
     ) -> None:
-    """Tests ArgumentParser.
+    """Tests ArgumentParser Invalid Arguments.
 
     Args:
         argument_type (type[ArgumentT]): Type of the argument.
@@ -385,3 +426,14 @@ def test_version_message(capsys: pytest.CaptureFixture[str]) -> None:
         CC
         """
     ).lstrip()
+
+
+def test_argument_descriptions(
+    model: type[pydantic.BaseModel],
+    ) -> None:
+    """Tests Argument Descriptions.
+
+    Args:
+        model (type[pydantic.BaseModel]): Test Pydantic model as per fixture.
+    """
+    print(model)
