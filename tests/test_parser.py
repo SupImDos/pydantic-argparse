@@ -458,6 +458,9 @@ def test_argument_descriptions(
     # Capture all arguments below 'optional arguments:'
     _, required, optional, _ = re.split(r".+:\n", captured.out)
 
+    # Format Argument Name
+    argument_name = argument_name.replace("_", "-")
+
     # Check if Required or Optional
     if argument_field.required:
         # Assert Argument in Required Args Section
