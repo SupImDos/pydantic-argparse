@@ -52,6 +52,11 @@ class ExampleEnum(Enum):
     C = 3
 
 
+class ExampleEnumSingle(Enum):
+    """Example Enum with Single Member for Testing"""
+    D = 4
+
+
 class ExampleModel(pydantic.BaseModel):
     """Example Model for Testing"""
     # Required Arguments
@@ -72,6 +77,7 @@ class ExampleModel(pydantic.BaseModel):
     arg_15: bool                           = pydantic.Field(description="arg_15")
     arg_16: Literal["A"]                   = pydantic.Field(description="arg_16")
     arg_17: Literal["A", "B"]              = pydantic.Field(description="arg_17")
+    arg_aa: ExampleEnumSingle              = pydantic.Field(description="arg_aa")
     arg_18: ExampleEnum                    = pydantic.Field(description="arg_18")
 
     # Optional Arguments (With Default)
@@ -91,7 +97,9 @@ class ExampleModel(pydantic.BaseModel):
     arg_32: timedelta                      = pydantic.Field(timedelta(hours=5),            description="arg_32")
     arg_33: bool                           = pydantic.Field(False,                         description="arg_33")
     arg_34: bool                           = pydantic.Field(True,                          description="arg_34")
+    arg_bb: Literal["A"]                   = pydantic.Field("A",                           description="arg_bb")
     arg_35: Literal["A", "B"]              = pydantic.Field("A",                           description="arg_35")
+    arg_cc: ExampleEnumSingle              = pydantic.Field(ExampleEnumSingle.D,           description="arg_cc")
     arg_36: ExampleEnum                    = pydantic.Field(ExampleEnum.A,                 description="arg_36")
 
     # Optional Arguments (No Default)
@@ -112,4 +120,5 @@ class ExampleModel(pydantic.BaseModel):
     arg_51: Optional[bool]                 = pydantic.Field(description="arg_51")
     arg_52: Optional[Literal["A"]]         = pydantic.Field(description="arg_52")
     arg_53: Optional[Literal["A", "B"]]    = pydantic.Field(description="arg_53")
+    arg_dd: Optional[ExampleEnumSingle]    = pydantic.Field(description="arg_dd")
     arg_54: Optional[ExampleEnum]          = pydantic.Field(description="arg_54")

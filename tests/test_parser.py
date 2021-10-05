@@ -27,7 +27,7 @@ import pytest
 
 # Local
 from pydantic_argparse import ArgumentParser
-from tests.conftest import ExampleModel, ExampleEnum
+from tests.conftest import ExampleModel, ExampleEnum, ExampleEnumSingle
 
 # Typing
 from typing import Any, Literal, Optional, Tuple, TypeVar  # pylint: disable=wrong-import-order
@@ -101,7 +101,9 @@ def test_create_argparser(
         (timedelta,            ..., "--test PT12H",            timedelta(hours=12)),
         (bool,                 ..., "--test",                  True),
         (bool,                 ..., "--no-test",               False),
+        (Literal["A"],         ..., "--test A",                "A"),
         (Literal["A", "B"],    ..., "--test B",                "B"),
+        (ExampleEnumSingle,    ..., "--test D",                ExampleEnumSingle.D),
         (ExampleEnum,          ..., "--test C",                ExampleEnum.C),
 
         # Optional Arguments (With Default)
@@ -121,7 +123,9 @@ def test_create_argparser(
         (timedelta,            timedelta(hours=6),             "--test PT12H",            timedelta(hours=12)),
         (bool,                 False,                          "--test",                  True),
         (bool,                 True,                           "--no-test",               False),
+        (Literal["A"],         "A",                            "--test",                  "A"),
         (Literal["A", "B"],    "A",                            "--test B",                "B"),
+        (ExampleEnumSingle,    ExampleEnumSingle.D,            "--test",                  ExampleEnumSingle.D),
         (ExampleEnum,          ExampleEnum.B,                  "--test C",                ExampleEnum.C),
 
         # Optional Arguments (With Default) (No Value Given)
@@ -141,7 +145,9 @@ def test_create_argparser(
         (timedelta,            timedelta(hours=6),             "", timedelta(hours=6)),
         (bool,                 False,                          "", False),
         (bool,                 True,                           "", True),
+        (Literal["A"],         "A",                            "", "A"),
         (Literal["A", "B"],    "A",                            "", "A"),
+        (ExampleEnumSingle,    ExampleEnumSingle.D,            "", ExampleEnumSingle.D),
         (ExampleEnum,          ExampleEnum.B,                  "", ExampleEnum.B),
 
         # Optional Arguments (No Default)
@@ -162,6 +168,7 @@ def test_create_argparser(
         (Optional[bool],                 None, "--test",                  True),
         (Optional[Literal["A"]],         None, "--test",                  "A"),
         (Optional[Literal["A", "B"]],    None, "--test B",                "B"),
+        (Optional[ExampleEnumSingle],    None, "--test",                  ExampleEnumSingle.D),
         (Optional[ExampleEnum],          None, "--test C",                ExampleEnum.C),
 
         # Optional Arguments (No Default) (No Value Given)
@@ -182,6 +189,7 @@ def test_create_argparser(
         (Optional[bool],                 None, "", None),
         (Optional[Literal["A"]],         None, "", None),
         (Optional[Literal["A", "B"]],    None, "", None),
+        (Optional[ExampleEnumSingle],    None, "", None),
         (Optional[ExampleEnum],          None, "", None),
     ]
 )
@@ -236,7 +244,10 @@ def test_arguments(
         (datetime,             ..., "--test invalid"),
         (time,                 ..., "--test invalid"),
         (timedelta,            ..., "--test invalid"),
+        (bool,                 ..., "--test invalid"),
+        (Literal["A"],         ..., "--test invalid"),
         (Literal["A", "B"],    ..., "--test invalid"),
+        (ExampleEnumSingle,    ..., "--test invalid"),
         (ExampleEnum,          ..., "--test invalid"),
 
         # Missing Argument Values
@@ -254,7 +265,9 @@ def test_arguments(
         (datetime,             ..., "--test"),
         (time,                 ..., "--test"),
         (timedelta,            ..., "--test"),
+        (Literal["A"],         ..., "--test"),
         (Literal["A", "B"],    ..., "--test"),
+        (ExampleEnumSingle,    ..., "--test"),
         (ExampleEnum,          ..., "--test"),
 
         # Missing Arguments
@@ -272,7 +285,10 @@ def test_arguments(
         (datetime,             ..., ""),
         (time,                 ..., ""),
         (timedelta,            ..., ""),
+        (bool,                 ..., ""),
+        (Literal["A"],         ..., ""),
         (Literal["A", "B"],    ..., ""),
+        (ExampleEnumSingle,    ..., ""),
         (ExampleEnum,          ..., ""),
 
         # Invalid Optional Arguments
@@ -288,7 +304,10 @@ def test_arguments(
         (Optional[datetime],             None, "--test invalid"),
         (Optional[time],                 None, "--test invalid"),
         (Optional[timedelta],            None, "--test invalid"),
+        (Optional[bool],                 None, "--test invalid"),
+        (Optional[Literal["A"]],         None, "--test invalid"),
         (Optional[Literal["A", "B"]],    None, "--test invalid"),
+        (Optional[ExampleEnumSingle],    None, "--test invalid"),
         (Optional[ExampleEnum],          None, "--test invalid"),
 
         # Missing Optional Argument Values

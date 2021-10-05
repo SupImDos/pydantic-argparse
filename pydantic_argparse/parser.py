@@ -356,17 +356,32 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         Args:
             field (pydanic.fields.ModelField): Field to be added to parser.
         """
+        # Get enum from field type
+        enum_type: type[enum.Enum] = field.outer_type_
+
         # Enums are treated as choices
         if field.required:
             # Required
             self._required_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreAction,  # pylint: disable=protected-access
-                type=lambda arg: _enum_name_to_member(arg, field.outer_type_),
-                choices=field.outer_type_,
+                type=lambda arg: _enum_name_to_member(arg, enum_type),
+                choices=enum_type,
                 help=field.field_info.description,
                 dest=field.name,
                 required=True,
+            )
+
+        elif len(enum_type) == 1:
+            # Optional Flag
+            self._optional_group.add_argument(
+                _argument_name(field.name),
+                action=argparse._StoreConstAction,  # pylint: disable=protected-access
+                const=list(enum_type.__members__.values())[0],
+                default=field.default,
+                help=f"{field.field_info.description} (default: {field.default})",
+                dest=field.name,
+                required=False,
             )
 
         else:
@@ -374,8 +389,8 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             self._optional_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreAction,  # pylint: disable=protected-access
-                type=lambda arg: _enum_name_to_member(arg, field.outer_type_),
-                choices=field.outer_type_,
+                type=lambda arg: _enum_name_to_member(arg, enum_type),
+                choices=enum_type,
                 default=field.default,
                 help=f"{field.field_info.description} (default: {field.default})",
                 dest=field.name,
