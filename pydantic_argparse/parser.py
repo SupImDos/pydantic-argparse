@@ -227,7 +227,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 _argument_name("no-" + field.name),
                 action=argparse._StoreFalseAction,  # pylint: disable=protected-access
                 default=field.default,
-                help=field.field_info.description,
+                help=f"{field.field_info.description} (default: {field.default})",
                 dest=field.name,
                 required=False,
             )
@@ -238,7 +238,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 _argument_name(field.name),
                 action=argparse._StoreTrueAction,  # pylint: disable=protected-access
                 default=field.default,
-                help=field.field_info.description,
+                help=f"{field.field_info.description} (default: {field.default})",
                 dest=field.name,
                 required=False,
             )
@@ -268,7 +268,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 action=argparse._StoreAction,  # pylint: disable=protected-access
                 nargs="+",
                 default=field.default,
-                help=field.field_info.description,
+                help=f"{field.field_info.description} (default: {field.default})",
                 dest=field.name,
                 required=False,
             )
@@ -298,7 +298,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 action=argparse._StoreAction,  # pylint: disable=protected-access
                 type=json.loads,
                 default=field.default,
-                help=field.field_info.description,
+                help=f"{field.field_info.description} (default: {field.default})",
                 dest=field.name,
                 required=False,
             )
@@ -313,19 +313,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         choices = typing_inspect.get_args(field.outer_type_)
 
         # Literals are treated as constant flags, or choices
-        if len(choices) == 1:
-            # Optional Flag
-            self._optional_group.add_argument(
-                _argument_name(field.name),
-                action=argparse._StoreConstAction,  # pylint: disable=protected-access
-                const=choices[0],
-                default=field.default,
-                help=field.field_info.description,
-                dest=field.name,
-                required=False,
-            )
-
-        elif field.required:
+        if field.required:
             # Required
             self._required_group.add_argument(
                 _argument_name(field.name),
@@ -335,6 +323,18 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 help=field.field_info.description,
                 dest=field.name,
                 required=True,
+            )
+
+        elif len(choices) == 1:
+            # Optional Flag
+            self._optional_group.add_argument(
+                _argument_name(field.name),
+                action=argparse._StoreConstAction,  # pylint: disable=protected-access
+                const=choices[0],
+                default=field.default,
+                help=f"{field.field_info.description} (default: {field.default})",
+                dest=field.name,
+                required=False,
             )
 
         else:
