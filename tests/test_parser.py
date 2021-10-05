@@ -18,7 +18,7 @@ from __future__ import unicode_literals
 import argparse
 from collections import deque
 from datetime import date, datetime, time, timedelta
-from enum import Enum
+import re
 import textwrap
 
 # Third-Party
@@ -27,6 +27,7 @@ import pytest
 
 # Local
 from pydantic_argparse import ArgumentParser
+from tests.conftest import ExampleModel, ExampleEnum
 
 # Typing
 from typing import Any, Literal, Optional, Tuple, TypeVar  # pylint: disable=wrong-import-order
@@ -34,7 +35,6 @@ from typing import Any, Literal, Optional, Tuple, TypeVar  # pylint: disable=wro
 
 # Constants
 ArgumentT = TypeVar("ArgumentT")
-ExampleEnum = Enum("ExampleEnum", ("A", "B", "C"))
 
 
 @pytest.mark.parametrize(["prog"],          [("AA",), (None,)])
@@ -44,7 +44,6 @@ ExampleEnum = Enum("ExampleEnum", ("A", "B", "C"))
 @pytest.mark.parametrize(["add_help"],      [(True,), (False,)])
 @pytest.mark.parametrize(["exit_on_error"], [(True,), (False,)])
 def test_create_argparser(
-    model: type[pydantic.BaseModel],
     prog: Optional[str],
     description: Optional[str],
     version: Optional[str],
@@ -55,7 +54,6 @@ def test_create_argparser(
     """Tests Constructing the ArgumentParser.
 
     Args:
-        model (type[pydantic.BaseModel]): Test Pydantic model as per fixture.
         prog (Optional[str]): Program name for testing.
         description (Optional[str]): Program description for testing.
         version (Optional[str]): Program version for testing.
@@ -65,7 +63,7 @@ def test_create_argparser(
     """
     # Create ArgumentParser
     parser = ArgumentParser(
-        model=model,
+        model=ExampleModel,
         prog=prog,
         description=description,
         version=version,
@@ -103,7 +101,6 @@ def test_create_argparser(
         (timedelta,            ..., "--test PT12H",            timedelta(hours=12)),
         (bool,                 ..., "--test",                  True),
         (bool,                 ..., "--no-test",               False),
-        (Literal["A"],         ..., "--test",                  "A"),
         (Literal["A", "B"],    ..., "--test B",                "B"),
         (ExampleEnum,          ..., "--test C",                ExampleEnum.C),
 
@@ -124,7 +121,6 @@ def test_create_argparser(
         (timedelta,            timedelta(hours=6),             "--test PT12H",            timedelta(hours=12)),
         (bool,                 False,                          "--test",                  True),
         (bool,                 True,                           "--no-test",               False),
-        (Literal["A"],         "A",                            "--test",                  "A"),
         (Literal["A", "B"],    "A",                            "--test B",                "B"),
         (ExampleEnum,          ExampleEnum.B,                  "--test C",                ExampleEnum.C),
 
@@ -145,7 +141,6 @@ def test_create_argparser(
         (timedelta,            timedelta(hours=6),             "", timedelta(hours=6)),
         (bool,                 False,                          "", False),
         (bool,                 True,                           "", True),
-        (Literal["A"],         "A",                            "", "A"),
         (Literal["A", "B"],    "A",                            "", "A"),
         (ExampleEnum,          ExampleEnum.B,                  "", ExampleEnum.B),
 
@@ -428,12 +423,54 @@ def test_version_message(capsys: pytest.CaptureFixture[str]) -> None:
     ).lstrip()
 
 
+@pytest.mark.parametrize(
+    [
+        "arg",
+        "field",
+    ],
+    ExampleModel.__fields__.items()
+)
 def test_argument_descriptions(
-    model: type[pydantic.BaseModel],
+    arg: str,
+    field: pydantic.fields.ModelField,
+    capsys: pytest.CaptureFixture[str],
     ) -> None:
     """Tests Argument Descriptions.
 
     Args:
-        model (type[pydantic.BaseModel]): Test Pydantic model as per fixture.
+        arg (str): Argument name.
+        field (pydantic.fields.ModelField): Pydantic model field for argument.
+        capsys (pytest.CaptureFixture[str]): Fixture to capture STDOUT/STDERR.
     """
-    print(model)
+    # Create ArgumentParser
+    parser = ArgumentParser(ExampleModel)
+
+    # Assert Parser Exits
+    with pytest.raises(SystemExit):
+        # Ask for Help
+        parser.parse_typed_args(["--help"])
+
+    # Capture STDOUT
+    captured = capsys.readouterr()
+
+    # Process STDOUT
+    # Capture all arguments below 'required arguments:'
+    # Capture all arguments below 'optional arguments:'
+    _, required, optional, _ = re.split(r".+:\n", captured.out)
+
+    # Check if Required or Optional
+    if field.required:
+        # Assert Argument in Required Args Section
+        assert arg in required
+        assert arg not in optional
+        assert field.field_info.description in required
+        assert field.field_info.description not in optional
+
+    else:
+        # Assert Argument in Optional Args Section
+        assert arg in optional
+        assert arg not in required
+        assert field.field_info.description in optional
+        assert field.field_info.description not in required
+        assert f"(default: {field.default})" in optional
+        assert f"(default: {field.default})" not in required
