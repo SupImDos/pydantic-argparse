@@ -425,21 +425,21 @@ def test_version_message(capsys: pytest.CaptureFixture[str]) -> None:
 
 @pytest.mark.parametrize(
     [
-        "arg",
-        "field",
+        "argument_name",
+        "argument_field",
     ],
     ExampleModel.__fields__.items()
 )
 def test_argument_descriptions(
-    arg: str,
-    field: pydantic.fields.ModelField,
+    argument_name: str,
+    argument_field: pydantic.fields.ModelField,
     capsys: pytest.CaptureFixture[str],
     ) -> None:
     """Tests Argument Descriptions.
 
     Args:
-        arg (str): Argument name.
-        field (pydantic.fields.ModelField): Pydantic model field for argument.
+        argument_name (str): Argument name.
+        argument_field (pydantic.fields.ModelField): Argument pydantic field.
         capsys (pytest.CaptureFixture[str]): Fixture to capture STDOUT/STDERR.
     """
     # Create ArgumentParser
@@ -459,18 +459,18 @@ def test_argument_descriptions(
     _, required, optional, _ = re.split(r".+:\n", captured.out)
 
     # Check if Required or Optional
-    if field.required:
+    if argument_field.required:
         # Assert Argument in Required Args Section
-        assert arg in required
-        assert arg not in optional
-        assert field.field_info.description in required
-        assert field.field_info.description not in optional
+        assert argument_name in required
+        assert argument_name not in optional
+        assert argument_field.field_info.description in required
+        assert argument_field.field_info.description not in optional
 
     else:
         # Assert Argument in Optional Args Section
-        assert arg in optional
-        assert arg not in required
-        assert field.field_info.description in optional
-        assert field.field_info.description not in required
-        assert f"(default: {field.default})" in optional
-        assert f"(default: {field.default})" not in required
+        assert argument_name in optional
+        assert argument_name not in required
+        assert argument_field.field_info.description in optional
+        assert argument_field.field_info.description not in required
+        assert f"(default: {argument_field.default})" in optional
+        assert f"(default: {argument_field.default})" not in required
