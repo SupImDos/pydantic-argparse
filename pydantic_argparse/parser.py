@@ -18,6 +18,7 @@ from __future__ import unicode_literals
 import argparse
 from collections import deque
 import enum
+import functools
 import json
 import sys
 
@@ -32,6 +33,7 @@ from typing import Generic, Literal, NoReturn, Optional, TypeVar  # pylint: disa
 # Constants
 PydanticModelT = TypeVar("PydanticModelT", bound=pydantic.BaseModel)
 EnumT = TypeVar("EnumT", bound=enum.Enum)
+AnyT = TypeVar("AnyT")
 
 
 class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
@@ -221,13 +223,13 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 required=True,
             )
 
-        elif field.default:
+        elif default := field.get_default():
             # Optional (Default True)
             self._optional_group.add_argument(
                 _argument_name("no-" + field.name),
                 action=argparse._StoreFalseAction,  # pylint: disable=protected-access
-                default=field.default,
-                help=f"{field.field_info.description} (default: {field.default})",
+                default=default,
+                help=f"{field.field_info.description} (default: {default})",
                 dest=field.name,
                 required=False,
             )
@@ -237,8 +239,8 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             self._optional_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreTrueAction,  # pylint: disable=protected-access
-                default=field.default,
-                help=f"{field.field_info.description} (default: {field.default})",
+                default=default,
+                help=f"{field.field_info.description} (default: {default})",
                 dest=field.name,
                 required=False,
             )
@@ -263,12 +265,13 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
 
         else:
             # Optional
+            default = field.get_default()
             self._optional_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreAction,  # pylint: disable=protected-access
                 nargs="+",
-                default=field.default,
-                help=f"{field.field_info.description} (default: {field.default})",
+                default=default,
+                help=f"{field.field_info.description} (default: {default})",
                 dest=field.name,
                 required=False,
             )
@@ -293,12 +296,13 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
 
         else:
             # Optional
+            default = field.get_default()
             self._optional_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreAction,  # pylint: disable=protected-access
                 type=json.loads,
-                default=field.default,
-                help=f"{field.field_info.description} (default: {field.default})",
+                default=default,
+                help=f"{field.field_info.description} (default: {default})",
                 dest=field.name,
                 required=False,
             )
@@ -310,42 +314,58 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             field (pydanic.fields.ModelField): Field to be added to parser.
         """
         # Get choices from literal
-        choices = typing_inspect.get_args(field.outer_type_)
+        choices = list(typing_inspect.get_args(field.outer_type_))
+
+        # Define Custom Type Caster
+        type_caster = functools.partial(_arg_to_choice, choices=choices)
+        setattr(type_caster, "__name__", field.name)  # For nicer error message
 
         # Literals are treated as constant flags, or choices
         if field.required:
-            # Required
+            # Required Choice
             self._required_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreAction,  # pylint: disable=protected-access
-                type=type(choices[0]),
+                type=type_caster,
                 choices=choices,
                 help=field.field_info.description,
                 dest=field.name,
                 required=True,
             )
 
+        elif (default := field.get_default()) is not None and len(choices) == 1 and field.allow_none:
+            # Optional Flag (Default Not None)
+            self._optional_group.add_argument(
+                _argument_name("no-" + field.name),
+                action=argparse._StoreConstAction,  # pylint: disable=protected-access
+                const=None,
+                default=default,
+                help=f"{field.field_info.description} (default: {default})",
+                dest=field.name,
+                required=False,
+            )
+
         elif len(choices) == 1:
-            # Optional Flag
+            # Optional Flag (Default None)
             self._optional_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreConstAction,  # pylint: disable=protected-access
                 const=choices[0],
-                default=field.default,
-                help=f"{field.field_info.description} (default: {field.default})",
+                default=default,
+                help=f"{field.field_info.description} (default: {default})",
                 dest=field.name,
                 required=False,
             )
 
         else:
-            # Optional
+            # Optional Choice
             self._optional_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreAction,  # pylint: disable=protected-access
-                type=type(choices[0]),
+                type=type_caster,
                 choices=choices,
-                default=field.default,
-                help=f"{field.field_info.description} (default: {field.default})",
+                default=default,
+                help=f"{field.field_info.description} (default: {default})",
                 dest=field.name,
                 required=False,
             )
@@ -359,40 +379,56 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         # Get enum from field type
         enum_type: type[enum.Enum] = field.outer_type_
 
+        # Define Type Caster
+        type_caster = functools.partial(_arg_to_enum_member, enum_type=enum_type)
+        setattr(type_caster, "__name__", field.name)  # For nicer error message
+
         # Enums are treated as choices
         if field.required:
-            # Required
+            # Required Choice
             self._required_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreAction,  # pylint: disable=protected-access
-                type=lambda arg: _enum_name_to_member(arg, enum_type),
+                type=type_caster,
                 choices=enum_type,
                 help=field.field_info.description,
                 dest=field.name,
                 required=True,
             )
 
+        elif (default := field.get_default()) is not None and len(enum_type) == 1 and field.allow_none:
+            # Optional Flag (Default Not None)
+            self._optional_group.add_argument(
+                _argument_name("no-" + field.name),
+                action=argparse._StoreConstAction,  # pylint: disable=protected-access
+                const=None,
+                default=default,
+                help=f"{field.field_info.description} (default: {default})",
+                dest=field.name,
+                required=False,
+            )
+
         elif len(enum_type) == 1:
-            # Optional Flag
+            # Optional Flag (Default None)
             self._optional_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreConstAction,  # pylint: disable=protected-access
-                const=list(enum_type.__members__.values())[0],
-                default=field.default,
-                help=f"{field.field_info.description} (default: {field.default})",
+                const=list(enum_type)[0],
+                default=default,
+                help=f"{field.field_info.description} (default: {default})",
                 dest=field.name,
                 required=False,
             )
 
         else:
-            # Optional
+            # Optional Choice
             self._optional_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreAction,  # pylint: disable=protected-access
-                type=lambda arg: _enum_name_to_member(arg, enum_type),
+                type=type_caster,
                 choices=enum_type,
-                default=field.default,
-                help=f"{field.field_info.description} (default: {field.default})",
+                default=default,
+                help=f"{field.field_info.description} (default: {default})",
                 dest=field.name,
                 required=False,
             )
@@ -416,21 +452,25 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
 
         else:
             # Optional
+            default = field.get_default()
             self._optional_group.add_argument(
                 _argument_name(field.name),
                 action=argparse._StoreAction,  # pylint: disable=protected-access
-                default=field.default,
-                help=f"{field.field_info.description} (default: {field.default})",
+                default=default,
+                help=f"{field.field_info.description} (default: {default})",
                 dest=field.name,
                 required=False,
             )
 
 
-def _enum_name_to_member(name: str, enum_type: type[EnumT]) -> EnumT:
-    """Converts enum member name to actual enum member.
+def _arg_to_enum_member(
+    argument: str,
+    enum_type: type[EnumT],
+    ) -> EnumT:
+    """Attempts to convert string argument to a supplied enum member.
 
     Args:
-        name (str): Name of enum member.
+        argument (str): Possible name of enum member.
         enum_type (type[EnumT]): Enum type.
 
     Returns:
@@ -439,10 +479,36 @@ def _enum_name_to_member(name: str, enum_type: type[EnumT]) -> EnumT:
     Raises:
         ValueError: Raised if enum member does not exist.
     """
+    # Attempt to convert string argument to enum member
     try:
-        return enum_type[name]
+        return enum_type[argument]
     except KeyError as exc:
         raise ValueError from exc
+
+
+def _arg_to_choice(
+    argument: str,
+    choices: list[AnyT],
+    ) -> AnyT:
+    """Attempts to convert string argument to a supplied choice.
+
+    Args:
+        argument (str): Possible choice.
+        choices (list[AnyT]): List of choices.
+
+    Returns:
+        AnyT: Selected choice.
+
+    Raises:
+        ValueError: Raised if argument is not one of the choices.
+    """
+    # Attempt to convert string argument to one of choices
+    for choice in choices:
+        if str(choice) == argument:
+            return choice
+
+    # Raise Error
+    raise ValueError
 
 
 def _argument_name(name: str) -> str:
