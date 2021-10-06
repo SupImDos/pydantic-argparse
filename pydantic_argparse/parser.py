@@ -27,27 +27,18 @@ import pydantic
 import typing_inspect
 
 # Typing
-from typing import Generic, Literal, NoReturn, Optional, TypeVar  # pylint: disable=wrong-import-order
+from typing import Any, Callable, Generic, Literal, NoReturn, Optional, TypeVar  # pylint: disable=wrong-import-order
 
 
 # Constants
 PydanticModelT = TypeVar("PydanticModelT", bound=pydantic.BaseModel)
 EnumT = TypeVar("EnumT", bound=enum.Enum)
 AnyT = TypeVar("AnyT")
+Missing = object()
 
 
 class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
-    """Custom Typed Argument Parser.
-
-    Args:
-        model (type[PydanticModelT]): Pydantic argument model class.
-        prog (Optional[str]): Program name for CLI.
-        description (Optional[str]): Program description for CLI.
-        version (Optional[str]): Program version string for CLI.
-        epilog (Optional[str]): Optional text following argument descriptions.
-        add_help (bool): Whether to add a -h/--help flag.
-        exit_on_error (bool): Whether to exit on error.
-    """
+    """Custom Typed Argument Parser."""
     def __init__(
         self,
         model: type[PydanticModelT],
@@ -58,7 +49,17 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         add_help: bool=True,
         exit_on_error: bool=True,
         ) -> None:
-        """Constructs Custom Argument Parser."""
+        """Custom Typed Argument Parser.
+
+        Args:
+            model (type[PydanticModelT]): Pydantic argument model class.
+            prog (Optional[str]): Program name for CLI.
+            description (Optional[str]): Program description for CLI.
+            version (Optional[str]): Program version string for CLI.
+            epilog (Optional[str]): Optional text following help message.
+            add_help (bool): Whether to add a -h/--help flag.
+            exit_on_error (bool): Whether to exit on error.
+        """
         # Initialise Super Class
         super().__init__(
             prog=prog,
@@ -82,8 +83,10 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         self._help_group = self.add_argument_group("help")
 
         # Add Help and Version Flags
-        self._add_help_flag()
-        self._add_version_flag()
+        if self.add_help:
+            self._add_help_flag()
+        if self.version:
+            self._add_version_flag()
 
         # Add Arguments from Model
         self._add_model(model)
@@ -137,27 +140,23 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
 
     def _add_help_flag(self) -> None:
         """Adds help flag to argparser."""
-        # Check if add help is flagged
-        if self.add_help:
-            # Add help flag
-            self._help_group.add_argument(
-                "-h",
-                "--help",
-                action=argparse._HelpAction,  # pylint: disable=protected-access
-                help="show this help message and exit",
-            )
+        # Add help flag
+        self._help_group.add_argument(
+            "-h",
+            "--help",
+            action=argparse._HelpAction,  # pylint: disable=protected-access
+            help="show this help message and exit",
+        )
 
     def _add_version_flag(self) -> None:
         """Adds version flag to argparser."""
-        # Check if version is set
-        if self.version:
-            # Add version flag
-            self._help_group.add_argument(
-                "-v",
-                "--version",
-                action=argparse._VersionAction,  # pylint: disable=protected-access
-                help="show program's version number and exit",
-            )
+        # Add version flag
+        self._help_group.add_argument(
+            "-v",
+            "--version",
+            action=argparse._VersionAction,  # pylint: disable=protected-access
+            help="show program's version number and exit",
+        )
 
     def _add_model(self, model: type[PydanticModelT]) -> None:
         """Adds pydantic model to argument parser.
@@ -212,24 +211,53 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         Args:
             field (pydanic.fields.ModelField): Field to be added to parser.
         """
-        # Boolean flags can be treated as required or optional
+        # Booleans can be treated as required or optional flags
         if field.required:
             # Required
-            self._required_group.add_argument(
-                _argument_name(field.name),
-                action=argparse.BooleanOptionalAction,
-                help=field.field_info.description,
-                dest=field.name,
-                required=True,
-            )
+            self._add_boolean_field_required(field)
 
-        elif default := field.get_default():
+        else:
+            # Optional
+            self._add_boolean_field_optional(field)
+
+    def _add_boolean_field_required(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds required boolean pydantic field to argument parser.
+
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
+        # Add Required Boolean Field
+        self._required_group.add_argument(
+            _argument_name(field.name),
+            action=argparse.BooleanOptionalAction,
+            help=_argument_description(field.field_info.description),
+            dest=field.name,
+            required=True,
+        )
+
+    def _add_boolean_field_optional(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds optional boolean pydantic field to argument parser.
+
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
+        # Get Default
+        default = field.get_default()
+
+        # Add Optional Boolean Field
+        if default:
             # Optional (Default True)
             self._optional_group.add_argument(
                 _argument_name("no-" + field.name),
                 action=argparse._StoreFalseAction,  # pylint: disable=protected-access
                 default=default,
-                help=f"{field.field_info.description} (default: {default})",
+                help=_argument_description(field.field_info.description, default),
                 dest=field.name,
                 required=False,
             )
@@ -240,7 +268,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 _argument_name(field.name),
                 action=argparse._StoreTrueAction,  # pylint: disable=protected-access
                 default=default,
-                help=f"{field.field_info.description} (default: {default})",
+                help=_argument_description(field.field_info.description, default),
                 dest=field.name,
                 required=False,
             )
@@ -251,30 +279,56 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         Args:
             field (pydanic.fields.ModelField): Field to be added to parser.
         """
-        # Deque, FrozenSet, List, Set Tuple
+        # List, Tuple, Set, FrozenSet, Deque
         if field.required:
             # Required
-            self._required_group.add_argument(
-                _argument_name(field.name),
-                action=argparse._StoreAction,  # pylint: disable=protected-access
-                nargs="+",
-                help=field.field_info.description,
-                dest=field.name,
-                required=True,
-            )
+            self._add_container_field_required(field)
 
         else:
             # Optional
-            default = field.get_default()
-            self._optional_group.add_argument(
-                _argument_name(field.name),
-                action=argparse._StoreAction,  # pylint: disable=protected-access
-                nargs="+",
-                default=default,
-                help=f"{field.field_info.description} (default: {default})",
-                dest=field.name,
-                required=False,
-            )
+            self._add_container_field_optional(field)
+
+    def _add_container_field_required(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds required container pydantic field to argument parser.
+
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
+        # Add Required Container Field
+        self._required_group.add_argument(
+            _argument_name(field.name),
+            action=argparse._StoreAction,  # pylint: disable=protected-access
+            nargs="+",
+            help=_argument_description(field.field_info.description),
+            dest=field.name,
+            required=True,
+        )
+
+    def _add_container_field_optional(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds optional container pydantic field to argument parser.
+
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
+        # Get Default
+        default = field.get_default()
+
+        # Add Optional Container Field
+        self._optional_group.add_argument(
+            _argument_name(field.name),
+            action=argparse._StoreAction,  # pylint: disable=protected-access
+            nargs="+",
+            default=default,
+            help=_argument_description(field.field_info.description, default),
+            dest=field.name,
+            required=False,
+        )
 
     def _add_json_field(self, field: pydantic.fields.ModelField) -> None:
         """Adds json pydantic field to argument parser.
@@ -285,27 +339,59 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         # JSON (Dictionary)
         if field.required:
             # Required
-            self._required_group.add_argument(
-                _argument_name(field.name),
-                action=argparse._StoreAction,  # pylint: disable=protected-access
-                type=json.loads,
-                help=field.field_info.description,
-                dest=field.name,
-                required=True,
-            )
+            self._add_json_field_required(field)
 
         else:
             # Optional
-            default = field.get_default()
-            self._optional_group.add_argument(
-                _argument_name(field.name),
-                action=argparse._StoreAction,  # pylint: disable=protected-access
-                type=json.loads,
-                default=default,
-                help=f"{field.field_info.description} (default: {default})",
-                dest=field.name,
-                required=False,
-            )
+            self._add_json_field_optional(field)
+
+    def _add_json_field_required(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds required json pydantic field to argument parser.
+
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
+        # Define Custom Type Caster
+        type_caster = _type_caster(field.name, json.loads)
+
+        # Add Required JSON Field
+        self._required_group.add_argument(
+            _argument_name(field.name),
+            action=argparse._StoreAction,  # pylint: disable=protected-access
+            type=type_caster,
+            help=_argument_description(field.field_info.description),
+            dest=field.name,
+            required=True,
+        )
+
+    def _add_json_field_optional(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds optional json pydantic field to argument parser.
+
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
+        # Define Custom Type Caster
+        type_caster = _type_caster(field.name, json.loads)
+
+        # Get Default
+        default = field.get_default()
+
+        # Add Optional JSON Field
+        self._optional_group.add_argument(
+            _argument_name(field.name),
+            action=argparse._StoreAction,  # pylint: disable=protected-access
+            type=type_caster,
+            default=default,
+            help=_argument_description(field.field_info.description, default),
+            dest=field.name,
+            required=False,
+        )
 
     def _add_literal_field(self, field: pydantic.fields.ModelField) -> None:
         """Adds literal pydantic field to argument parser.
@@ -313,49 +399,85 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         Args:
             field (pydanic.fields.ModelField): Field to be added to parser.
         """
+        # Literals are treated as constant flags, or choices
+        if field.required:
+            # Required
+            self._add_literal_field_required(field)
+
+        else:
+            # Optional
+            self._add_literal_field_optional(field)
+
+    def _add_literal_field_required(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds required literal pydantic field to argument parser.
+
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
         # Get choices from literal
         choices = list(typing_inspect.get_args(field.outer_type_))
 
         # Define Custom Type Caster
-        type_caster = functools.partial(_arg_to_choice, choices=choices)
-        setattr(type_caster, "__name__", field.name)  # For nicer error message
+        type_caster = _type_caster(field.name, _arg_to_choice, choices=choices)
 
-        # Literals are treated as constant flags, or choices
-        if field.required:
-            # Required Choice
-            self._required_group.add_argument(
-                _argument_name(field.name),
-                action=argparse._StoreAction,  # pylint: disable=protected-access
-                type=type_caster,
-                choices=choices,
-                help=field.field_info.description,
-                dest=field.name,
-                required=True,
-            )
+        # Add Required Literal Field
+        self._required_group.add_argument(
+            _argument_name(field.name),
+            action=argparse._StoreAction,  # pylint: disable=protected-access
+            type=type_caster,
+            choices=choices,
+            help=_argument_description(field.field_info.description),
+            dest=field.name,
+            required=True,
+        )
 
-        elif (default := field.get_default()) is not None and len(choices) == 1 and field.allow_none:
-            # Optional Flag (Default Not None)
-            self._optional_group.add_argument(
-                _argument_name("no-" + field.name),
-                action=argparse._StoreConstAction,  # pylint: disable=protected-access
-                const=None,
-                default=default,
-                help=f"{field.field_info.description} (default: {default})",
-                dest=field.name,
-                required=False,
-            )
+    def _add_literal_field_optional(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds optional literal pydantic field to argument parser.
 
-        elif len(choices) == 1:
-            # Optional Flag (Default None)
-            self._optional_group.add_argument(
-                _argument_name(field.name),
-                action=argparse._StoreConstAction,  # pylint: disable=protected-access
-                const=choices[0],
-                default=default,
-                help=f"{field.field_info.description} (default: {default})",
-                dest=field.name,
-                required=False,
-            )
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
+        # Get choices from literal
+        choices = list(typing_inspect.get_args(field.outer_type_))
+
+        # Define Custom Type Caster
+        type_caster = _type_caster(field.name, _arg_to_choice, choices=choices)
+
+        # Get Default
+        default = field.get_default()
+
+        # Add Optional Literal Field
+        if len(choices) == 1:
+            # Optional Flag
+            if default is not None and field.allow_none:
+                # Optional Flag (Default Not None)
+                self._optional_group.add_argument(
+                    _argument_name("no-" + field.name),
+                    action=argparse._StoreConstAction,  # pylint: disable=protected-access
+                    const=None,
+                    default=default,
+                    help=_argument_description(field.field_info.description, default),
+                    dest=field.name,
+                    required=False,
+                )
+
+            else:
+                # Optional Flag (Default None)
+                self._optional_group.add_argument(
+                    _argument_name(field.name),
+                    action=argparse._StoreConstAction,  # pylint: disable=protected-access
+                    const=choices[0],
+                    default=default,
+                    help=_argument_description(field.field_info.description, default),
+                    dest=field.name,
+                    required=False,
+                )
 
         else:
             # Optional Choice
@@ -365,7 +487,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 type=type_caster,
                 choices=choices,
                 default=default,
-                help=f"{field.field_info.description} (default: {default})",
+                help=_argument_description(field.field_info.description, default),
                 dest=field.name,
                 required=False,
             )
@@ -376,49 +498,85 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         Args:
             field (pydanic.fields.ModelField): Field to be added to parser.
         """
-        # Get enum from field type
-        enum_type: type[enum.Enum] = field.outer_type_
-
-        # Define Type Caster
-        type_caster = functools.partial(_arg_to_enum_member, enum_type=enum_type)
-        setattr(type_caster, "__name__", field.name)  # For nicer error message
-
         # Enums are treated as choices
         if field.required:
-            # Required Choice
-            self._required_group.add_argument(
-                _argument_name(field.name),
-                action=argparse._StoreAction,  # pylint: disable=protected-access
-                type=type_caster,
-                choices=enum_type,
-                help=field.field_info.description,
-                dest=field.name,
-                required=True,
-            )
+            # Required
+            self._add_enum_field_required(field)
 
-        elif (default := field.get_default()) is not None and len(enum_type) == 1 and field.allow_none:
-            # Optional Flag (Default Not None)
-            self._optional_group.add_argument(
-                _argument_name("no-" + field.name),
-                action=argparse._StoreConstAction,  # pylint: disable=protected-access
-                const=None,
-                default=default,
-                help=f"{field.field_info.description} (default: {default})",
-                dest=field.name,
-                required=False,
-            )
+        else:
+            # Optional
+            self._add_enum_field_optional(field)
 
-        elif len(enum_type) == 1:
-            # Optional Flag (Default None)
-            self._optional_group.add_argument(
-                _argument_name(field.name),
-                action=argparse._StoreConstAction,  # pylint: disable=protected-access
-                const=list(enum_type)[0],
-                default=default,
-                help=f"{field.field_info.description} (default: {default})",
-                dest=field.name,
-                required=False,
-            )
+    def _add_enum_field_required(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds required enum pydantic field to argument parser.
+
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
+        # Get Enum Type
+        enum_type: type[enum.Enum] = field.outer_type_
+
+        # Define Custom Type Caster
+        type_caster = _type_caster(field.name, _arg_to_enum_member, enum_type=enum_type)
+
+        # Add Required Enum Field
+        self._required_group.add_argument(
+            _argument_name(field.name),
+            action=argparse._StoreAction,  # pylint: disable=protected-access
+            type=type_caster,
+            choices=enum_type,
+            help=_argument_description(field.field_info.description),
+            dest=field.name,
+            required=True,
+        )
+
+    def _add_enum_field_optional(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds optional enum pydantic field to argument parser.
+
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
+        # Get Enum Type
+        enum_type: type[enum.Enum] = field.outer_type_
+
+        # Define Custom Type Caster
+        type_caster = _type_caster(field.name, _arg_to_enum_member, enum_type=enum_type)
+
+        # Get Default
+        default = field.get_default()
+
+        # Add Optional Enum Field
+        if len(enum_type) == 1:
+            # Optional Flag
+            if default is not None and field.allow_none:
+                # Optional Flag (Default Not None)
+                self._optional_group.add_argument(
+                    _argument_name("no-" + field.name),
+                    action=argparse._StoreConstAction,  # pylint: disable=protected-access
+                    const=None,
+                    default=default,
+                    help=_argument_description(field.field_info.description, default),
+                    dest=field.name,
+                    required=False,
+                )
+
+            else:
+                # Optional Flag (Default None)
+                self._optional_group.add_argument(
+                    _argument_name(field.name),
+                    action=argparse._StoreConstAction,  # pylint: disable=protected-access
+                    const=list(enum_type)[0],
+                    default=default,
+                    help=_argument_description(field.field_info.description, default),
+                    dest=field.name,
+                    required=False,
+                )
 
         else:
             # Optional Choice
@@ -428,7 +586,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 type=type_caster,
                 choices=enum_type,
                 default=default,
-                help=f"{field.field_info.description} (default: {default})",
+                help=_argument_description(field.field_info.description, default),
                 dest=field.name,
                 required=False,
             )
@@ -442,25 +600,51 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         # All other types are treated in a standard way
         if field.required:
             # Required
-            self._required_group.add_argument(
-                _argument_name(field.name),
-                action=argparse._StoreAction,  # pylint: disable=protected-access
-                help=field.field_info.description,
-                dest=field.name,
-                required=True,
-            )
+            self._add_standard_field_required(field)
 
         else:
             # Optional
-            default = field.get_default()
-            self._optional_group.add_argument(
-                _argument_name(field.name),
-                action=argparse._StoreAction,  # pylint: disable=protected-access
-                default=default,
-                help=f"{field.field_info.description} (default: {default})",
-                dest=field.name,
-                required=False,
-            )
+            self._add_standard_field_optional(field)
+
+    def _add_standard_field_required(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds required standard pydantic field to argument parser.
+
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
+        # Add Required Standard Field
+        self._required_group.add_argument(
+            _argument_name(field.name),
+            action=argparse._StoreAction,  # pylint: disable=protected-access
+            help=_argument_description(field.field_info.description),
+            dest=field.name,
+            required=True,
+        )
+
+    def _add_standard_field_optional(
+        self,
+        field: pydantic.fields.ModelField,
+        ) -> None:
+        """Adds optional standard pydantic field to argument parser.
+
+        Args:
+            field (pydantic.fields.ModelField): Field to be added to parser.
+        """
+        # Get Default
+        default = field.get_default()
+
+        # Add Optional Standard Field
+        self._optional_group.add_argument(
+            _argument_name(field.name),
+            action=argparse._StoreAction,  # pylint: disable=protected-access
+            default=default,
+            help=_argument_description(field.field_info.description, default),
+            dest=field.name,
+            required=False,
+        )
 
 
 def _arg_to_enum_member(
@@ -511,6 +695,29 @@ def _arg_to_choice(
     raise ValueError
 
 
+def _type_caster(
+    name: str,
+    function: Callable[..., AnyT],
+    **kwargs: Any,
+    ) -> Callable[[str], AnyT]:
+    """Wraps a function to provide a type caster.
+
+    Args:
+        name (str): Name of the type caster (for nicer error messages)
+        function (Callable[..., AnyT]): Callable function for type caster.
+        **kwargs (Any): Keyword arguments to pass to function.
+
+    Returns:
+        Callable[[str], AnyT]: Type caster named partial function.
+    """
+    # Create Partial Function and Set Name
+    function = functools.partial(function, **kwargs)
+    setattr(function, "__name__", name)
+
+    # Return
+    return function
+
+
 def _argument_name(name: str) -> str:
     """Standardises argument name.
 
@@ -522,3 +729,23 @@ def _argument_name(name: str) -> str:
     """
     # Add '--', replace '_' with '-'
     return f"--{name.replace('_', '-')}"
+
+
+def _argument_description(
+    description: Optional[str],
+    default: Optional[Any]=Missing,
+    ) -> str:
+    """Standardises argument description.
+
+    Args:
+        description (Optional[str]): Optional description for argument.
+        default (Optional[Any]): Default value for argument if applicable.
+
+    Returns:
+        str: Standardised description of the argument.
+    """
+    # Construct Default String
+    default = f"(default: {default})" if default is not Missing else None
+
+    # Return Standardised Description String
+    return " ".join(filter(None, [description, default]))
