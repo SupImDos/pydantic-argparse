@@ -76,7 +76,7 @@ class ExampleModel(pydantic.BaseModel):
     arg_14: timedelta                      = pydantic.Field(description="arg_14")
     arg_15: bool                           = pydantic.Field(description="arg_15")
     arg_16: Literal["A"]                   = pydantic.Field(description="arg_16")
-    arg_17: Literal["A", "B"]              = pydantic.Field(description="arg_17")
+    arg_17: Literal["A", 1]                = pydantic.Field(description="arg_17")
     arg_18: ExampleEnumSingle              = pydantic.Field(description="arg_18")
     arg_19: ExampleEnum                    = pydantic.Field(description="arg_19")
 
@@ -98,7 +98,7 @@ class ExampleModel(pydantic.BaseModel):
     arg_34: bool                           = pydantic.Field(False,                         description="arg_34")
     arg_35: bool                           = pydantic.Field(True,                          description="arg_35")
     arg_36: Literal["A"]                   = pydantic.Field("A",                           description="arg_36")
-    arg_37: Literal["A", "B"]              = pydantic.Field("A",                           description="arg_37")
+    arg_37: Literal["A", 1]                = pydantic.Field("A",                           description="arg_37")
     arg_38: ExampleEnumSingle              = pydantic.Field(ExampleEnumSingle.D,           description="arg_38")
     arg_39: ExampleEnum                    = pydantic.Field(ExampleEnum.A,                 description="arg_39")
 
@@ -119,6 +119,12 @@ class ExampleModel(pydantic.BaseModel):
     arg_53: Optional[timedelta]            = pydantic.Field(description="arg_53")
     arg_54: Optional[bool]                 = pydantic.Field(description="arg_54")
     arg_55: Optional[Literal["A"]]         = pydantic.Field(description="arg_55")
-    arg_56: Optional[Literal["A", "B"]]    = pydantic.Field(description="arg_56")
+    arg_56: Optional[Literal["A", 1]]      = pydantic.Field(description="arg_56")
     arg_57: Optional[ExampleEnumSingle]    = pydantic.Field(description="arg_57")
     arg_58: Optional[ExampleEnum]          = pydantic.Field(description="arg_58")
+
+    # Special Enums and Literals Optional Flag Behaviour
+    arg_59: Optional[Literal["A"]]         = pydantic.Field(description="arg_59")
+    arg_60: Optional[Literal["A"]]         = pydantic.Field("A", description="arg_60")
+    arg_61: Optional[ExampleEnumSingle]    = pydantic.Field(description="arg_61")
+    arg_62: Optional[ExampleEnumSingle]    = pydantic.Field(ExampleEnumSingle.D, description="arg_62")

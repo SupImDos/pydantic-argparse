@@ -102,7 +102,7 @@ def test_create_argparser(
         (bool,                 ..., "--test",                  True),
         (bool,                 ..., "--no-test",               False),
         (Literal["A"],         ..., "--test A",                "A"),
-        (Literal["A", "B"],    ..., "--test B",                "B"),
+        (Literal["A", 1],      ..., "--test 1",                1),
         (ExampleEnumSingle,    ..., "--test D",                ExampleEnumSingle.D),
         (ExampleEnum,          ..., "--test C",                ExampleEnum.C),
 
@@ -124,7 +124,7 @@ def test_create_argparser(
         (bool,                 False,                          "--test",                  True),
         (bool,                 True,                           "--no-test",               False),
         (Literal["A"],         "A",                            "--test",                  "A"),
-        (Literal["A", "B"],    "A",                            "--test B",                "B"),
+        (Literal["A", 1],      "A",                            "--test 1",                1),
         (ExampleEnumSingle,    ExampleEnumSingle.D,            "--test",                  ExampleEnumSingle.D),
         (ExampleEnum,          ExampleEnum.B,                  "--test C",                ExampleEnum.C),
 
@@ -146,7 +146,7 @@ def test_create_argparser(
         (bool,                 False,                          "", False),
         (bool,                 True,                           "", True),
         (Literal["A"],         "A",                            "", "A"),
-        (Literal["A", "B"],    "A",                            "", "A"),
+        (Literal["A", 1],      "A",                            "", "A"),
         (ExampleEnumSingle,    ExampleEnumSingle.D,            "", ExampleEnumSingle.D),
         (ExampleEnum,          ExampleEnum.B,                  "", ExampleEnum.B),
 
@@ -167,7 +167,7 @@ def test_create_argparser(
         (Optional[timedelta],            None, "--test PT12H",            timedelta(hours=12)),
         (Optional[bool],                 None, "--test",                  True),
         (Optional[Literal["A"]],         None, "--test",                  "A"),
-        (Optional[Literal["A", "B"]],    None, "--test B",                "B"),
+        (Optional[Literal["A", 1]],      None, "--test 1",                1),
         (Optional[ExampleEnumSingle],    None, "--test",                  ExampleEnumSingle.D),
         (Optional[ExampleEnum],          None, "--test C",                ExampleEnum.C),
 
@@ -188,9 +188,19 @@ def test_create_argparser(
         (Optional[timedelta],            None, "", None),
         (Optional[bool],                 None, "", None),
         (Optional[Literal["A"]],         None, "", None),
-        (Optional[Literal["A", "B"]],    None, "", None),
+        (Optional[Literal["A", 1]],      None, "", None),
         (Optional[ExampleEnumSingle],    None, "", None),
         (Optional[ExampleEnum],          None, "", None),
+
+        # Special Enums and Literals Optional Flag Behaviour
+        (Optional[Literal["A"]],         None,                "--test",    "A"),
+        (Optional[Literal["A"]],         None,                "",          None),
+        (Optional[Literal["A"]],         "A",                 "--no-test", None),
+        (Optional[Literal["A"]],         "A",                 "",          "A"),
+        (Optional[ExampleEnumSingle],    None,                "--test",    ExampleEnumSingle.D),
+        (Optional[ExampleEnumSingle],    None,                "",          None),
+        (Optional[ExampleEnumSingle],    ExampleEnumSingle.D, "--no-test", None),
+        (Optional[ExampleEnumSingle],    ExampleEnumSingle.D, "",          ExampleEnumSingle.D),
     ]
 )
 def test_arguments(
@@ -246,7 +256,7 @@ def test_arguments(
         (timedelta,            ..., "--test invalid"),
         (bool,                 ..., "--test invalid"),
         (Literal["A"],         ..., "--test invalid"),
-        (Literal["A", "B"],    ..., "--test invalid"),
+        (Literal["A", 1],      ..., "--test invalid"),
         (ExampleEnumSingle,    ..., "--test invalid"),
         (ExampleEnum,          ..., "--test invalid"),
 
@@ -266,7 +276,7 @@ def test_arguments(
         (time,                 ..., "--test"),
         (timedelta,            ..., "--test"),
         (Literal["A"],         ..., "--test"),
-        (Literal["A", "B"],    ..., "--test"),
+        (Literal["A", 1],      ..., "--test"),
         (ExampleEnumSingle,    ..., "--test"),
         (ExampleEnum,          ..., "--test"),
 
@@ -287,7 +297,7 @@ def test_arguments(
         (timedelta,            ..., ""),
         (bool,                 ..., ""),
         (Literal["A"],         ..., ""),
-        (Literal["A", "B"],    ..., ""),
+        (Literal["A", 1],      ..., ""),
         (ExampleEnumSingle,    ..., ""),
         (ExampleEnum,          ..., ""),
 
@@ -306,7 +316,7 @@ def test_arguments(
         (Optional[timedelta],            None, "--test invalid"),
         (Optional[bool],                 None, "--test invalid"),
         (Optional[Literal["A"]],         None, "--test invalid"),
-        (Optional[Literal["A", "B"]],    None, "--test invalid"),
+        (Optional[Literal["A", 1]],      None, "--test invalid"),
         (Optional[ExampleEnumSingle],    None, "--test invalid"),
         (Optional[ExampleEnum],          None, "--test invalid"),
 
@@ -325,7 +335,7 @@ def test_arguments(
         (Optional[datetime],             None, "--test"),
         (Optional[time],                 None, "--test"),
         (Optional[timedelta],            None, "--test"),
-        (Optional[Literal["A", "B"]],    None, "--test"),
+        (Optional[Literal["A", 1]],      None, "--test"),
         (Optional[ExampleEnum],          None, "--test"),
     ]
 )
@@ -490,9 +500,10 @@ def test_argument_descriptions(
 
     else:
         # Assert Argument in Optional Args Section
+        default = argument_field.get_default()
         assert argument_name in optional
         assert argument_name not in required
         assert argument_field.field_info.description in optional
         assert argument_field.field_info.description not in required
-        assert f"(default: {argument_field.default})" in optional
-        assert f"(default: {argument_field.default})" not in required
+        assert f"(default: {default})" in optional
+        assert f"(default: {default})" not in required
