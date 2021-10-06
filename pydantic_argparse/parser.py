@@ -16,10 +16,10 @@ from __future__ import unicode_literals
 
 # Standard
 import argparse
+import ast
 from collections import deque
 import enum
 import functools
-import json
 import sys
 
 # Third-Party
@@ -355,7 +355,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             field (pydantic.fields.ModelField): Field to be added to parser.
         """
         # Define Custom Type Caster
-        type_caster = _type_caster(field.name, json.loads)
+        type_caster = _type_caster(field.name, ast.literal_eval)
 
         # Add Required JSON Field
         self._required_group.add_argument(
@@ -377,7 +377,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             field (pydantic.fields.ModelField): Field to be added to parser.
         """
         # Define Custom Type Caster
-        type_caster = _type_caster(field.name, json.loads)
+        type_caster = _type_caster(field.name, ast.literal_eval)
 
         # Get Default
         default = field.get_default()
