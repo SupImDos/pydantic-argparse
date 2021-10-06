@@ -10,5 +10,5 @@ Exports the name, version, description and authors of the package
 # Duplicated from `pyproject.toml`
 __app__ = "pydantic-argparse"
 __description__ = "Typed Argument Parsing with Pydantic"
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __authors__ = ["Hayden Richards <SupImDos@gmail.com>"]
