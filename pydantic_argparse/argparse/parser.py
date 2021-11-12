@@ -151,18 +151,6 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         # Return Action
         return action
 
-    def add_subparsers(self, **kwargs: Any) -> argparse._SubParsersAction:  # pylint: disable=useless-super-delegation
-        """Adds a SubParser to the Argument Parser.
-
-        Args:
-            kwargs (Any): Keyword args to be passed to super class method.
-
-        Returns:
-            argparse._SubParsersAction: Generated SubParsersAction.
-        """
-        # TODO
-        return super().add_subparsers(**kwargs)
-
     def error(self, message: str) -> NoReturn:
         """Prints a usage message to stderr and exits if required.
 
