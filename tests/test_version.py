@@ -1,7 +1,6 @@
-#!/usr/bin/env python3
 """test_pkginfo.py
 
-Tests __pkginfo__ Module.
+Tests __version__ Module.
 
 @author Hayden Richards <SupImDos@gmail.com>
 """

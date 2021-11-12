@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-"""__pkginfo__.py
+"""__version__.py
 
 Exports the name, version, description and authors of the package
 

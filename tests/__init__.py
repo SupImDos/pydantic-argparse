@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """__init__.py
 
 This file is required to mark the unit tests as a package, so they can resolve

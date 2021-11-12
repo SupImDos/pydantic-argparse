@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """__init__.py
 
 Exports sub-modules from package
@@ -8,5 +7,5 @@ Exports sub-modules from package
 
 
 # Local
-from .__pkginfo__ import __app__, __description__, __version__, __authors__
-from .parser import ArgumentParser
+from .__version__ import __app__, __description__, __version__, __authors__
+from .argparse import ArgumentParser

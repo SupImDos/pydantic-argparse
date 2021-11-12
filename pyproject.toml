@@ -214,6 +214,7 @@ evaluation = "10.0 - ((float(5 * error + warning + refactor + convention) / stat
 
 [tool.pylint.basic]
 good-names = [
+    "T",
     "i",
     "j",
     "k",
@@ -285,7 +286,7 @@ notes=[
 ]
 
 [tool.pylint.similarities]
-min-similarity-lines = 10
+min-similarity-lines = 20
 ignore-comments = true
 ignore-docstrings = true
 ignore-imports = false

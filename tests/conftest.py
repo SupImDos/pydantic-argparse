@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """conftest.py
 
 Configure Testing and Define Pytest Fixtures
