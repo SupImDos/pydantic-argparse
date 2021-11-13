@@ -48,7 +48,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
 
     # Keyword Arguments
     KWARG_REQUIRED = "required"
-    KWARG_COMMAND = "__command__"
+    KWARG_COMMAND = "<command>"
 
     # Exit Codes
     EXIT_ERROR = 2
@@ -123,7 +123,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
 
         # Restructure Namespace
         # TODO
-        print(namespace)
+        print(namespace.__dict__)
 
         # Handle Possible Validation Errors
         try:
@@ -252,7 +252,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 # Add Commands Group
                 self._commands = self.add_subparsers(
                     title=ArgumentParser.COMMANDS,
-                    # dest=ArgumentParser.KWARG_COMMAND,  # error message bug
+                    dest=ArgumentParser.KWARG_COMMAND,
                     required=True,
                 )
 
