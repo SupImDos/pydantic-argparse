@@ -77,7 +77,7 @@ def _parse_container_field_optional(
     parser.add_argument(
         argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
-        nargs="+",
+        nargs=argparse.ONE_OR_MORE,
         default=default,
         help=argument_description(field.field_info.description, default),
         dest=field.name,
