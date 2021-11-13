@@ -155,14 +155,14 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         # Check whether required or optional
         if kwargs.get(ArgumentParser.KWARG_REQUIRED):
             # Required
-            action = self._required_group.add_argument(*args, **kwargs)
+            group = self._required_group
 
         else:
             # Optional
-            action = self._optional_group.add_argument(*args, **kwargs)
+            group = self._optional_group
 
         # Return Action
-        return action
+        return group.add_argument(*args, **kwargs)
 
     def error(self, message: str) -> NoReturn:
         """Prints a usage message to stderr and exits if required.
