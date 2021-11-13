@@ -53,7 +53,7 @@ def _parse_container_field_required(
     parser.add_argument(
         argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
-        nargs="+",
+        nargs=argparse.ONE_OR_MORE,
         help=argument_description(field.field_info.description),
         dest=field.name,
         required=True,
