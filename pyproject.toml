@@ -22,6 +22,7 @@ include = [
 python = "~3.9"
 pydantic = "^1.8.2"
 typing-inspect = "^0.7.1"
+unflatten = "^0.1.1"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.11.1"

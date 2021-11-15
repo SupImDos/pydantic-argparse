@@ -18,6 +18,7 @@ import sys
 # Third-Party
 import pydantic
 import typing_inspect
+import unflatten
 
 # Local
 from ..parsers import (
@@ -47,8 +48,8 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
     HELP = "help"
 
     # Keyword Arguments
+    KWARG_DEST = "dest"
     KWARG_REQUIRED = "required"
-    KWARG_COMMAND = "<command>"
 
     # Exit Codes
     EXIT_ERROR = 2
@@ -62,6 +63,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         epilog: Optional[str]=None,
         add_help: bool=True,
         exit_on_error: bool=True,
+        prefix: Optional[str]=None,
         ) -> None:
         """Custom Typed Argument Parser.
 
@@ -73,6 +75,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             epilog (Optional[str]): Optional text following help message.
             add_help (bool): Whether to add a -h/--help flag.
             exit_on_error (bool): Whether to exit on error.
+            prefix (Optional[str]): Optional parent command string prefix.
         """
         # Initialise Super Class
         super().__init__(
@@ -82,6 +85,10 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             exit_on_error=exit_on_error,
             add_help=False,  # Always disable the automatic help flag.
         )
+
+        # Set Prefix and Model
+        self.prefix = prefix
+        self.model = model
 
         # Set Add Help and Exit on Error Flag
         self.add_help = add_help
@@ -159,6 +166,15 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         else:
             # Optional
             group = self._optional_group
+
+        # Augment destination with prefix
+        if ArgumentParser.KWARG_DEST in kwargs and self.prefix:
+            # Prepend with prefix if applicable
+            dest = f"{self.prefix}.{kwargs[ArgumentParser.KWARG_DEST]}"
+
+            # Set destination
+            kwargs[ArgumentParser.KWARG_DEST] = dest
+
 
         # Return Action
         return group.add_argument(*args, **kwargs)
@@ -251,7 +267,6 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 # Add Commands Group
                 self._commands = self.add_subparsers(
                     title=ArgumentParser.COMMANDS,
-                    dest=ArgumentParser.KWARG_COMMAND,
                     required=True,
                 )
 
@@ -279,6 +294,9 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         """
         # Get Arguments from Vars
         arguments = vars(namespace)
+
+        # Unflatten Arguments
+        arguments = unflatten.unflatten(arguments)
 
         # Return
         return arguments
