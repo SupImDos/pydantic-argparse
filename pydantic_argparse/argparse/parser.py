@@ -122,13 +122,12 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         namespace = self.parse_args(args, None)
 
         # Restructure Namespace
-        # TODO
-        print(namespace.__dict__)
+        arguments = self._restructure_namespace(namespace)
 
         # Handle Possible Validation Errors
         try:
             # Convert Namespace to Pydantic Model
-            model = self.model.parse_obj(namespace.__dict__)
+            model = self.model.parse_obj(arguments)
 
         except pydantic.ValidationError as exc:
             # Catch exception, and use the ArgumentParser.error() method
@@ -265,3 +264,21 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         else:
             # Add Other Standard Field
             parse_standard_field(self, field)
+
+    def _restructure_namespace(
+        self,
+        namespace: argparse.Namespace,
+        ) -> dict[str, Any]:
+        """Restructures namespace to a nested dictionary.
+
+        Args:
+            namespace (argparse.Namespace): Namespace to restructure.
+
+        Returns:
+            dict[str, Any]: Nested dictionary constructed from namespace.
+        """
+        # Get Arguments from Vars
+        arguments = vars(namespace)
+
+        # Return
+        return arguments
