@@ -63,7 +63,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         epilog: Optional[str]=None,
         add_help: bool=True,
         exit_on_error: bool=True,
-        prefix: Optional[str]=None,
+        parent_command: Optional[str]=None,
         ) -> None:
         """Custom Typed Argument Parser.
 
@@ -75,7 +75,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             epilog (Optional[str]): Optional text following help message.
             add_help (bool): Whether to add a -h/--help flag.
             exit_on_error (bool): Whether to exit on error.
-            prefix (Optional[str]): Optional parent command string prefix.
+            parent_command (Optional[str]): Optional parent command string.
         """
         # Initialise Super Class
         super().__init__(
@@ -86,8 +86,8 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             add_help=False,  # Always disable the automatic help flag.
         )
 
-        # Set Prefix and Model
-        self.prefix = prefix
+        # Set Parent Command and Model
+        self.parent_command = parent_command
         self.model = model
 
         # Set Add Help and Exit on Error Flag
@@ -167,14 +167,13 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             # Optional
             group = self._optional_group
 
-        # Augment destination with prefix
-        if ArgumentParser.KWARG_DEST in kwargs and self.prefix:
-            # Prepend with prefix if applicable
-            dest = f"{self.prefix}.{kwargs[ArgumentParser.KWARG_DEST]}"
+        # Augment destination with parent command
+        if ArgumentParser.KWARG_DEST in kwargs and self.parent_command:
+            # Prepend with parent command if applicable
+            dest = f"{self.parent_command}.{kwargs[ArgumentParser.KWARG_DEST]}"
 
             # Set destination
             kwargs[ArgumentParser.KWARG_DEST] = dest
-
 
         # Return Action
         return group.add_argument(*args, **kwargs)
@@ -274,7 +273,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 self._action_groups.insert(0, self._action_groups.pop())
 
             # Add Command
-            parse_command_field(self._commands, field)
+            parse_command_field(self.parent_command, self._commands, field)
 
         else:
             # Add Other Standard Field
