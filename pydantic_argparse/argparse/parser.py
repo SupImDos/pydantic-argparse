@@ -30,6 +30,7 @@ from ..parsers import (
     parse_literal_field,
     parse_standard_field,
 )
+from ..utils import combine_commands
 
 # Typing
 from typing import Any, Generic, Literal, NoReturn, Optional, TypeVar  # pylint: disable=wrong-import-order
@@ -75,7 +76,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             epilog (Optional[str]): Optional text following help message.
             add_help (bool): Whether to add a -h/--help flag.
             exit_on_error (bool): Whether to exit on error.
-            command (Optional[str]): Optional parent command string.
+            command (Optional[str]): Optional command string for this parser.
         """
         # Initialise Super Class
         super().__init__(
@@ -168,12 +169,9 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             group = self._optional_group
 
         # Augment destination with parent command
-        if ArgumentParser.KWARG_DEST in kwargs and self.command:
-            # Prepend with parent command if applicable
-            dest = f"{self.command}.{kwargs[ArgumentParser.KWARG_DEST]}"
-
-            # Set destination
-            kwargs[ArgumentParser.KWARG_DEST] = dest
+        kwargs[ArgumentParser.KWARG_DEST] = combine_commands(
+            [self.command, kwargs.get(ArgumentParser.KWARG_DEST)]
+        )
 
         # Return Action
         return group.add_argument(*args, **kwargs)

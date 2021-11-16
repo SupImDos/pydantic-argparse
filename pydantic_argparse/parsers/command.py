@@ -15,6 +15,9 @@ import argparse
 # Third-Party
 import pydantic
 
+# Local
+from ..utils import combine_commands
+
 # Typing
 from typing import Optional  # pylint: disable=wrong-import-order
 
@@ -32,7 +35,7 @@ def parse_command_field(
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Construct Command with Parent Command as Prefix
-    command = ".".join(filter(None, (parent_command, field.name)))
+    command = combine_commands([parent_command, field.name])
 
     # Add Command
     subparser.add_parser(
