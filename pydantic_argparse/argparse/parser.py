@@ -168,10 +168,12 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             # Optional
             group = self._optional_group
 
-        # Augment destination with parent command
-        kwargs[ArgumentParser.KWARG_DEST] = combine_commands(
-            [self.command, kwargs.get(ArgumentParser.KWARG_DEST)]
-        )
+        # Check for dest in kwargs
+        if ArgumentParser.KWARG_DEST in kwargs:
+            # Augment destination with parent command
+            kwargs[ArgumentParser.KWARG_DEST] = combine_commands(
+                [self.command, kwargs.get(ArgumentParser.KWARG_DEST)]
+            )
 
         # Return Action
         return group.add_argument(*args, **kwargs)
