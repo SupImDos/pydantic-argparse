@@ -18,7 +18,6 @@ import sys
 # Third-Party
 import pydantic
 import typing_inspect
-import unflatten
 
 # Local
 from ..parsers import (
@@ -30,7 +29,6 @@ from ..parsers import (
     parse_literal_field,
     parse_standard_field,
 )
-from ..utils import combine_commands
 
 # Typing
 from typing import Any, Generic, Literal, NoReturn, Optional, TypeVar  # pylint: disable=wrong-import-order
@@ -49,7 +47,6 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
     HELP = "help"
 
     # Keyword Arguments
-    KWARG_DEST = "dest"
     KWARG_REQUIRED = "required"
 
     # Exit Codes
@@ -64,7 +61,6 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         epilog: Optional[str]=None,
         add_help: bool=True,
         exit_on_error: bool=True,
-        command: Optional[str]=None,
         ) -> None:
         """Custom Typed Argument Parser.
 
@@ -76,7 +72,6 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             epilog (Optional[str]): Optional text following help message.
             add_help (bool): Whether to add a -h/--help flag.
             exit_on_error (bool): Whether to exit on error.
-            command (Optional[str]): Optional command string for this parser.
         """
         # Initialise Super Class
         super().__init__(
@@ -87,8 +82,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             add_help=False,  # Always disable the automatic help flag.
         )
 
-        # Set Parent Command and Model
-        self.command = command
+        # Set Model
         self.model = model
 
         # Set Add Help and Exit on Error Flag
@@ -127,7 +121,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             PydanticModelT: Typed arguments.
         """
         # Call Super Class Method
-        namespace = self.parse_args(args, None)
+        namespace = self.parse_args(args)
 
         # Restructure Namespace
         arguments = self._restructure_namespace(namespace)
@@ -167,13 +161,6 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         else:
             # Optional
             group = self._optional_group
-
-        # Check for dest in kwargs
-        if ArgumentParser.KWARG_DEST in kwargs:
-            # Augment destination with parent command
-            kwargs[ArgumentParser.KWARG_DEST] = combine_commands(
-                [self.command, kwargs.get(ArgumentParser.KWARG_DEST)]
-            )
 
         # Return Action
         return group.add_argument(*args, **kwargs)
@@ -273,7 +260,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 self._action_groups.insert(0, self._action_groups.pop())
 
             # Add Command
-            parse_command_field(self.command, self._subcommands, field)
+            parse_command_field(self._subcommands, field)
 
         else:
             # Add Other Standard Field
@@ -293,9 +280,6 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         """
         # Get Arguments from Vars
         arguments = vars(namespace)
-
-        # Unflatten Arguments
-        arguments = unflatten.unflatten(arguments)
 
         # Return
         return arguments

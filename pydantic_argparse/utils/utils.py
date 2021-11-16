@@ -13,7 +13,7 @@ from __future__ import annotations
 import functools
 
 # Typing
-from typing import Any, Callable, Iterable, Optional, TypeVar  # pylint: disable=wrong-import-order
+from typing import Any, Callable, Optional, TypeVar  # pylint: disable=wrong-import-order
 
 
 # Constants
@@ -77,16 +77,3 @@ def type_caster(
 
     # Return
     return function
-
-
-def combine_commands(commands: Iterable[Optional[str]]) -> str:
-    """Combines iterable of possible commands into string.
-
-    Args:
-        commands (Iterable[Optional[str]]): Possible commands to combine.
-
-    Returns:
-        str: Combined commands separated by a '.'
-    """
-    # Combine and Filter
-    return ".".join(filter(None, commands))
