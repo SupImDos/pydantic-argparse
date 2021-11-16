@@ -34,7 +34,7 @@ def parse_literal_field(
     """Adds enum pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Literals are treated as constant flags, or choices
@@ -54,7 +54,7 @@ def _parse_literal_field_required(
     """Adds required literal pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Get choices from literal
@@ -82,7 +82,7 @@ def _parse_literal_field_optional(
     """Adds optional literal pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Get choices from literal

@@ -26,7 +26,7 @@ def parse_container_field(
     """Adds standard pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # List, Tuple, Set, FrozenSet, Deque
@@ -46,7 +46,7 @@ def _parse_container_field_required(
     """Adds required container pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Add Required Container Field
@@ -67,7 +67,7 @@ def _parse_container_field_optional(
     """Adds optional container pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Get Default

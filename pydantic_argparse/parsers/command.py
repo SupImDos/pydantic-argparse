@@ -28,7 +28,7 @@ def parse_command_field(
 
     Args:
         parent_command (Optional[str]): Parent command for this parser.
-        subparser: (argparse._SubParsersAction): Sub-parser to add to.
+        subparser (argparse._SubParsersAction): Sub-parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Construct Command with Parent Command as Prefix
