@@ -99,7 +99,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         self.model = model
 
         # Add Arguments Groups
-        self._commands: Optional[argparse._SubParsersAction] = None
+        self._subcommands: Optional[argparse._SubParsersAction] = None
         self._required_group = self.add_argument_group(ArgumentParser.REQUIRED)
         self._optional_group = self.add_argument_group(ArgumentParser.OPTIONAL)
         self._help_group = self.add_argument_group(ArgumentParser.HELP)
@@ -261,10 +261,10 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             parse_enum_field(self, field)
 
         elif isinstance(field_type, pydantic.main.ModelMetaclass):
-            # Check for Commands Group
-            if not self._commands:
-                # Add Commands Group
-                self._commands = self.add_subparsers(
+            # Check for Sub-Commands Group
+            if not self._subcommands:
+                # Add Sub-Commands Group
+                self._subcommands = self.add_subparsers(
                     title=ArgumentParser.COMMANDS,
                     required=True,
                 )
@@ -273,7 +273,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 self._action_groups.insert(0, self._action_groups.pop())
 
             # Add Command
-            parse_command_field(self.command, self._commands, field)
+            parse_command_field(self.command, self._subcommands, field)
 
         else:
             # Add Other Standard Field
