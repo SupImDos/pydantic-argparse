@@ -20,24 +20,24 @@ from typing import Optional  # pylint: disable=wrong-import-order
 
 
 def parse_command_field(
-    grandparent_command: Optional[str],
+    parent_command: Optional[str],
     subparser: argparse._SubParsersAction,
     field: pydantic.fields.ModelField,
     ) -> None:
     """Adds command pydantic field to argument parser.
 
     Args:
-        grandparent_command (Optional[str]): Grandparent command for parser.
+        parent_command (Optional[str]): Parent command for this parser.
         subparser: (argparse._SubParsersAction): Sub-parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
-    # Construct Parent Command with Prefix
-    parent_command = ".".join(filter(None, (grandparent_command, field.name)))
+    # Construct Command with Parent Command as Prefix
+    command = ".".join(filter(None, (parent_command, field.name)))
 
     # Add Command
     subparser.add_parser(
         field.name,
         help=field.field_info.description,
         model=field.outer_type_,
-        parent_command=parent_command,
+        command=command,
     )
