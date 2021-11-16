@@ -277,7 +277,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             # Add Other Standard Field
             parse_standard_field(self, field)
 
-    def _restructure_namespace(
+    def _restructure_namespace(  # pylint: disable=no-self-use
         self,
         namespace: argparse.Namespace,
         ) -> dict[str, Any]:
