@@ -71,6 +71,7 @@ def _parse_literal_field_required(
         choices=choices,
         help=argument_description(field.field_info.description),
         dest=field.name,
+        metavar=field.name.upper(),
         required=True,
     )
 
@@ -106,6 +107,7 @@ def _parse_literal_field_optional(
                 default=default,
                 help=argument_description(field.field_info.description, default),
                 dest=field.name,
+                metavar=field.name.upper(),
                 required=False,
             )
 
@@ -118,6 +120,7 @@ def _parse_literal_field_optional(
                 default=default,
                 help=argument_description(field.field_info.description, default),
                 dest=field.name,
+                metavar=field.name.upper(),
                 required=False,
             )
 
@@ -131,6 +134,7 @@ def _parse_literal_field_optional(
             default=default,
             help=argument_description(field.field_info.description, default),
             dest=field.name,
+            metavar=field.name.upper(),
             required=False,
         )
 

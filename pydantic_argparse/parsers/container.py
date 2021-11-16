@@ -56,6 +56,7 @@ def _parse_container_field_required(
         nargs=argparse.ONE_OR_MORE,
         help=argument_description(field.field_info.description),
         dest=field.name,
+        metavar=field.name.upper(),
         required=True,
     )
 
@@ -81,5 +82,6 @@ def _parse_container_field_optional(
         default=default,
         help=argument_description(field.field_info.description, default),
         dest=field.name,
+        metavar=field.name.upper(),
         required=False,
     )

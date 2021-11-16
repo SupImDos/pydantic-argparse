@@ -55,6 +55,7 @@ def _parse_standard_field_required(
         action=argparse._StoreAction,  # pylint: disable=protected-access
         help=argument_description(field.field_info.description),
         dest=field.name,
+        metavar=field.name.upper(),
         required=True,
     )
 
@@ -79,5 +80,6 @@ def _parse_standard_field_optional(
         default=default,
         help=argument_description(field.field_info.description, default),
         dest=field.name,
+        metavar=field.name.upper(),
         required=False,
     )

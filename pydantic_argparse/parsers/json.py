@@ -60,6 +60,7 @@ def _parse_json_field_required(
         type=caster,
         help=argument_description(field.field_info.description),
         dest=field.name,
+        metavar=field.name.upper(),
         required=True,
     )
 
@@ -88,5 +89,6 @@ def _parse_json_field_optional(
         default=default,
         help=argument_description(field.field_info.description, default),
         dest=field.name,
+        metavar=field.name.upper(),
         required=False,
     )

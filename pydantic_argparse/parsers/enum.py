@@ -71,6 +71,7 @@ def _parse_enum_field_required(
         choices=enum_type,
         help=argument_description(field.field_info.description),
         dest=field.name,
+        metavar=field.name.upper(),
         required=True,
     )
 
@@ -106,6 +107,7 @@ def _parse_enum_field_optional(
                 default=default,
                 help=argument_description(field.field_info.description, default),
                 dest=field.name,
+                metavar=field.name.upper(),
                 required=False,
             )
 
@@ -118,6 +120,7 @@ def _parse_enum_field_optional(
                 default=default,
                 help=argument_description(field.field_info.description, default),
                 dest=field.name,
+                metavar=field.name.upper(),
                 required=False,
             )
 
@@ -131,6 +134,7 @@ def _parse_enum_field_optional(
             default=default,
             help=argument_description(field.field_info.description, default),
             dest=field.name,
+            metavar=field.name.upper(),
             required=False,
         )
 
