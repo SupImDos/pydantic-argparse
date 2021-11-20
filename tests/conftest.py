@@ -13,31 +13,12 @@ from __future__ import annotations
 from collections import deque
 from datetime import date, datetime, time, timedelta
 from enum import Enum
-import pathlib
 
 # Third-Party
 import pydantic
-import pytest
-import toml
 
 # Typing
-from typing import Any, Literal, Optional, Tuple  # pylint: disable=wrong-import-order
-
-
-# Constants
-PROJECT_ROOT = pathlib.Path(__file__).resolve().parent.parent
-PROJECT_TOML = PROJECT_ROOT.joinpath("pyproject.toml")
-
-
-@pytest.fixture
-def pyproject() -> dict[str, Any]:
-    """Loads the project pyproject.toml.
-
-    Returns:
-        dict[str, Any]: pyproject.toml parsed as a dictionary.
-    """
-    # Load Project TOML
-    return dict(toml.load(PROJECT_TOML))
+from typing import Literal, Optional, Tuple  # pylint: disable=wrong-import-order
 
 
 class ExampleEnum(Enum):

@@ -1,13 +1,18 @@
 """__version__.py
 
-Exports the name, version, description and authors of the package
+Exports the title, description, version, author and license of the package
 
 @author Hayden Richards <SupImDos@gmail.com>
 """
 
 
-# Duplicated from `pyproject.toml`
-__app__ = "pydantic-argparse"
-__description__ = "Typed Argument Parsing with Pydantic"
-__version__ = "0.2.0"
-__authors__ = ["Hayden Richards <SupImDos@gmail.com>"]
+# Standard
+from importlib.metadata import metadata
+
+
+# Retrieve Metadata from Package
+__title__ = metadata(__package__)["name"]
+__description__ = metadata(__package__)["summary"]
+__version__ = metadata(__package__)["version"]
+__author__ = metadata(__package__)["author"]
+__license__ = metadata(__package__)["license"]
