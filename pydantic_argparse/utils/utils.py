@@ -24,19 +24,6 @@ MISSING = object()
 T = TypeVar("T")
 
 
-def argument_name(name: str) -> str:
-    """Standardises argument name.
-
-    Args:
-        name (str): Name of the argument.
-
-    Returns:
-        str: Standardised name of the argument.
-    """
-    # Add '--', replace '_' with '-'
-    return f"--{name.replace('_', '-')}"
-
-
 def argument_description(
     description: Optional[str],
     default: Optional[Any]=MISSING,
@@ -57,27 +44,17 @@ def argument_description(
     return " ".join(filter(None, [description, default]))
 
 
-def type_caster(
-    name: str,
-    function: Callable[..., T],
-    **kwargs: Any,
-    ) -> Callable[[str], T]:
-    """Wraps a function to provide a type caster.
+def argument_name(name: str) -> str:
+    """Standardises argument name.
 
     Args:
-        name (str): Name of the type caster (for nicer error messages)
-        function (Callable[..., T]): Callable function for type caster.
-        **kwargs (Any): Keyword arguments to pass to function.
+        name (str): Name of the argument.
 
     Returns:
-        Callable[[str], T]: Type caster named partial function.
+        str: Standardised name of the argument.
     """
-    # Create Partial Function and Set Name
-    function = functools.partial(function, **kwargs)
-    setattr(function, "__name__", name)
-
-    # Return
-    return function
+    # Add '--', replace '_' with '-'
+    return f"--{name.replace('_', '-')}"
 
 
 def namespace_to_dict(namespace: argparse.Namespace) -> dict[str, Any]:
@@ -101,3 +78,26 @@ def namespace_to_dict(namespace: argparse.Namespace) -> dict[str, Any]:
 
     # Return
     return dictionary
+
+
+def type_caster(
+    name: str,
+    function: Callable[..., T],
+    **kwargs: Any,
+    ) -> Callable[[str], T]:
+    """Wraps a function to provide a type caster.
+
+    Args:
+        name (str): Name of the type caster (for nicer error messages)
+        function (Callable[..., T]): Callable function for type caster.
+        **kwargs (Any): Keyword arguments to pass to function.
+
+    Returns:
+        Callable[[str], T]: Type caster named partial function.
+    """
+    # Create Partial Function and Set Name
+    function = functools.partial(function, **kwargs)
+    setattr(function, "__name__", name)
+
+    # Return
+    return function
