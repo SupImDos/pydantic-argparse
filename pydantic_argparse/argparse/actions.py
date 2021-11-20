@@ -98,14 +98,18 @@ class SubParsersAction(argparse._SubParsersAction):  # pylint: disable=protected
 
         # Parse all the remaining options into a sub-namespace, then embed this
         # sub-namespace into the parent namespace
-        subnamespace, arg_strings = parser.parse_known_args(arg_strings, None)
+        subnamespace, arg_strings = parser.parse_known_args(arg_strings)
         setattr(namespace, parser_name, subnamespace)
-
-        # TODO (HaydenR): Move unrecognized args on the subnamespace to the top
-        #                 level namespace?
 
         # Store any unrecognized options on the parent namespace, so that the
         # top level parser can decide what to do with them
         if arg_strings:
             vars(namespace).setdefault(argparse._UNRECOGNIZED_ARGS_ATTR, [])
             getattr(namespace, argparse._UNRECOGNIZED_ARGS_ATTR).extend(arg_strings)
+
+        # Get unrecognized options from the sub-namespace as well and propagate
+        # them up to the parent namespace, in case there are multiple levels of
+        # nesting subparsers
+        arg_strings = getattr(subnamespace, argparse._UNRECOGNIZED_ARGS_ATTR, [])
+        vars(namespace).setdefault(argparse._UNRECOGNIZED_ARGS_ATTR, [])
+        getattr(namespace, argparse._UNRECOGNIZED_ARGS_ATTR).extend(arg_strings)
