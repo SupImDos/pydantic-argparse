@@ -20,6 +20,7 @@ import pydantic
 import typing_inspect
 
 # Local
+from .actions import SubParsersAction
 from ..parsers import (
     parse_boolean_field,
     parse_command_field,
@@ -29,6 +30,7 @@ from ..parsers import (
     parse_literal_field,
     parse_standard_field,
 )
+from ..utils import namespace_to_dict
 
 # Typing
 from typing import Any, Generic, Literal, NoReturn, Optional, TypeVar  # pylint: disable=wrong-import-order
@@ -123,8 +125,8 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         # Call Super Class Method
         namespace = self.parse_args(args)
 
-        # Restructure Namespace
-        arguments = self._restructure_namespace(namespace)
+        # Convert Namespace to Dictionary
+        arguments = namespace_to_dict(namespace)
 
         # Handle Possible Validation Errors
         try:
@@ -253,6 +255,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 # Add Sub-Commands Group
                 self._subcommands = self.add_subparsers(
                     title=ArgumentParser.COMMANDS,
+                    action=SubParsersAction,
                     required=True,
                 )
 
@@ -265,21 +268,3 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         else:
             # Add Other Standard Field
             parse_standard_field(self, field)
-
-    def _restructure_namespace(  # pylint: disable=no-self-use
-        self,
-        namespace: argparse.Namespace,
-        ) -> dict[str, Any]:
-        """Restructures namespace to a nested dictionary.
-
-        Args:
-            namespace (argparse.Namespace): Namespace to restructure.
-
-        Returns:
-            dict[str, Any]: Nested dictionary constructed from namespace.
-        """
-        # Get Arguments from Vars
-        arguments = vars(namespace)
-
-        # Return
-        return arguments

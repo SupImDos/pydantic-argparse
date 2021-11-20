@@ -7,4 +7,4 @@ Exports sub-modules from package
 
 
 # Local
-from .utils import argument_description, argument_name, type_caster
+from .utils import argument_description, argument_name, namespace_to_dict, type_caster
