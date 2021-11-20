@@ -25,48 +25,50 @@ class SubParsersAction(argparse._SubParsersAction):  # pylint: disable=protected
         values: Union[str, Sequence[Any], None],
         option_string: Optional[str]=None,
         ) -> None:
-        """Parses arguments with the subparser, then embeds the resultant
-        sub-namespace into the parent namespace.
+        """Parses arguments with the specified subparser, then embeds the
+        resultant sub-namespace into the supplied parent namespace.
 
-        This subclass differs in functionality to the existing inbuilt argparse
-        SubParsersAction because it nests the resultant sub-namespace into the
-        parent namespace, rather than iterating through the parsed arguments to
-        update the parent namespace object.
+        This subclass differs in functionality from the existing standard
+        argparse SubParsersAction because it nests the resultant sub-namespace
+        directly into the parent namespace, rather than iterating through and
+        updating the parent namespace object with each argument individually.
 
         Example:
             # Create Argument Parser
             parser = argparse.ArgumentParser()
 
-            # Add Example '--global' Argument
-            parser.add_argument("--global")
+            # Add Example Global Argument
+            parser.add_argument("--time")
 
             # Add SubParsersAction
             subparsers = parser.add_subparsers()
 
-            # Add Example 'apple' Command with '--cat' Argument
-            apple = subparsers.add_parser("apple")
-            apple.add_argument("--cat")
+            # Add Example 'walk' Command with Arguments
+            walk = subparsers.add_parser("walk")
+            walk.add_argument("--speed")
+            walk.add_argument("--distance")
 
-            # Add Example 'banana' Command with '--dog' Argument
-            banana = subparsers.add_parser("banana")
-            banana.add_argument("--dog")
+            # Add Example 'talk' Command with Arguments
+            talk = subparsers.add_parser("talk")
+            talk.add_argument("--volume")
+            talk.add_argument("--topic")
 
         Parsing the arguments:
-            * --global 1 apple --cat 2
+            * --time 3 walk --speed 7 --distance 42
 
         Resultant namespaces:
-            * Original: Namespace(global=1, cat=2)
-            * Custom:   Namespace(global=1, apple=Namespace(cat=2))
+            * Original: Namespace(time=3, speed=7, distance=42)
+            * Custom:   Namespace(time=3, walk=Namespace(speed=7, distance=42))
 
         This behaviour results in a final namespace structure which is much
-        easier to parser, where subcommands are easily identified and nested
+        easier to parse, where subcommands are easily identified and nested
         into their own namespace recursively.
 
         Args:
             parser (argparse.ArgumentParser): Parent argument parser object.
             namespace (argparse.Namespace): Parent namespace being parsed to.
             values (Union[str, Sequence[Any], None]): Arguments to parse.
-            option_string (Optional[str]): Optional option string.
+            option_string (Optional[str]): Optional option string (not used).
 
         Raises:
             argparse.ArgumentError: Raised if subparser name does not exist.
