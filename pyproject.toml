@@ -27,7 +27,7 @@ typing-inspect = "^0.7.1"
 pylint = "^2.11.1"
 mypy = "^0.910"
 pytest = "^6.2.5"
-pytest-cov = "^2.12.1"
+pytest-cov = {extras = ["toml"], version = "^3.0.0"}
 pytest-mock = "^3.6.1"
 poethepoet = "^0.10.0"
 toml = "^0.10.2"
