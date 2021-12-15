@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pydantic-argparse"
-version = "0.2.0"
+version = "0.3.0"
 description = "Typed Argument Parsing with Pydantic"
 authors = ["Hayden Richards <SupImDos@gmail.com>"]
 readme = "README.md"
@@ -19,7 +19,7 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = "~3.9"
+python = "^3.9"
 pydantic = "^1.8.2"
 typing-inspect = "^0.7.1"
 
@@ -27,7 +27,7 @@ typing-inspect = "^0.7.1"
 pylint = "^2.11.1"
 mypy = "^0.910"
 pytest = "^6.2.5"
-pytest-cov = "^2.12.1"
+pytest-cov = {extras = ["toml"], version = "^3.0.0"}
 pytest-mock = "^3.6.1"
 poethepoet = "^0.10.0"
 toml = "^0.10.2"
