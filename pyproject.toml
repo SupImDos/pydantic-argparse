@@ -19,7 +19,7 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = "~3.9"
+python = "^3.9"
 pydantic = "^1.8.2"
 typing-inspect = "^0.7.1"
 
