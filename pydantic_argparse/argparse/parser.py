@@ -22,7 +22,6 @@ import typing_inspect
 # Local
 from ..parsers import (
     parse_boolean_field,
-    parse_command_field,
     parse_container_field,
     parse_enum_field,
     parse_json_field,
@@ -41,14 +40,12 @@ PydanticModelT = TypeVar("PydanticModelT", bound=pydantic.BaseModel)
 class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
     """Custom Typed Argument Parser."""
     # Argument Group Names
-    COMMANDS = "commands"
     REQUIRED = "required arguments"
     OPTIONAL = "optional arguments"
     HELP = "help"
 
     # Keyword Arguments
     KWARG_REQUIRED = "required"
-    KWARG_COMMAND = "<command>"
 
     # Exit Codes
     EXIT_ERROR = 2
@@ -92,7 +89,6 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         self.model = model
 
         # Add Arguments Groups
-        self._commands: Optional[argparse._SubParsersAction] = None
         self._required_group = self.add_argument_group(ArgumentParser.REQUIRED)
         self._optional_group = self.add_argument_group(ArgumentParser.OPTIONAL)
         self._help_group = self.add_argument_group(ArgumentParser.HELP)
@@ -244,22 +240,6 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         elif isinstance(field_type, enum.EnumMeta):
             # Add Enum Field
             parse_enum_field(self, field)
-
-        elif isinstance(field_type, pydantic.main.ModelMetaclass):
-            # Check for Commands Group
-            if not self._commands:
-                # Add Commands Group
-                self._commands = self.add_subparsers(
-                    title=ArgumentParser.COMMANDS,
-                    dest=ArgumentParser.KWARG_COMMAND,
-                    required=True,
-                )
-
-                # Shuffle it to the top
-                self._action_groups.insert(0, self._action_groups.pop())
-
-            # Add Command
-            parse_command_field(self._commands, field)
 
         else:
             # Add Other Standard Field
