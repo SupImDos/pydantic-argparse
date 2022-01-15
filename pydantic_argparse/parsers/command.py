@@ -6,9 +6,6 @@ Provides functions to parse command fields.
 """
 
 
-from __future__ import annotations
-
-
 # Standard
 import argparse
 

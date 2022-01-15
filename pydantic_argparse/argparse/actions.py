@@ -6,9 +6,6 @@ Provides custom Actions classes.
 """
 
 
-from __future__ import annotations
-
-
 # Standard
 import argparse
 

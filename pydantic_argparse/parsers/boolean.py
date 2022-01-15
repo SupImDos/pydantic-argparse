@@ -6,9 +6,6 @@ Provides functions to parse boolean fields.
 """
 
 
-from __future__ import annotations
-
-
 # Standard
 import argparse
 
@@ -16,8 +13,7 @@ import argparse
 import pydantic
 
 # Local
-from ..utils import argument_description, argument_name
-
+from pydantic_argparse import utils
 
 
 def parse_boolean_field(
@@ -52,9 +48,9 @@ def _parse_boolean_field_required(
     """
     # Add Required Boolean Field
     parser.add_argument(
-        argument_name(field.name),
+        utils.argument_name(field.name),
         action=argparse.BooleanOptionalAction,
-        help=argument_description(field.field_info.description),
+        help=utils.argument_description(field.field_info.description),
         dest=field.name,
         required=True,
     )
@@ -77,10 +73,10 @@ def _parse_boolean_field_optional(
     if default:
         # Optional (Default True)
         parser.add_argument(
-            argument_name("no-" + field.name),
+            utils.argument_name("no-" + field.name),
             action=argparse._StoreFalseAction,  # pylint: disable=protected-access
             default=default,
-            help=argument_description(field.field_info.description, default),
+            help=utils.argument_description(field.field_info.description, default),
             dest=field.name,
             required=False,
         )
@@ -88,10 +84,10 @@ def _parse_boolean_field_optional(
     else:
         # Optional (Default False)
         parser.add_argument(
-            argument_name(field.name),
+            utils.argument_name(field.name),
             action=argparse._StoreTrueAction,  # pylint: disable=protected-access
             default=default,
-            help=argument_description(field.field_info.description, default),
+            help=utils.argument_description(field.field_info.description, default),
             dest=field.name,
             required=False,
         )

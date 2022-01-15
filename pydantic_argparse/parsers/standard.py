@@ -6,9 +6,6 @@ Provides functions to parse standard fields.
 """
 
 
-from __future__ import annotations
-
-
 # Standard
 import argparse
 
@@ -16,7 +13,7 @@ import argparse
 import pydantic
 
 # Local
-from ..utils import argument_description, argument_name
+from pydantic_argparse import utils
 
 
 def parse_standard_field(
@@ -51,9 +48,9 @@ def _parse_standard_field_required(
     """
     # Add Required Standard Field
     parser.add_argument(
-        argument_name(field.name),
+        utils.argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
-        help=argument_description(field.field_info.description),
+        help=utils.argument_description(field.field_info.description),
         dest=field.name,
         metavar=field.name.upper(),
         required=True,
@@ -75,10 +72,10 @@ def _parse_standard_field_optional(
 
     # Add Optional Standard Field
     parser.add_argument(
-        argument_name(field.name),
+        utils.argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
         default=default,
-        help=argument_description(field.field_info.description, default),
+        help=utils.argument_description(field.field_info.description, default),
         dest=field.name,
         metavar=field.name.upper(),
         required=False,

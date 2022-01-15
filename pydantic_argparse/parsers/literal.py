@@ -6,9 +6,6 @@ Provides functions to parse literal fields.
 """
 
 
-from __future__ import annotations
-
-
 # Standard
 import argparse
 
@@ -17,7 +14,7 @@ import pydantic
 import typing_inspect
 
 # Local
-from ..utils import argument_description, argument_name, type_caster
+from pydantic_argparse import utils
 
 # Typing
 from typing import TypeVar  # pylint: disable=wrong-import-order
@@ -61,15 +58,15 @@ def _parse_literal_field_required(
     choices = list(typing_inspect.get_args(field.outer_type_))
 
     # Define Custom Type Caster
-    caster = type_caster(field.name, _arg_to_choice, choices=choices)
+    caster = utils.type_caster(field.name, _arg_to_choice, choices=choices)
 
     # Add Required Literal Field
     parser.add_argument(
-        argument_name(field.name),
+        utils.argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
         type=caster,
         choices=choices,
-        help=argument_description(field.field_info.description),
+        help=utils.argument_description(field.field_info.description),
         dest=field.name,
         metavar=field.name.upper(),
         required=True,
@@ -90,7 +87,7 @@ def _parse_literal_field_optional(
     choices = list(typing_inspect.get_args(field.outer_type_))
 
     # Define Custom Type Caster
-    caster = type_caster(field.name, _arg_to_choice, choices=choices)
+    caster = utils.type_caster(field.name, _arg_to_choice, choices=choices)
 
     # Get Default
     default = field.get_default()
@@ -101,11 +98,11 @@ def _parse_literal_field_optional(
         if default is not None and field.allow_none:
             # Optional Flag (Default Not None)
             parser.add_argument(
-                argument_name("no-" + field.name),
+                utils.argument_name("no-" + field.name),
                 action=argparse._StoreConstAction,  # pylint: disable=protected-access
                 const=None,
                 default=default,
-                help=argument_description(field.field_info.description, default),
+                help=utils.argument_description(field.field_info.description, default),
                 dest=field.name,
                 metavar=field.name.upper(),
                 required=False,
@@ -114,11 +111,11 @@ def _parse_literal_field_optional(
         else:
             # Optional Flag (Default None)
             parser.add_argument(
-                argument_name(field.name),
+                utils.argument_name(field.name),
                 action=argparse._StoreConstAction,  # pylint: disable=protected-access
                 const=choices[0],
                 default=default,
-                help=argument_description(field.field_info.description, default),
+                help=utils.argument_description(field.field_info.description, default),
                 dest=field.name,
                 metavar=field.name.upper(),
                 required=False,
@@ -127,12 +124,12 @@ def _parse_literal_field_optional(
     else:
         # Optional Choice
         parser.add_argument(
-            argument_name(field.name),
+            utils.argument_name(field.name),
             action=argparse._StoreAction,  # pylint: disable=protected-access
             type=caster,
             choices=choices,
             default=default,
-            help=argument_description(field.field_info.description, default),
+            help=utils.argument_description(field.field_info.description, default),
             dest=field.name,
             metavar=field.name.upper(),
             required=False,

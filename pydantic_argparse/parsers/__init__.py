@@ -5,7 +5,6 @@ Exports sub-modules from package
 @author Hayden Richards <SupImDos@gmail.com>
 """
 
-
 # Local
 from .boolean import parse_boolean_field
 from .command import parse_command_field

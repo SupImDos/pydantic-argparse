@@ -6,9 +6,6 @@ Provides functions to parse json fields.
 """
 
 
-from __future__ import annotations
-
-
 # Standard
 import argparse
 import ast
@@ -17,7 +14,7 @@ import ast
 import pydantic
 
 # Local
-from ..utils import argument_description, argument_name, type_caster
+from pydantic_argparse import utils
 
 
 def parse_json_field(
@@ -51,14 +48,14 @@ def _parse_json_field_required(
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Define Custom Type Caster
-    caster = type_caster(field.name, ast.literal_eval)
+    caster = utils.type_caster(field.name, ast.literal_eval)
 
     # Add Required JSON Field
     parser.add_argument(
-        argument_name(field.name),
+        utils.argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
         type=caster,
-        help=argument_description(field.field_info.description),
+        help=utils.argument_description(field.field_info.description),
         dest=field.name,
         metavar=field.name.upper(),
         required=True,
@@ -76,18 +73,18 @@ def _parse_json_field_optional(
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Define Custom Type Caster
-    caster = type_caster(field.name, ast.literal_eval)
+    caster = utils.type_caster(field.name, ast.literal_eval)
 
     # Get Default
     default = field.get_default()
 
     # Add Optional JSON Field
     parser.add_argument(
-        argument_name(field.name),
+        utils.argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
         type=caster,
         default=default,
-        help=argument_description(field.field_info.description, default),
+        help=utils.argument_description(field.field_info.description, default),
         dest=field.name,
         metavar=field.name.upper(),
         required=False,

@@ -6,9 +6,6 @@ Provides utility functions for other modules.
 """
 
 
-from __future__ import annotations
-
-
 # Standard
 import argparse
 import functools
@@ -20,8 +17,8 @@ from typing import Any, Callable, Optional, TypeVar  # pylint: disable=wrong-imp
 # Constants
 # Arbitrary 'MISSING' object is required for functions where 'None' is a valid
 # and possible argument to specify.
-MISSING = object()
 T = TypeVar("T")
+MISSING = object()
 
 
 def argument_description(
