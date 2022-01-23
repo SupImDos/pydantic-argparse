@@ -20,7 +20,7 @@ include = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
-pydantic = "^1.8.2"
+pydantic = "^1.9.0"
 typing-inspect = "^0.7.1"
 
 [tool.poetry.dev-dependencies]
@@ -63,7 +63,7 @@ show_error_codes = true
 warn_redundant_casts = true
 warn_unused_ignores = true
 plugins = [
-    # "pydantic.mypy"
+    "pydantic.mypy"
 ]
 
 [tool.pydantic-mypy]
