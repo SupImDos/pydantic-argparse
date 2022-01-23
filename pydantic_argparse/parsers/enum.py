@@ -6,9 +6,6 @@ Provides functions to parse enum fields.
 """
 
 
-from __future__ import annotations
-
-
 # Standard
 import argparse
 import enum
@@ -17,13 +14,13 @@ import enum
 import pydantic
 
 # Local
-from ..utils import argument_description, argument_name, type_caster
+from pydantic_argparse import utils
 
 # Typing
 from typing import TypeVar  # pylint: disable=wrong-import-order
 
 
-# Typing
+# Constants
 EnumT = TypeVar("EnumT", bound=enum.Enum)
 
 
@@ -34,7 +31,7 @@ def parse_enum_field(
     """Adds enum pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Enums are treated as choices
@@ -54,23 +51,24 @@ def _parse_enum_field_required(
     """Adds required enum pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Get Enum Type
     enum_type: type[enum.Enum] = field.outer_type_
 
     # Define Custom Type Caster
-    caster = type_caster(field.name, _arg_to_enum_member, enum_type=enum_type)
+    caster = utils.type_caster(field.name, _arg_to_enum_member, enum_type=enum_type)
 
     # Add Required Enum Field
     parser.add_argument(
-        argument_name(field.name),
+        utils.argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
         type=caster,
         choices=enum_type,
-        help=argument_description(field.field_info.description),
+        help=utils.argument_description(field.field_info.description),
         dest=field.name,
+        metavar=field.name.upper(),
         required=True,
     )
 
@@ -82,14 +80,14 @@ def _parse_enum_field_optional(
     """Adds optional enum pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Get Enum Type
     enum_type: type[enum.Enum] = field.outer_type_
 
     # Define Custom Type Caster
-    caster = type_caster(field.name, _arg_to_enum_member, enum_type=enum_type)
+    caster = utils.type_caster(field.name, _arg_to_enum_member, enum_type=enum_type)
 
     # Get Default
     default = field.get_default()
@@ -100,37 +98,40 @@ def _parse_enum_field_optional(
         if default is not None and field.allow_none:
             # Optional Flag (Default Not None)
             parser.add_argument(
-                argument_name("no-" + field.name),
+                utils.argument_name("no-" + field.name),
                 action=argparse._StoreConstAction,  # pylint: disable=protected-access
                 const=None,
                 default=default,
-                help=argument_description(field.field_info.description, default),
+                help=utils.argument_description(field.field_info.description, default),
                 dest=field.name,
+                metavar=field.name.upper(),
                 required=False,
             )
 
         else:
             # Optional Flag (Default None)
             parser.add_argument(
-                argument_name(field.name),
+                utils.argument_name(field.name),
                 action=argparse._StoreConstAction,  # pylint: disable=protected-access
                 const=list(enum_type)[0],
                 default=default,
-                help=argument_description(field.field_info.description, default),
+                help=utils.argument_description(field.field_info.description, default),
                 dest=field.name,
+                metavar=field.name.upper(),
                 required=False,
             )
 
     else:
         # Optional Choice
         parser.add_argument(
-            argument_name(field.name),
+            utils.argument_name(field.name),
             action=argparse._StoreAction,  # pylint: disable=protected-access
             type=caster,
             choices=enum_type,
             default=default,
-            help=argument_description(field.field_info.description, default),
+            help=utils.argument_description(field.field_info.description, default),
             dest=field.name,
+            metavar=field.name.upper(),
             required=False,
         )
 

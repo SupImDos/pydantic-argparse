@@ -6,9 +6,6 @@ Provides functions to parse container fields.
 """
 
 
-from __future__ import annotations
-
-
 # Standard
 import argparse
 
@@ -16,7 +13,7 @@ import argparse
 import pydantic
 
 # Local
-from ..utils import argument_description, argument_name
+from pydantic_argparse import utils
 
 
 def parse_container_field(
@@ -26,7 +23,7 @@ def parse_container_field(
     """Adds standard pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # List, Tuple, Set, FrozenSet, Deque
@@ -46,16 +43,17 @@ def _parse_container_field_required(
     """Adds required container pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Add Required Container Field
     parser.add_argument(
-        argument_name(field.name),
+        utils.argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
         nargs=argparse.ONE_OR_MORE,
-        help=argument_description(field.field_info.description),
+        help=utils.argument_description(field.field_info.description),
         dest=field.name,
+        metavar=field.name.upper(),
         required=True,
     )
 
@@ -67,7 +65,7 @@ def _parse_container_field_optional(
     """Adds optional container pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Get Default
@@ -75,11 +73,12 @@ def _parse_container_field_optional(
 
     # Add Optional Container Field
     parser.add_argument(
-        argument_name(field.name),
+        utils.argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
         nargs=argparse.ONE_OR_MORE,
         default=default,
-        help=argument_description(field.field_info.description, default),
+        help=utils.argument_description(field.field_info.description, default),
         dest=field.name,
+        metavar=field.name.upper(),
         required=False,
     )

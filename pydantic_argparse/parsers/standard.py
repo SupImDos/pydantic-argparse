@@ -6,9 +6,6 @@ Provides functions to parse standard fields.
 """
 
 
-from __future__ import annotations
-
-
 # Standard
 import argparse
 
@@ -16,7 +13,7 @@ import argparse
 import pydantic
 
 # Local
-from ..utils import argument_description, argument_name
+from pydantic_argparse import utils
 
 
 def parse_standard_field(
@@ -26,7 +23,7 @@ def parse_standard_field(
     """Adds standard pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # All other types are treated in a standard way
@@ -46,15 +43,16 @@ def _parse_standard_field_required(
     """Adds required standard pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Add Required Standard Field
     parser.add_argument(
-        argument_name(field.name),
+        utils.argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
-        help=argument_description(field.field_info.description),
+        help=utils.argument_description(field.field_info.description),
         dest=field.name,
+        metavar=field.name.upper(),
         required=True,
     )
 
@@ -66,7 +64,7 @@ def _parse_standard_field_optional(
     """Adds optional standard pydantic field to argument parser.
 
     Args:
-        parser: (argparse.ArgumentParser): Argument parser to add to.
+        parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Get Default
@@ -74,10 +72,11 @@ def _parse_standard_field_optional(
 
     # Add Optional Standard Field
     parser.add_argument(
-        argument_name(field.name),
+        utils.argument_name(field.name),
         action=argparse._StoreAction,  # pylint: disable=protected-access
         default=default,
-        help=argument_description(field.field_info.description, default),
+        help=utils.argument_description(field.field_info.description, default),
         dest=field.name,
+        metavar=field.name.upper(),
         required=False,
     )

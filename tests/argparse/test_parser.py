@@ -6,17 +6,10 @@ Tests parser Module.
 """
 
 
-from __future__ import absolute_import
-from __future__ import annotations
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-
-
 # Standard
 import argparse
-from collections import deque
-from datetime import date, datetime, time, timedelta
+import collections as coll
+import datetime as dt
 import re
 import textwrap
 
@@ -25,8 +18,8 @@ import pydantic
 import pytest
 
 # Local
-from pydantic_argparse import ArgumentParser
-from tests.conftest import ExampleModel, ExampleEnum, ExampleEnumSingle
+import pydantic_argparse
+import tests.conftest as conf
 
 # Typing
 from typing import Any, Literal, Optional, Tuple, TypeVar  # pylint: disable=wrong-import-order
@@ -61,8 +54,8 @@ def test_create_argparser(
         exit_on_error (bool): Whether to exit on error for testing.
     """
     # Create ArgumentParser
-    parser = ArgumentParser(
-        model=ExampleModel,
+    parser = pydantic_argparse.ArgumentParser(
+        model=conf.TestModel,
         prog=prog,
         description=description,
         version=version,
@@ -72,7 +65,7 @@ def test_create_argparser(
     )
 
     # Asserts
-    assert isinstance(parser, ArgumentParser)
+    assert isinstance(parser, pydantic_argparse.ArgumentParser)
 
 
 @pytest.mark.parametrize(
@@ -84,26 +77,26 @@ def test_create_argparser(
     ],
     [
         # Required Arguments
-        (int,                  ..., "--test 123",              123),
-        (float,                ..., "--test 4.56",             4.56),
-        (str,                  ..., "--test hello",            "hello"),
-        (bytes,                ..., "--test bytes",            b"bytes"),
-        (list[str],            ..., "--test a b c",            list(("a", "b", "c"))),
-        (Tuple[str, str, str], ..., "--test a b c",            tuple(("a", "b", "c"))),
-        (set[str],             ..., "--test a b c",            set(("a", "b", "c"))),
-        (frozenset[str],       ..., "--test a b c",            frozenset(("a", "b", "c"))),
-        (deque[str],           ..., "--test a b c",            deque(("a", "b", "c"))),
-        (dict[str, int],       ..., "--test {'a':2}",          dict(a=2)),
-        (date,                 ..., "--test 2021-12-25",       date(2021, 12, 25)),
-        (datetime,             ..., "--test 2021-12-25T12:34", datetime(2021, 12, 25, 12, 34)),
-        (time,                 ..., "--test 12:34",            time(12, 34)),
-        (timedelta,            ..., "--test PT12H",            timedelta(hours=12)),
-        (bool,                 ..., "--test",                  True),
-        (bool,                 ..., "--no-test",               False),
-        (Literal["A"],         ..., "--test A",                "A"),
-        (Literal["A", 1],      ..., "--test 1",                1),
-        (ExampleEnumSingle,    ..., "--test D",                ExampleEnumSingle.D),
-        (ExampleEnum,          ..., "--test C",                ExampleEnum.C),
+        (int,                    ..., "--test 123",              123),
+        (float,                  ..., "--test 4.56",             4.56),
+        (str,                    ..., "--test hello",            "hello"),
+        (bytes,                  ..., "--test bytes",            b"bytes"),
+        (list[str],              ..., "--test a b c",            list(("a", "b", "c"))),
+        (Tuple[str, str, str],   ..., "--test a b c",            tuple(("a", "b", "c"))),
+        (set[str],               ..., "--test a b c",            set(("a", "b", "c"))),
+        (frozenset[str],         ..., "--test a b c",            frozenset(("a", "b", "c"))),
+        (coll.deque[str],        ..., "--test a b c",            coll.deque(("a", "b", "c"))),
+        (dict[str, int],         ..., "--test {'a':2}",          dict(a=2)),
+        (dt.date,                ..., "--test 2021-12-25",       dt.date(2021, 12, 25)),
+        (dt.datetime,            ..., "--test 2021-12-25T12:34", dt.datetime(2021, 12, 25, 12, 34)),
+        (dt.time,                ..., "--test 12:34",            dt.time(12, 34)),
+        (dt.timedelta,           ..., "--test PT12H",            dt.timedelta(hours=12)),
+        (bool,                   ..., "--test",                  True),
+        (bool,                   ..., "--no-test",               False),
+        (Literal["A"],           ..., "--test A",                "A"),
+        (Literal["A", 1],        ..., "--test 1",                1),
+        (conf.TestEnumSingle,    ..., "--test D",                conf.TestEnumSingle.D),
+        (conf.TestEnum,          ..., "--test C",                conf.TestEnum.C),
 
         # Optional Arguments (With Default)
         (int,                  456,                            "--test 123",              123),
@@ -114,18 +107,18 @@ def test_create_argparser(
         (Tuple[str, str, str], tuple(("d", "e", "f")),         "--test a b c",            tuple(("a", "b", "c"))),
         (set[str],             set(("d", "e", "f")),           "--test a b c",            set(("a", "b", "c"))),
         (frozenset[str],       frozenset(("d", "e", "f")),     "--test a b c",            frozenset(("a", "b", "c"))),
-        (deque[str],           deque(("d", "e", "f")),         "--test a b c",            deque(("a", "b", "c"))),
+        (coll.deque[str],      coll.deque(("d", "e", "f")),    "--test a b c",            coll.deque(("a", "b", "c"))),
         (dict[str, int],       dict(b=3),                      "--test {'a':2}",          dict(a=2)),
-        (date,                 date(2021, 7, 21),              "--test 2021-12-25",       date(2021, 12, 25)),
-        (datetime,             datetime(2021, 7, 21, 3, 21),   "--test 2021-04-03T02:01", datetime(2021, 4, 3, 2, 1)),
-        (time,                 time(3, 21),                    "--test 12:34",            time(12, 34)),
-        (timedelta,            timedelta(hours=6),             "--test PT12H",            timedelta(hours=12)),
+        (dt.date,              dt.date(2021, 7, 21),           "--test 2021-12-25",       dt.date(2021, 12, 25)),
+        (dt.datetime,          dt.datetime(2021, 7, 21, 3),    "--test 2021-04-03T02:00", dt.datetime(2021, 4, 3, 2)),
+        (dt.time,              dt.time(3, 21),                 "--test 12:34",            dt.time(12, 34)),
+        (dt.timedelta,         dt.timedelta(hours=6),          "--test PT12H",            dt.timedelta(hours=12)),
         (bool,                 False,                          "--test",                  True),
         (bool,                 True,                           "--no-test",               False),
         (Literal["A"],         "A",                            "--test",                  "A"),
         (Literal["A", 1],      "A",                            "--test 1",                1),
-        (ExampleEnumSingle,    ExampleEnumSingle.D,            "--test",                  ExampleEnumSingle.D),
-        (ExampleEnum,          ExampleEnum.B,                  "--test C",                ExampleEnum.C),
+        (conf.TestEnumSingle,  conf.TestEnumSingle.D,          "--test",                  conf.TestEnumSingle.D),
+        (conf.TestEnum,        conf.TestEnum.B,                "--test C",                conf.TestEnum.C),
 
         # Optional Arguments (With Default) (No Value Given)
         (int,                  456,                            "", 456),
@@ -136,18 +129,18 @@ def test_create_argparser(
         (Tuple[str, str, str], tuple(("d", "e", "f")),         "", tuple(("d", "e", "f"))),
         (set[str],             set(("d", "e", "f")),           "", set(("d", "e", "f"))),
         (frozenset[str],       frozenset(("d", "e", "f")),     "", frozenset(("d", "e", "f"))),
-        (deque[str],           deque(("d", "e", "f")),         "", deque(("d", "e", "f"))),
+        (coll.deque[str],      coll.deque(("d", "e", "f")),    "", coll.deque(("d", "e", "f"))),
         (dict[str, int],       dict(b=3),                      "", dict(b=3)),
-        (date,                 date(2021, 7, 21),              "", date(2021, 7, 21)),
-        (datetime,             datetime(2021, 7, 21, 3, 21),   "", datetime(2021, 7, 21, 3, 21)),
-        (time,                 time(3, 21),                    "", time(3, 21)),
-        (timedelta,            timedelta(hours=6),             "", timedelta(hours=6)),
+        (dt.date,              dt.date(2021, 7, 21),           "", dt.date(2021, 7, 21)),
+        (dt.datetime,          dt.datetime(2021, 7, 21, 3, 7), "", dt.datetime(2021, 7, 21, 3, 7)),
+        (dt.time,              dt.time(3, 21),                 "", dt.time(3, 21)),
+        (dt.timedelta,         dt.timedelta(hours=6),          "", dt.timedelta(hours=6)),
         (bool,                 False,                          "", False),
         (bool,                 True,                           "", True),
         (Literal["A"],         "A",                            "", "A"),
         (Literal["A", 1],      "A",                            "", "A"),
-        (ExampleEnumSingle,    ExampleEnumSingle.D,            "", ExampleEnumSingle.D),
-        (ExampleEnum,          ExampleEnum.B,                  "", ExampleEnum.B),
+        (conf.TestEnumSingle,  conf.TestEnumSingle.D,          "", conf.TestEnumSingle.D),
+        (conf.TestEnum,        conf.TestEnum.B,                "", conf.TestEnum.B),
 
         # Optional Arguments (No Default)
         (Optional[int],                  None, "--test 123",              123),
@@ -158,17 +151,17 @@ def test_create_argparser(
         (Optional[Tuple[str, str, str]], None, "--test a b c",            tuple(("a", "b", "c"))),
         (Optional[set[str]],             None, "--test a b c",            set(("a", "b", "c"))),
         (Optional[frozenset[str]],       None, "--test a b c",            frozenset(("a", "b", "c"))),
-        (Optional[deque[str]],           None, "--test a b c",            deque(("a", "b", "c"))),
+        (Optional[coll.deque[str]],      None, "--test a b c",            coll.deque(("a", "b", "c"))),
         (Optional[dict[str, int]],       None, "--test {'a':2}",          dict(a=2)),
-        (Optional[date],                 None, "--test 2021-12-25",       date(2021, 12, 25)),
-        (Optional[datetime],             None, "--test 2021-12-25T12:34", datetime(2021, 12, 25, 12, 34)),
-        (Optional[time],                 None, "--test 12:34",            time(12, 34)),
-        (Optional[timedelta],            None, "--test PT12H",            timedelta(hours=12)),
+        (Optional[dt.date],              None, "--test 2021-12-25",       dt.date(2021, 12, 25)),
+        (Optional[dt.datetime],          None, "--test 2021-12-25T12:34", dt.datetime(2021, 12, 25, 12, 34)),
+        (Optional[dt.time],              None, "--test 12:34",            dt.time(12, 34)),
+        (Optional[dt.timedelta],         None, "--test PT12H",            dt.timedelta(hours=12)),
         (Optional[bool],                 None, "--test",                  True),
         (Optional[Literal["A"]],         None, "--test",                  "A"),
         (Optional[Literal["A", 1]],      None, "--test 1",                1),
-        (Optional[ExampleEnumSingle],    None, "--test",                  ExampleEnumSingle.D),
-        (Optional[ExampleEnum],          None, "--test C",                ExampleEnum.C),
+        (Optional[conf.TestEnumSingle],  None, "--test",                  conf.TestEnumSingle.D),
+        (Optional[conf.TestEnum],        None, "--test C",                conf.TestEnum.C),
 
         # Optional Arguments (No Default) (No Value Given)
         (Optional[int],                  None, "", None),
@@ -179,30 +172,46 @@ def test_create_argparser(
         (Optional[Tuple[str, str, str]], None, "", None),
         (Optional[set[str]],             None, "", None),
         (Optional[frozenset[str]],       None, "", None),
-        (Optional[deque[str]],           None, "", None),
+        (Optional[coll.deque[str]],      None, "", None),
         (Optional[dict[str, int]],       None, "", None),
-        (Optional[date],                 None, "", None),
-        (Optional[datetime],             None, "", None),
-        (Optional[time],                 None, "", None),
-        (Optional[timedelta],            None, "", None),
+        (Optional[dt.date],              None, "", None),
+        (Optional[dt.datetime],          None, "", None),
+        (Optional[dt.time],              None, "", None),
+        (Optional[dt.timedelta],         None, "", None),
         (Optional[bool],                 None, "", None),
         (Optional[Literal["A"]],         None, "", None),
         (Optional[Literal["A", 1]],      None, "", None),
-        (Optional[ExampleEnumSingle],    None, "", None),
-        (Optional[ExampleEnum],          None, "", None),
+        (Optional[conf.TestEnumSingle],  None, "", None),
+        (Optional[conf.TestEnum],        None, "", None),
 
         # Special Enums and Literals Optional Flag Behaviour
-        (Optional[Literal["A"]],         None,                "--test",    "A"),
-        (Optional[Literal["A"]],         None,                "",          None),
-        (Optional[Literal["A"]],         "A",                 "--no-test", None),
-        (Optional[Literal["A"]],         "A",                 "",          "A"),
-        (Optional[ExampleEnumSingle],    None,                "--test",    ExampleEnumSingle.D),
-        (Optional[ExampleEnumSingle],    None,                "",          None),
-        (Optional[ExampleEnumSingle],    ExampleEnumSingle.D, "--no-test", None),
-        (Optional[ExampleEnumSingle],    ExampleEnumSingle.D, "",          ExampleEnumSingle.D),
+        (Optional[Literal["A"]],         None,                  "--test",    "A"),
+        (Optional[Literal["A"]],         None,                  "",          None),
+        (Optional[Literal["A"]],         "A",                   "--no-test", None),
+        (Optional[Literal["A"]],         "A",                   "",          "A"),
+        (Optional[conf.TestEnumSingle],  None,                  "--test",    conf.TestEnumSingle.D),
+        (Optional[conf.TestEnumSingle],  None,                  "",          None),
+        (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "--no-test", None),
+        (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "",          conf.TestEnumSingle.D),
+
+        # Commands
+        (conf.TestCommand,            ..., "test",               conf.TestCommand()),
+        (conf.TestCommands,           ..., "test cmd_01",        conf.TestCommands(cmd_01=conf.TestCommand())),
+        (conf.TestCommands,           ..., "test cmd_02",        conf.TestCommands(cmd_02=conf.TestCommand())),
+        (conf.TestCommands,           ..., "test cmd_03",        conf.TestCommands(cmd_03=conf.TestCommand())),
+        (conf.TestCommands,           ..., "test cmd_01 --flag", conf.TestCommands(cmd_01=conf.TestCommand(flag=True))),
+        (conf.TestCommands,           ..., "test cmd_02 --flag", conf.TestCommands(cmd_02=conf.TestCommand(flag=True))),
+        (conf.TestCommands,           ..., "test cmd_03 --flag", conf.TestCommands(cmd_03=conf.TestCommand(flag=True))),
+        (Optional[conf.TestCommand],  ..., "test",               conf.TestCommand()),
+        (Optional[conf.TestCommands], ..., "test cmd_01",        conf.TestCommands(cmd_01=conf.TestCommand())),
+        (Optional[conf.TestCommands], ..., "test cmd_02",        conf.TestCommands(cmd_02=conf.TestCommand())),
+        (Optional[conf.TestCommands], ..., "test cmd_03",        conf.TestCommands(cmd_03=conf.TestCommand())),
+        (Optional[conf.TestCommands], ..., "test cmd_01 --flag", conf.TestCommands(cmd_01=conf.TestCommand(flag=True))),
+        (Optional[conf.TestCommands], ..., "test cmd_02 --flag", conf.TestCommands(cmd_02=conf.TestCommand(flag=True))),
+        (Optional[conf.TestCommands], ..., "test cmd_03 --flag", conf.TestCommands(cmd_03=conf.TestCommand(flag=True))),
     ]
 )
-def test_arguments(
+def test_valid_arguments(
     argument_type: type[ArgumentT],
     argument_default: ArgumentT,
     arguments: str,
@@ -223,7 +232,7 @@ def test_arguments(
     )
 
     # Create ArgumentParser
-    parser = ArgumentParser(model)
+    parser = pydantic_argparse.ArgumentParser(model)
 
     # Parse
     args = parser.parse_typed_args(arguments.split())
@@ -247,17 +256,17 @@ def test_arguments(
         (Tuple[int, int, int], ..., "--test invalid"),
         (set[int],             ..., "--test invalid"),
         (frozenset[int],       ..., "--test invalid"),
-        (deque[int],           ..., "--test invalid"),
+        (coll.deque[int],      ..., "--test invalid"),
         (dict[str, int],       ..., "--test invalid"),
-        (date,                 ..., "--test invalid"),
-        (datetime,             ..., "--test invalid"),
-        (time,                 ..., "--test invalid"),
-        (timedelta,            ..., "--test invalid"),
+        (dt.date,              ..., "--test invalid"),
+        (dt.datetime,          ..., "--test invalid"),
+        (dt.time,              ..., "--test invalid"),
+        (dt.timedelta,         ..., "--test invalid"),
         (bool,                 ..., "--test invalid"),
         (Literal["A"],         ..., "--test invalid"),
         (Literal["A", 1],      ..., "--test invalid"),
-        (ExampleEnumSingle,    ..., "--test invalid"),
-        (ExampleEnum,          ..., "--test invalid"),
+        (conf.TestEnumSingle,  ..., "--test invalid"),
+        (conf.TestEnum,        ..., "--test invalid"),
 
         # Missing Argument Values
         (int,                  ..., "--test"),
@@ -268,16 +277,16 @@ def test_arguments(
         (Tuple[int, int, int], ..., "--test"),
         (set[int],             ..., "--test"),
         (frozenset[int],       ..., "--test"),
-        (deque[int],           ..., "--test"),
+        (coll.deque[int],      ..., "--test"),
         (dict[str, int],       ..., "--test"),
-        (date,                 ..., "--test"),
-        (datetime,             ..., "--test"),
-        (time,                 ..., "--test"),
-        (timedelta,            ..., "--test"),
+        (dt.date,              ..., "--test"),
+        (dt.datetime,          ..., "--test"),
+        (dt.time,              ..., "--test"),
+        (dt.timedelta,         ..., "--test"),
         (Literal["A"],         ..., "--test"),
         (Literal["A", 1],      ..., "--test"),
-        (ExampleEnumSingle,    ..., "--test"),
-        (ExampleEnum,          ..., "--test"),
+        (conf.TestEnumSingle,  ..., "--test"),
+        (conf.TestEnum,        ..., "--test"),
 
         # Missing Arguments
         (int,                  ..., ""),
@@ -288,17 +297,17 @@ def test_arguments(
         (Tuple[int, int, int], ..., ""),
         (set[int],             ..., ""),
         (frozenset[int],       ..., ""),
-        (deque[int],           ..., ""),
+        (coll.deque[int],      ..., ""),
         (dict[str, int],       ..., ""),
-        (date,                 ..., ""),
-        (datetime,             ..., ""),
-        (time,                 ..., ""),
-        (timedelta,            ..., ""),
+        (dt.date,              ..., ""),
+        (dt.datetime,          ..., ""),
+        (dt.time,              ..., ""),
+        (dt.timedelta,         ..., ""),
         (bool,                 ..., ""),
         (Literal["A"],         ..., ""),
         (Literal["A", 1],      ..., ""),
-        (ExampleEnumSingle,    ..., ""),
-        (ExampleEnum,          ..., ""),
+        (conf.TestEnumSingle,  ..., ""),
+        (conf.TestEnum,        ..., ""),
 
         # Invalid Optional Arguments
         (Optional[int],                  None, "--test invalid"),
@@ -307,17 +316,17 @@ def test_arguments(
         (Optional[Tuple[int, int, int]], None, "--test invalid"),
         (Optional[set[int]],             None, "--test invalid"),
         (Optional[frozenset[int]],       None, "--test invalid"),
-        (Optional[deque[int]],           None, "--test invalid"),
+        (Optional[coll.deque[int]],      None, "--test invalid"),
         (Optional[dict[str, int]],       None, "--test invalid"),
-        (Optional[date],                 None, "--test invalid"),
-        (Optional[datetime],             None, "--test invalid"),
-        (Optional[time],                 None, "--test invalid"),
-        (Optional[timedelta],            None, "--test invalid"),
+        (Optional[dt.date],              None, "--test invalid"),
+        (Optional[dt.datetime],          None, "--test invalid"),
+        (Optional[dt.time],              None, "--test invalid"),
+        (Optional[dt.timedelta],         None, "--test invalid"),
         (Optional[bool],                 None, "--test invalid"),
         (Optional[Literal["A"]],         None, "--test invalid"),
         (Optional[Literal["A", 1]],      None, "--test invalid"),
-        (Optional[ExampleEnumSingle],    None, "--test invalid"),
-        (Optional[ExampleEnum],          None, "--test invalid"),
+        (Optional[conf.TestEnumSingle],  None, "--test invalid"),
+        (Optional[conf.TestEnum],        None, "--test invalid"),
 
         # Missing Optional Argument Values
         (Optional[int],                  None, "--test"),
@@ -328,14 +337,24 @@ def test_arguments(
         (Optional[Tuple[int, int, int]], None, "--test"),
         (Optional[set[int]],             None, "--test"),
         (Optional[frozenset[int]],       None, "--test"),
-        (Optional[deque[int]],           None, "--test"),
+        (Optional[coll.deque[int]],      None, "--test"),
         (Optional[dict[str, int]],       None, "--test"),
-        (Optional[date],                 None, "--test"),
-        (Optional[datetime],             None, "--test"),
-        (Optional[time],                 None, "--test"),
-        (Optional[timedelta],            None, "--test"),
+        (Optional[dt.date],              None, "--test"),
+        (Optional[dt.datetime],          None, "--test"),
+        (Optional[dt.time],              None, "--test"),
+        (Optional[dt.timedelta],         None, "--test"),
         (Optional[Literal["A", 1]],      None, "--test"),
-        (Optional[ExampleEnum],          None, "--test"),
+        (Optional[conf.TestEnum],        None, "--test"),
+
+        # Commands
+        (conf.TestCommand,            ..., ""),
+        (conf.TestCommand,            ..., "invalid"),
+        (conf.TestCommands,           ..., "test"),
+        (conf.TestCommands,           ..., "test invalid"),
+        (Optional[conf.TestCommand],  ..., ""),
+        (Optional[conf.TestCommand],  ..., "invalid"),
+        (Optional[conf.TestCommands], ..., "test"),
+        (Optional[conf.TestCommands], ..., "test invalid"),
     ]
 )
 @pytest.mark.parametrize(
@@ -371,7 +390,7 @@ def test_invalid_arguments(
     )
 
     # Create ArgumentParser
-    parser = ArgumentParser(model, exit_on_error=exit_on_error)
+    parser = pydantic_argparse.ArgumentParser(model, exit_on_error=exit_on_error)
 
     # Assert Parser Raises Error
     with pytest.raises(error):
@@ -389,7 +408,7 @@ def test_help_message(capsys: pytest.CaptureFixture[str]) -> None:
     model: Any = pydantic.create_model("model")
 
     # Create ArgumentParser
-    parser = ArgumentParser(
+    parser = pydantic_argparse.ArgumentParser(
         model=model,
         prog="AA",
         description="BB",
@@ -429,7 +448,7 @@ def test_version_message(capsys: pytest.CaptureFixture[str]) -> None:
     model: Any = pydantic.create_model("model")
 
     # Create ArgumentParser
-    parser = ArgumentParser(
+    parser = pydantic_argparse.ArgumentParser(
         model=model,
         prog="AA",
         description="BB",
@@ -456,7 +475,7 @@ def test_version_message(capsys: pytest.CaptureFixture[str]) -> None:
         "argument_name",
         "argument_field",
     ],
-    ExampleModel.__fields__.items()
+    conf.TestModel.__fields__.items()
 )
 def test_argument_descriptions(
     argument_name: str,
@@ -471,7 +490,7 @@ def test_argument_descriptions(
         capsys (pytest.CaptureFixture[str]): Fixture to capture STDOUT/STDERR.
     """
     # Create ArgumentParser
-    parser = ArgumentParser(ExampleModel)
+    parser = pydantic_argparse.ArgumentParser(conf.TestModel)
 
     # Assert Parser Exits
     with pytest.raises(SystemExit):
@@ -482,27 +501,53 @@ def test_argument_descriptions(
     captured = capsys.readouterr()
 
     # Process STDOUT
+    # Capture all arguments below 'commands:'
     # Capture all arguments below 'required arguments:'
     # Capture all arguments below 'optional arguments:'
-    _, required, optional, _ = re.split(r".+:\n", captured.out)
+    _, commands, required, optional, _ = re.split(r".+:\n", captured.out)
 
-    # Format Argument Name
-    argument_name = argument_name.replace("_", "-")
-
-    # Check if Required or Optional
-    if argument_field.required:
-        # Assert Argument in Required Args Section
-        assert argument_name in required
+    # Check if Command, Required or Optional
+    if isinstance(argument_field.outer_type_, pydantic.main.ModelMetaclass):
+        # Assert Argument Name in Commands Section
+        assert argument_name in commands
+        assert argument_name not in required
         assert argument_name not in optional
+
+        # Assert Argument Description in Commands Section
+        assert argument_field.field_info.description in commands
+        assert argument_field.field_info.description not in required
+        assert argument_field.field_info.description not in optional
+
+    elif argument_field.required:
+        # Format Argument Name
+        argument_name = argument_name.replace("_", "-")
+
+        # Assert Argument Name in Required Args Section
+        assert argument_name in required
+        assert argument_name not in commands
+        assert argument_name not in optional
+
+        # Assert Argument Description in Required Args Section
         assert argument_field.field_info.description in required
+        assert argument_field.field_info.description not in commands
         assert argument_field.field_info.description not in optional
 
     else:
-        # Assert Argument in Optional Args Section
-        default = argument_field.get_default()
+        # Format Argument Name and Default
+        argument_name = argument_name.replace("_", "-")
+        default = f"(default: {argument_field.get_default()})"
+
+        # Assert Argument Name in Optional Args Section
         assert argument_name in optional
+        assert argument_name not in commands
         assert argument_name not in required
+
+        # Assert Argument Description in Optional Args Section
         assert argument_field.field_info.description in optional
+        assert argument_field.field_info.description not in commands
         assert argument_field.field_info.description not in required
-        assert f"(default: {default})" in optional
-        assert f"(default: {default})" not in required
+
+        # Assert Argument Default in Optional Args Section
+        assert default in optional
+        assert default not in commands
+        assert default not in required

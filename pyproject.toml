@@ -30,8 +30,6 @@ pytest = "^6.2.5"
 pytest-cov = {extras = ["toml"], version = "^3.0.0"}
 pytest-mock = "^3.6.1"
 poethepoet = "^0.10.0"
-toml = "^0.10.2"
-types-toml = "^0.10.0"
 
 [tool.poe.tasks]
 test = "pytest tests --cov=pydantic_argparse"
