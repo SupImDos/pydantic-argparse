@@ -103,11 +103,3 @@ class SubParsersAction(argparse._SubParsersAction):  # pylint: disable=protected
         if arg_strings:
             vars(namespace).setdefault(argparse._UNRECOGNIZED_ARGS_ATTR, [])
             getattr(namespace, argparse._UNRECOGNIZED_ARGS_ATTR).extend(arg_strings)
-
-        # Get unrecognized options from the sub-namespace as well and propagate
-        # them up to the parent namespace, in case there are multiple levels of
-        # nesting subparsers
-        if hasattr(subnamespace, argparse._UNRECOGNIZED_ARGS_ATTR):
-            arg_strings = getattr(subnamespace, argparse._UNRECOGNIZED_ARGS_ATTR)
-            vars(namespace).setdefault(argparse._UNRECOGNIZED_ARGS_ATTR, [])
-            getattr(namespace, argparse._UNRECOGNIZED_ARGS_ATTR).extend(arg_strings)

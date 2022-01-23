@@ -193,9 +193,25 @@ def test_create_argparser(
         (Optional[conf.TestEnumSingle],  None,                  "",          None),
         (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "--no-test", None),
         (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "",          conf.TestEnumSingle.D),
+
+        # Commands
+        (conf.TestCommand,            ..., "test",               conf.TestCommand()),
+        (conf.TestCommands,           ..., "test cmd_01",        conf.TestCommands(cmd_01=conf.TestCommand())),
+        (conf.TestCommands,           ..., "test cmd_02",        conf.TestCommands(cmd_02=conf.TestCommand())),
+        (conf.TestCommands,           ..., "test cmd_03",        conf.TestCommands(cmd_03=conf.TestCommand())),
+        (conf.TestCommands,           ..., "test cmd_01 --flag", conf.TestCommands(cmd_01=conf.TestCommand(flag=True))),
+        (conf.TestCommands,           ..., "test cmd_02 --flag", conf.TestCommands(cmd_02=conf.TestCommand(flag=True))),
+        (conf.TestCommands,           ..., "test cmd_03 --flag", conf.TestCommands(cmd_03=conf.TestCommand(flag=True))),
+        (Optional[conf.TestCommand],  ..., "test",               conf.TestCommand()),
+        (Optional[conf.TestCommands], ..., "test cmd_01",        conf.TestCommands(cmd_01=conf.TestCommand())),
+        (Optional[conf.TestCommands], ..., "test cmd_02",        conf.TestCommands(cmd_02=conf.TestCommand())),
+        (Optional[conf.TestCommands], ..., "test cmd_03",        conf.TestCommands(cmd_03=conf.TestCommand())),
+        (Optional[conf.TestCommands], ..., "test cmd_01 --flag", conf.TestCommands(cmd_01=conf.TestCommand(flag=True))),
+        (Optional[conf.TestCommands], ..., "test cmd_02 --flag", conf.TestCommands(cmd_02=conf.TestCommand(flag=True))),
+        (Optional[conf.TestCommands], ..., "test cmd_03 --flag", conf.TestCommands(cmd_03=conf.TestCommand(flag=True))),
     ]
 )
-def test_arguments(
+def test_valid_arguments(
     argument_type: type[ArgumentT],
     argument_default: ArgumentT,
     arguments: str,
@@ -329,6 +345,16 @@ def test_arguments(
         (Optional[dt.timedelta],         None, "--test"),
         (Optional[Literal["A", 1]],      None, "--test"),
         (Optional[conf.TestEnum],        None, "--test"),
+
+        # Commands
+        (conf.TestCommand,            ..., ""),
+        (conf.TestCommand,            ..., "invalid"),
+        (conf.TestCommands,           ..., "test"),
+        (conf.TestCommands,           ..., "test invalid"),
+        (Optional[conf.TestCommand],  ..., ""),
+        (Optional[conf.TestCommand],  ..., "invalid"),
+        (Optional[conf.TestCommands], ..., "test"),
+        (Optional[conf.TestCommands], ..., "test invalid"),
     ]
 )
 @pytest.mark.parametrize(
@@ -475,27 +501,53 @@ def test_argument_descriptions(
     captured = capsys.readouterr()
 
     # Process STDOUT
+    # Capture all arguments below 'commands:'
     # Capture all arguments below 'required arguments:'
     # Capture all arguments below 'optional arguments:'
-    _, required, optional, _ = re.split(r".+:\n", captured.out)
+    _, commands, required, optional, _ = re.split(r".+:\n", captured.out)
 
-    # Format Argument Name
-    argument_name = argument_name.replace("_", "-")
-
-    # Check if Required or Optional
-    if argument_field.required:
-        # Assert Argument in Required Args Section
-        assert argument_name in required
+    # Check if Command, Required or Optional
+    if isinstance(argument_field.outer_type_, pydantic.main.ModelMetaclass):
+        # Assert Argument Name in Commands Section
+        assert argument_name in commands
+        assert argument_name not in required
         assert argument_name not in optional
+
+        # Assert Argument Description in Commands Section
+        assert argument_field.field_info.description in commands
+        assert argument_field.field_info.description not in required
+        assert argument_field.field_info.description not in optional
+
+    elif argument_field.required:
+        # Format Argument Name
+        argument_name = argument_name.replace("_", "-")
+
+        # Assert Argument Name in Required Args Section
+        assert argument_name in required
+        assert argument_name not in commands
+        assert argument_name not in optional
+
+        # Assert Argument Description in Required Args Section
         assert argument_field.field_info.description in required
+        assert argument_field.field_info.description not in commands
         assert argument_field.field_info.description not in optional
 
     else:
-        # Assert Argument in Optional Args Section
-        default = argument_field.get_default()
+        # Format Argument Name and Default
+        argument_name = argument_name.replace("_", "-")
+        default = f"(default: {argument_field.get_default()})"
+
+        # Assert Argument Name in Optional Args Section
         assert argument_name in optional
+        assert argument_name not in commands
         assert argument_name not in required
+
+        # Assert Argument Description in Optional Args Section
         assert argument_field.field_info.description in optional
+        assert argument_field.field_info.description not in commands
         assert argument_field.field_info.description not in required
-        assert f"(default: {default})" in optional
-        assert f"(default: {default})" not in required
+
+        # Assert Argument Default in Optional Args Section
+        assert default in optional
+        assert default not in commands
+        assert default not in required

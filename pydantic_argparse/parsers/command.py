@@ -28,4 +28,5 @@ def parse_command_field(
         field.name,
         help=field.field_info.description,
         model=field.outer_type_,
+        exit_on_error=False,  # Allow top level parser to handle exiting
     )

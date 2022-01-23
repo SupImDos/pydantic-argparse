@@ -7,15 +7,38 @@ Configure Testing and Define Pytest Fixtures
 
 
 # Standard
+import argparse
 import collections
 import datetime
 import enum
 
 # Third-Party
 import pydantic
+import pytest
+
+# Local
+from pydantic_argparse.argparse import actions
 
 # Typing
 from typing import Literal, Optional  # pylint: disable=wrong-import-order
+
+
+@pytest.fixture
+def sub_parsers_action() -> actions.SubParsersAction:
+    """PyTest Fixture for actions.SubParsersAction.
+
+    Returns:
+        actions.SubParsersAction.
+    """
+    # Instantiate Action
+    action = actions.SubParsersAction(
+        option_strings=[],  # Always empty for the SubParsersAction
+        prog="example",
+        parser_class=argparse.ArgumentParser,
+    )
+
+    # Return
+    return action
 
 
 class TestEnum(enum.Enum):
@@ -28,6 +51,18 @@ class TestEnum(enum.Enum):
 class TestEnumSingle(enum.Enum):
     """Test Enum with Single Member for Testing"""
     D = enum.auto()
+
+
+class TestCommand(pydantic.BaseModel):
+    """Test Command Model for Testing"""
+    flag: bool = pydantic.Field(False, description="flag")
+
+
+class TestCommands(pydantic.BaseModel):
+    """Test Commands Model for Testing"""
+    cmd_01: Optional[TestCommand] = pydantic.Field(description="cmd_01")
+    cmd_02: Optional[TestCommand] = pydantic.Field(description="cmd_02")
+    cmd_03: Optional[TestCommand] = pydantic.Field(description="cmd_03")
 
 
 class TestModel(pydantic.BaseModel):
@@ -101,3 +136,9 @@ class TestModel(pydantic.BaseModel):
     arg_60: Optional[Literal["A"]] = pydantic.Field("A", description="arg_60")
     arg_61: Optional[TestEnumSingle] = pydantic.Field(description="arg_61")
     arg_62: Optional[TestEnumSingle] = pydantic.Field(TestEnumSingle.D, description="arg_62")
+
+    # Commands
+    arg_63: Optional[TestCommand] = pydantic.Field(description="arg_63")
+    arg_64: TestCommand = pydantic.Field(description="arg_64")
+    arg_65: Optional[TestCommands] = pydantic.Field(description="arg_65")
+    arg_66: TestCommands = pydantic.Field(description="arg_66")
