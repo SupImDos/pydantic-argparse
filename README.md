@@ -10,7 +10,7 @@ Typed Argument Parsing with Pydantic
 Documentation coming soon.
 
 ## Installation
-Installing `pydantic-argparse` with `pip` is simple:
+Installation with `pip` is simple:
 ```console
 $ pip install pydantic-argparse
 ```
