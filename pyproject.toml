@@ -24,13 +24,14 @@ pydantic = "^1.9.0"
 typing-inspect = "^0.7.1"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2.11.1"
-mypy = "^0.910"
+poethepoet = "^0.12.2"
+pylint = "^2.12.2"
+mypy = "^0.921"
 pytest = "^6.2.5"
 pytest-cov = {extras = ["toml"], version = "^3.0.0"}
 pytest-mock = "^3.6.1"
-poethepoet = "^0.10.0"
 mkdocs-material = "^8.1.8"
+mkdocstrings = "^0.17.0"
 
 [tool.poe.tasks]
 test = "pytest tests --cov=pydantic_argparse"
