@@ -1,8 +1,8 @@
-"""test_parser.py
+"""Tests the `parser` Module.
 
-Tests parser Module.
-
-@author Hayden Richards <SupImDos@gmail.com>
+This module provides full unit test coverage for the `parser` module, testing
+all branches of all methods. These unit tests target the typed `ArgumentParser`
+class by testing a large number of expected use-cases.
 """
 
 

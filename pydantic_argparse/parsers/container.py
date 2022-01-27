@@ -1,8 +1,8 @@
-"""container.py
+"""Parses Container Pydantic Fields to Command-Line Arguments.
 
-Provides functions to parse container fields.
-
-@author Hayden Richards <SupImDos@gmail.com>
+The `container` module contains the `parse_container_field` method, which
+parses container `pydantic` model fields to `ArgumentParser` command-line
+arguments.
 """
 
 

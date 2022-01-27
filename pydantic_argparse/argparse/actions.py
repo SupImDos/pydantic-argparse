@@ -1,8 +1,7 @@
-"""actions.py
+"""Recursively Nesting Sub-Parsers Action for Typed Argument Parsing
 
-Provides custom Actions classes.
-
-@author Hayden Richards <SupImDos@gmail.com>
+The `actions` module contains the `SubParsersAction` class, which is an action
+that provides recursive namespace nesting when parsing sub-commands.
 """
 
 
@@ -14,7 +13,52 @@ from typing import Any, Optional, Sequence, Union, cast
 
 
 class SubParsersAction(argparse._SubParsersAction):  # pylint: disable=protected-access
-    """Custom SubParsersAction."""
+    """Recursively Nesting Sub-Parsers Action for Typed Argument Parsing
+
+    This custom action differs in functionality from the existing standard
+    argparse SubParsersAction because it nests the resultant sub-namespace
+    directly into the supplied parent namespace, rather than iterating through
+    and updating the parent namespace object with each argument individually.
+
+    Example:
+        Construct `ArgumentParser`:
+        ```python
+        # Create Argument Parser
+        parser = argparse.ArgumentParser()
+
+        # Add Example Global Argument
+        parser.add_argument("--time")
+
+        # Add SubParsersAction
+        subparsers = parser.add_subparsers()
+
+        # Add Example 'walk' Command with Arguments
+        walk = subparsers.add_parser("walk")
+        walk.add_argument("--speed")
+        walk.add_argument("--distance")
+
+        # Add Example 'talk' Command with Arguments
+        talk = subparsers.add_parser("talk")
+        talk.add_argument("--volume")
+        talk.add_argument("--topic")
+        ```
+
+        Parse the Arguments:
+        ```console
+        --time 3 walk --speed 7 --distance 42
+        ```
+
+        Check Resultant Namespaces:
+        ```python
+        Original: Namespace(time=3, speed=7, distance=42)
+        Custom:   Namespace(time=3, walk=Namespace(speed=7, distance=42))
+        ```
+
+    This behaviour results in a final namespace structure which is much easier
+    to parse, where subcommands are easily identified and nested into their own
+    namespace recursively.
+    """
+
     def __call__(
         self,
         parser: argparse.ArgumentParser,
@@ -24,42 +68,6 @@ class SubParsersAction(argparse._SubParsersAction):  # pylint: disable=protected
         ) -> None:
         """Parses arguments with the specified subparser, then embeds the
         resultant sub-namespace into the supplied parent namespace.
-
-        This subclass differs in functionality from the existing standard
-        argparse SubParsersAction because it nests the resultant sub-namespace
-        directly into the parent namespace, rather than iterating through and
-        updating the parent namespace object with each argument individually.
-
-        Example:
-            # Create Argument Parser
-            parser = argparse.ArgumentParser()
-
-            # Add Example Global Argument
-            parser.add_argument("--time")
-
-            # Add SubParsersAction
-            subparsers = parser.add_subparsers()
-
-            # Add Example 'walk' Command with Arguments
-            walk = subparsers.add_parser("walk")
-            walk.add_argument("--speed")
-            walk.add_argument("--distance")
-
-            # Add Example 'talk' Command with Arguments
-            talk = subparsers.add_parser("talk")
-            talk.add_argument("--volume")
-            talk.add_argument("--topic")
-
-        Parsing the arguments:
-            * --time 3 walk --speed 7 --distance 42
-
-        Resultant namespaces:
-            * Original: Namespace(time=3, speed=7, distance=42)
-            * Custom:   Namespace(time=3, walk=Namespace(speed=7, distance=42))
-
-        This behaviour results in a final namespace structure which is much
-        easier to parse, where subcommands are easily identified and nested
-        into their own namespace recursively.
 
         Args:
             parser (argparse.ArgumentParser): Parent argument parser object.

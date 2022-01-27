@@ -1,8 +1,7 @@
-"""standard.py
+"""Parses Standard Pydantic Fields to Command-Line Arguments.
 
-Provides functions to parse standard fields.
-
-@author Hayden Richards <SupImDos@gmail.com>
+The `standard` module contains the `parse_standard_field` method, which parses
+standard `pydantic` model fields to `ArgumentParser` command-line arguments.
 """
 
 

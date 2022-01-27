@@ -1,8 +1,11 @@
-"""__init__.py
+"""Declarative Typed Argument Parsing with Pydantic Models
 
-Exports sub-modules from package
+This is the `pydantic-argparse` package, which contains the classes, methods
+and functions required for declarative and typed argument parsing with
+`pydantic` models.
 
-@author Hayden Richards <SupImDos@gmail.com>
+The public interface exposed by this package is the declarative and typed
+`ArgumentParser` class, as well as the package "dunder" metadata.
 """
 
 # Local

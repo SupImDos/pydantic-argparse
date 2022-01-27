@@ -1,8 +1,8 @@
-"""conftest.py
+"""Configures Testing and Defines Pytest Fixtures
 
-Configure Testing and Define Pytest Fixtures
-
-@author Hayden Richards <SupImDos@gmail.com>
+The `conftest.py` file serves as a means of providing fixtures for an entire
+directory. Fixtures defined in a `conftest.py` can be used by any test in the
+package without needing to import them.
 """
 
 

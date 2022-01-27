@@ -1,8 +1,7 @@
-"""command.py
+"""Parses Nested Pydantic Model Fields to Sub-Commands.
 
-Provides functions to parse command fields.
-
-@author Hayden Richards <SupImDos@gmail.com>
+The `command` module contains the `parse_command_field` method, which parses
+nested `pydantic` model fields to `ArgumentParser` sub-commands.
 """
 
 

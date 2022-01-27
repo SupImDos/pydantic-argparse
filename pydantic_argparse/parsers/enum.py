@@ -1,8 +1,7 @@
-"""enum.py
+"""Parses Enum Pydantic Fields to Command-Line Arguments.
 
-Provides functions to parse enum fields.
-
-@author Hayden Richards <SupImDos@gmail.com>
+The `enum` module contains the `parse_enum_field` method, which parses enum
+`pydantic` model fields to `ArgumentParser` command-line arguments.
 """
 
 

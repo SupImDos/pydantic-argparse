@@ -1,8 +1,12 @@
-"""__init__.py
+"""Declarative and Typed Argument Parsing.
 
-Exports sub-modules from package
+This package contains the classes and methods required for declarative and
+typed argument parsing.
 
-@author Hayden Richards <SupImDos@gmail.com>
+The public interface exposed by this package is the `ArgumentParser` class,
+which is intended to be a *near* drop-in replacement for the Python standard
+library `argparse.ArgumentParser` - while providing declarative and typed
+argument parsing.
 """
 
 # Local

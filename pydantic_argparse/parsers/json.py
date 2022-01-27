@@ -1,8 +1,7 @@
-"""json.py
+"""Parses JSON Pydantic Fields to Command-Line Arguments.
 
-Provides functions to parse json fields.
-
-@author Hayden Richards <SupImDos@gmail.com>
+The `json` module contains the `parse_json_field` method, which parses JSON
+`pydantic` model fields to `ArgumentParser` command-line arguments.
 """
 
 
