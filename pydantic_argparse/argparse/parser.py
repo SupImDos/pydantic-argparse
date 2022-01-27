@@ -1,8 +1,17 @@
-"""parser.py
+"""Declarative and Typed Argument Parser.
 
-Provides custom typed ArgumentParser class.
+The `parser` module contains the `ArgumentParser` class, which provides a
+declarative method of defining command-line interfaces.
 
-@author Hayden Richards <SupImDos@gmail.com>
+The procedure to declaratively define a typed command-line interface is:
+
+1. Define `pydantic` arguments model
+2. Create typed `ArgumentParser`
+3. Parse typed arguments
+
+The resultant arguments object returned is an instance of the defined
+`pydantic` model. This means that the arguments object and its attributes will
+be compatible with an IDE, linter or type checker.
 """
 
 
@@ -30,7 +39,25 @@ PydanticModelT = TypeVar("PydanticModelT", bound=pydantic.BaseModel)
 
 
 class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
-    """Custom Typed Argument Parser."""
+    """Declarative and Typed Argument Parser.
+
+    The `ArgumentParser` declaratively generates a command-line interface using
+    the `pydantic` model specified upon instantiation.
+
+    The `ArgumentParser` provides the following `argparse` functionality:
+
+    * Required Arguments
+    * Optional Arguments
+    * Subcommands
+
+    All arguments are *named*, and positional arguments are not supported.
+
+    The `ArgumentParser` provides the method `parse_typed_args()` to parse
+    command line arguments and return an instance of its bound `pydantic`
+    model, populated with the parsed and validated user supplied command-line
+    arguments.
+    """
+
     # Argument Group Names
     COMMANDS = "commands"
     REQUIRED = "required arguments"
@@ -53,7 +80,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         add_help: bool=True,
         exit_on_error: bool=True,
         ) -> None:
-        """Custom Typed Argument Parser.
+        """Instantiates the Typed Argument Parser with its `pydantic` model.
 
         Args:
             model (type[PydanticModelT]): Pydantic argument model class.
@@ -61,7 +88,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             description (Optional[str]): Program description for CLI.
             version (Optional[str]): Program version string for CLI.
             epilog (Optional[str]): Optional text following help message.
-            add_help (bool): Whether to add a -h/--help flag.
+            add_help (bool): Whether to add a `-h`/`--help` flag.
             exit_on_error (bool): Whether to exit on error.
         """
         # Initialise Super Class
@@ -105,11 +132,18 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         ) -> PydanticModelT:
         """Parses command line arguments.
 
+        If `args` are not supplied by the user, then they are automatically
+        retrieved from the `sys.argv` command-line arguments.
+
         Args:
-            args (Optional[list[str]]): Optional list of arguments to parse
+            args (Optional[list[str]]): Optional list of arguments to parse.
 
         Returns:
-            PydanticModelT: Typed arguments.
+            PydanticModelT: Populated instance of typed arguments model.
+
+        Raises:
+            argparse.ArgumentError: Raised upon error, if not exiting on error.
+            SystemExit: Raised upon error, if exiting on error.
         """
         # Call Super Class Method
         namespace = self.parse_args(args)
@@ -157,13 +191,14 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         return group.add_argument(*args, **kwargs)
 
     def error(self, message: str) -> NoReturn:
-        """Prints a usage message to stderr and exits if required.
+        """Prints a usage message to `stderr` and exits if required.
 
         Args:
             message (str): Message to print to the user.
 
         Raises:
             argparse.ArgumentError: Raised if not exiting on error.
+            SystemExit: Raised if exiting on error.
         """
         # Print usage message
         self.print_usage(sys.stderr)

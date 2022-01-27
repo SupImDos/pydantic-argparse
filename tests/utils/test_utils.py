@@ -1,8 +1,7 @@
-"""test_utils.py
+"""Tests the `utils` Module.
 
-Tests utils Module.
-
-@author Hayden Richards <SupImDos@gmail.com>
+This module provides full unit test coverage for the `utils` module, testing
+all branches of all functions.
 """
 
 
@@ -17,6 +16,33 @@ from pydantic_argparse.utils import utils
 
 # Typing
 from typing import Any, Optional  # pylint: disable=wrong-import-order
+
+
+@pytest.mark.parametrize(
+    [
+        "name",
+        "expected",
+    ],
+    [
+        ("test", "--test"),
+        ("test_two", "--test-two"),
+    ]
+)
+def test_argument_name(
+    name: str,
+    expected: str,
+    ) -> None:
+    """Tests utils.argument_name Function.
+
+    Args:
+        name (str): Argument name to test.
+        expected (str): Expected result of the test.
+    """
+    # Generate Argument Name
+    result = utils.argument_name(name)
+
+    # Assert
+    assert result == expected
 
 
 @pytest.mark.parametrize(
@@ -50,33 +76,6 @@ def test_argument_description(
     """
     # Generate Argument Description
     result = utils.argument_description(description, default)
-
-    # Assert
-    assert result == expected
-
-
-@pytest.mark.parametrize(
-    [
-        "name",
-        "expected",
-    ],
-    [
-        ("test", "--test"),
-        ("test_two", "--test-two"),
-    ]
-)
-def test_argument_name(
-    name: str,
-    expected: str,
-    ) -> None:
-    """Tests utils.argument_name Function.
-
-    Args:
-        name (str): Argument name to test.
-        expected (str): Expected result of the test.
-    """
-    # Generate Argument Name
-    result = utils.argument_name(name)
 
     # Assert
     assert result == expected

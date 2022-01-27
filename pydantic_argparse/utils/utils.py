@@ -1,8 +1,15 @@
-"""utils.py
+"""Utility Functions for Declarative Typed Argument Parsing.
 
-Provides utility functions for other modules.
+The `utils` module contains various utility functions, including:
 
-@author Hayden Richards <SupImDos@gmail.com>
+* `argument_name`: Formatting argument names.
+* `argument_description`: Formatting argument descriptions.
+* `namespace_to_dict`: Recursively parsing `argparse.Namespace`s to `dict`s.
+* `type_caster`: Constructing named `functools.partial` type casting functions.
+
+The functionality outlined above is so common throughout the typed argument
+parsing process that the functions have been refactored out into this module as
+utility functions.
 """
 
 
@@ -18,7 +25,26 @@ from typing import Any, Callable, Optional, TypeVar  # pylint: disable=wrong-imp
 # Arbitrary 'MISSING' object is required for functions where 'None' is a valid
 # and possible argument to specify.
 T = TypeVar("T")
-MISSING = object()
+MISSING = TypeVar("MISSING")
+
+
+def argument_name(name: str) -> str:
+    """Standardises argument name.
+
+    Examples:
+        ```python
+        argument_name("hello") == "--hello"
+        argument_name("hello_world") == "--hello-world"
+        ```
+
+    Args:
+        name (str): Name of the argument.
+
+    Returns:
+        str: Standardised name of the argument.
+    """
+    # Add '--', replace '_' with '-'
+    return f"--{name.replace('_', '-')}"
 
 
 def argument_description(
@@ -26,6 +52,13 @@ def argument_description(
     default: Optional[Any]=MISSING,
     ) -> str:
     """Standardises argument description.
+
+    Examples:
+        ```python
+        argument_description("hello") == "hello"
+        argument_description("hello", None) == "hello (default: None)"
+        argument_description("hello", 42) == "hello (default: 42)"
+        ```
 
     Args:
         description (Optional[str]): Optional description for argument.
@@ -39,19 +72,6 @@ def argument_description(
 
     # Return Standardised Description String
     return " ".join(filter(None, [description, default]))
-
-
-def argument_name(name: str) -> str:
-    """Standardises argument name.
-
-    Args:
-        name (str): Name of the argument.
-
-    Returns:
-        str: Standardised name of the argument.
-    """
-    # Add '--', replace '_' with '-'
-    return f"--{name.replace('_', '-')}"
 
 
 def namespace_to_dict(namespace: argparse.Namespace) -> dict[str, Any]:

@@ -1,8 +1,7 @@
-"""boolean.py
+"""Parses Boolean Pydantic Fields to Command-Line Arguments.
 
-Provides functions to parse boolean fields.
-
-@author Hayden Richards <SupImDos@gmail.com>
+The `boolean` module contains the `parse_boolean_field` method, which parses
+boolean `pydantic` model fields to `ArgumentParser` command-line arguments.
 """
 
 

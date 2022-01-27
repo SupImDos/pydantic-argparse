@@ -1,8 +1,7 @@
-"""literal.py
+"""Parses Literal Pydantic Fields to Command-Line Arguments.
 
-Provides functions to parse literal fields.
-
-@author Hayden Richards <SupImDos@gmail.com>
+The `literal` module contains the `parse_literal_field` method, which parses
+literal `pydantic` model fields to `ArgumentParser` command-line arguments.
 """
 
 

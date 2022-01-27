@@ -1,8 +1,8 @@
-"""test_actions.py
+"""Tests the `actions` Module.
 
-Tests actions Module.
-
-@author Hayden Richards <SupImDos@gmail.com>
+This module provides full unit test coverage for the `actions` module, testing
+all branches of all methods. These unit tests target the `SubParsersAction`
+class by testing the expected nested namespace functionality.
 """
 
 

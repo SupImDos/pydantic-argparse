@@ -1,8 +1,11 @@
-"""__init__.py
+"""Parses Pydantic Fields to Command-Line Arguments.
 
-Exports sub-modules from package
+This package contains the methods required for parsing `pydantic` model fields
+to `ArgumentParser` command-line arguments.
 
-@author Hayden Richards <SupImDos@gmail.com>
+The public interface exposed by this package is the `parsing` functions, which
+take an `argparse.ArgumentParser` and a `pydantic.fields.ModelField`, parse the
+field and add a new argument to the `ArgumentParser`.
 """
 
 # Local
