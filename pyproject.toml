@@ -32,6 +32,8 @@ pytest-cov = {extras = ["toml"], version = "^3.0.0"}
 pytest-mock = "^3.6.1"
 mkdocs-material = "^8.1.8"
 mkdocstrings = "^0.17.0"
+mkdocs-gen-files = "^0.3.4"
+mkdocs-literate-nav = "^0.4.1"
 
 [tool.poe.tasks]
 test = "pytest tests --cov=pydantic_argparse"
