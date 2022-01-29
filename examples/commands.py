@@ -1,4 +1,4 @@
-"""Sub-Commands Example"""
+"""Commands Example"""
 
 
 # Third-Party
