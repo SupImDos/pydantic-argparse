@@ -1,0 +1,79 @@
+# Site
+site_name: Pydantic Argparse
+site_description: Typed Argument Parsing with Pydantic
+site_author: Hayden Richards
+
+# Repository
+repo_name: SupImDos/pydantic-argparse
+repo_url: https://github.com/SupImDos/pydantic-argparse
+edit_uri: ""
+
+# Navigation
+nav:
+  - Overview: index.md
+  - Usage:
+    - Getting Started: usage/getting_started.md
+    - Models: usage/models.md
+    - Data Types:
+      - Standard: usage/data_types/standard.md
+      - Flags: usage/data_types/flags.md
+      - Enums & Literals: usage/data_types/enums_literals.md
+      - Containers & Mappings: usage/data_types/containers_mappings.md
+    - Commands: usage/commands.md
+  - Examples:
+    - Simple: examples/simple.md
+    - Commands: examples/commands.md
+  - Reference: reference/
+
+# Theme
+theme:
+  name: material
+  icon:
+    logo: material/filter-plus
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - navigation.sections
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+
+# Extra CSS
+extra_css:
+  - stylesheet.css
+
+# Markdown Extensions
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+# Plugins
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          rendering:
+            show_root_toc_entry: false
+            show_bases: false
+            members_order: source
+  - gen-files:
+      scripts:
+        - docs/docs/reference/reference.py
+  - literate-nav
