@@ -27,6 +27,16 @@ Example Epilog
 
 ### Check Commands Help
 ```console
+$ python3 examples/commands.py build --help
+usage: Example Program build [-h] --location LOCATION
+
+required arguments:
+  --location LOCATION  build location
+
+help:
+  -h, --help           show this help message and exit
+```
+```console
 $ python3 examples/commands.py serve --help
 usage: Example Program serve [-h] --address ADDRESS --port PORT
 
