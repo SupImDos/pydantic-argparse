@@ -7,7 +7,7 @@
 Typed Argument Parsing with Pydantic
 
 ## Help
-Documentation coming soon.
+See [documentation](https://supimdos.github.io/pydantic-argparse/) for help.
 
 ## Installation
 Installation with `pip` is simple:
