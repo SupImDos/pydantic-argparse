@@ -1,4 +1,4 @@
-"""Generate Code Reference Documentation."""
+"""Automatic Code Reference Documentation Generation."""
 
 
 # Standard
@@ -8,67 +8,73 @@ import pathlib
 import mkdocs_gen_files
 
 
-# Constants
+# Configuration
 PACKAGE = pathlib.Path("pydantic_argparse")
 DOCS = pathlib.Path("reference")
-NAV = DOCS / pathlib.Path("SUMMARY.md")
+
+# Constants
+FILENAME_NAVIGATION = "SUMMARY.md"
+FILENAME_INDEX = "index.md"
+PYTHON_GLOB = "**/*.py"
+DUNDER = "__"
+DOT_MD = ".md"
+PREFIX_H1 = "# "
+PREFIX_H2 = "## "
+PREFIX_CODE = "::: "
+ESCAPE_MD = "_", r"\_"
 
 
-def main() -> None:
-    """Main Function."""
-    # Instantiate Documentation Generator and Navigation
-    gen = mkdocs_gen_files.FilesEditor.current()
+def generate(package: pathlib.Path, docs: pathlib.Path) -> None:
+    """Generates the Code Reference Documentation.
+
+    Args:
+        package (pathlib.Path): Location of the package to generate docs.
+        docs (pathlib.Path): Location to write out docs to.
+    """
+    # Instantiate Documentation and Navigation Generators
+    files_editor = mkdocs_gen_files.FilesEditor.current()
     nav = mkdocs_gen_files.Nav()
 
-    # Loop through all modules in the package
-    for path in sorted(PACKAGE.glob("**/*.py")):
-        # Put Dunder Files into `index.md`
-        if path.stem.startswith("__") and path.stem.endswith("__"):
-            # Set Docs Location
-            docs = DOCS / path.parent / pathlib.Path("index.md")
+    # Loop through regular files in the package
+    for source in sorted(package.glob(PYTHON_GLOB)):
+        # Generate Reference
+        reference = PREFIX_CODE + ".".join(source.with_suffix("").parts)
 
-            # Generate Magic String
-            string = "## " + path.name.replace("_", r"\_") + "\n"
-
-            # Get Header
-            header = path.parent.stem
-
-            # Nav Parts
-            nav_parts = docs.relative_to(DOCS).parent.parts
+        # Check if file is "dunder" module
+        if source.stem.startswith(DUNDER) and source.stem.endswith(DUNDER):
+            # Generate docs for dunder files
+            path = docs / source.with_name(FILENAME_INDEX)
+            heading = PREFIX_H1 + source.parent.stem
+            subheading = PREFIX_H2 + source.name.replace(*ESCAPE_MD)
+            titles = source.parent.parts
 
         else:
-            # Set Docs Location
-            docs = DOCS / path.with_suffix(".md")
+            # Generate docs for regular files
+            path = docs / source.with_suffix(DOT_MD)
+            heading = PREFIX_H1 + source.stem
+            subheading = ""
+            titles = source.parts
 
-            # Initialise Magic String
-            string = ""
-
-            # Get Header
-            header = path.stem
-
-            # Nav Parts
-            nav_parts = docs.relative_to(DOCS).with_suffix(".py").parts
-
-        # Generate Magic String
-        string += "::: " + ".".join(path.with_suffix("").parts) + "\n"
-
-        # Write the Documentation
-        with gen.open(docs, "a") as file_object:
-            # Check if its the first time opening the file
+        # Docs
+        with files_editor.open(path, "a") as file_object:
+            # Heading
             if not file_object.tell():
-                # Write the file header
-                file_object.write("# " + header + "\n")
+                file_object.write(heading + "\n")
 
-            # Write
-            file_object.write(string)
+            # Sub Heading
+            file_object.write(subheading + "\n")
 
-        # Append to Navigation
-        nav[nav_parts] = docs.relative_to(DOCS)
+            # Code Reference
+            file_object.write(reference + "\n")
 
-    # Write the Navigation
-    with gen.open(NAV, "w") as file_object:
+        # Build Nav
+        nav[titles] = path.relative_to(docs)
+
+    # Nav
+    with files_editor.open(docs / FILENAME_NAVIGATION, "w") as file_object:
+        # Write Nav
         file_object.writelines(nav.build_literate_nav())
 
 
-# Generate Docs
-main()
+# Run
+generate(PACKAGE, DOCS)
