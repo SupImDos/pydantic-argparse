@@ -40,6 +40,10 @@ test = "pytest tests --cov=pydantic_argparse"
 type = "mypy tests pydantic_argparse"
 lint = "pylint tests pydantic_argparse"
 clean = "rm -rf **/.coverage **/.mypy_cache **/.pytest_cache **/__pycache__"
+build = "poetry build"
+publish = "poetry publish"
+docs-serve = "mkdocs serve -f docs/mkdocs.yml"
+docs-publish = "mkdocs gh-deploy --force -f docs/mkdocs.yml"
 
 [tool.pytest.ini_options]
 addopts = "--verbose"
