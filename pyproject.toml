@@ -21,7 +21,6 @@ include = [
 [tool.poetry.dependencies]
 python = "^3.9"
 pydantic = "^1.9.0"
-typing-inspect = "^0.7.1"
 
 [tool.poetry.dev-dependencies]
 poethepoet = "^0.12.2"

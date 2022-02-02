@@ -20,10 +20,10 @@ import argparse
 import collections
 import enum
 import sys
+import typing
 
 # Third-Party
 import pydantic
-import typing_inspect
 
 # Local
 from pydantic_argparse import parsers
@@ -250,7 +250,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         """
         # Get Field Type and Possible Origin
         field_type = field.outer_type_
-        field_origin = typing_inspect.get_origin(field_type)
+        field_origin = typing.get_origin(field_type)
 
         # Switch on Field Type
         if field_type is bool:
