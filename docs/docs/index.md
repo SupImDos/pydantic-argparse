@@ -43,10 +43,7 @@ $ pip install pydantic-argparse
 
 <!-- Credits -->
 ## Credits
-This project is made possible by the following projects:
-
-* [`pydantic`](https://pydantic-docs.helpmanual.io/)
-* [`typing-inspect`](https://github.com/ilevkivskyi/typing_inspect)
+This project is made possible by [`pydantic`](https://pydantic-docs.helpmanual.io/).
 
 <!-- License -->
 ## License

@@ -7,10 +7,10 @@ literal `pydantic` model fields to `ArgumentParser` command-line arguments.
 
 # Standard
 import argparse
+import typing
 
 # Third-Party
 import pydantic
-import typing_inspect
 
 # Local
 from pydantic_argparse import utils
@@ -54,7 +54,7 @@ def _parse_literal_field_required(
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Get choices from literal
-    choices = list(typing_inspect.get_args(field.outer_type_))
+    choices = list(typing.get_args(field.outer_type_))
 
     # Define Custom Type Caster
     caster = utils.type_caster(field.name, _arg_to_choice, choices=choices)
@@ -83,7 +83,7 @@ def _parse_literal_field_optional(
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Get choices from literal
-    choices = list(typing_inspect.get_args(field.outer_type_))
+    choices = list(typing.get_args(field.outer_type_))
 
     # Define Custom Type Caster
     caster = utils.type_caster(field.name, _arg_to_choice, choices=choices)
