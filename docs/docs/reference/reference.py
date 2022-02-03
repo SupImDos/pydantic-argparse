@@ -57,8 +57,9 @@ def generate(package: pathlib.Path, docs: pathlib.Path) -> None:
 
         # Docs
         with files_editor.open(path, "a") as file_object:
-            # Heading
+            # Check if the file is empty
             if not file_object.tell():
+                # Heading
                 file_object.write(heading + "\n")
 
             # Sub Heading
