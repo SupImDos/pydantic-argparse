@@ -1,7 +1,9 @@
 """Parses Nested Pydantic Model Fields to Sub-Commands.
 
-The `command` module contains the `parse_command_field` method, which parses
-nested `pydantic` model fields to `ArgumentParser` sub-commands.
+The `command` module contains the `should_parse` function, which checks whether
+this module should be used to parse the field, as well as the `parse_field`
+function, which parses nested `pydantic` model fields to `ArgumentParser`
+sub-commands.
 """
 
 
@@ -12,7 +14,20 @@ import argparse
 import pydantic
 
 
-def parse_command_field(
+def should_parse(field: pydantic.fields.ModelField) -> bool:
+    """Checks whether this field should be parsed as a `command`.
+
+    Args:
+        field (pydantic.fields.ModelField): Field to check.
+
+    Returns:
+        bool: Whether this field should be parsed as a `command`.
+    """
+    # Check and Return
+    return isinstance(field.outer_type_, pydantic.main.ModelMetaclass)
+
+
+def parse_field(
     subparser: argparse._SubParsersAction,
     field: pydantic.fields.ModelField,
     ) -> None:

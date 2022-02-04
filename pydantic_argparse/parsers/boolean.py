@@ -1,7 +1,9 @@
 """Parses Boolean Pydantic Fields to Command-Line Arguments.
 
-The `boolean` module contains the `parse_boolean_field` method, which parses
-boolean `pydantic` model fields to `ArgumentParser` command-line arguments.
+The `boolean` module contains the `should_parse` function, which checks whether
+this module should be used to parse the field, as well as the `parse_field`
+function, which parses boolean `pydantic` model fields to `ArgumentParser`
+command-line arguments.
 """
 
 
@@ -15,7 +17,20 @@ import pydantic
 from pydantic_argparse import utils
 
 
-def parse_boolean_field(
+def should_parse(field: pydantic.fields.ModelField) -> bool:
+    """Checks whether this field should be parsed as a `boolean`.
+
+    Args:
+        field (pydantic.fields.ModelField): Field to check.
+
+    Returns:
+        bool: Whether this field should be parsed as a `boolean`.
+    """
+    # Check and Return
+    return field.outer_type_ is bool
+
+
+def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
     ) -> None:
@@ -25,54 +40,24 @@ def parse_boolean_field(
         parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
-    # Booleans can be treated as required or optional flags
-    if field.required:
-        # Required
-        _parse_boolean_field_required(parser, field)
-
-    else:
-        # Optional
-        _parse_boolean_field_optional(parser, field)
-
-
-def _parse_boolean_field_required(
-    parser: argparse.ArgumentParser,
-    field: pydantic.fields.ModelField,
-    ) -> None:
-    """Adds required boolean pydantic field to argument parser.
-
-    Args:
-        parser (argparse.ArgumentParser): Argument parser to add to.
-        field (pydantic.fields.ModelField): Field to be added to parser.
-    """
-    # Add Required Boolean Field
-    parser.add_argument(
-        utils.argument_name(field.name),
-        action=argparse.BooleanOptionalAction,
-        help=utils.argument_description(field.field_info.description),
-        dest=field.name,
-        required=True,
-    )
-
-
-def _parse_boolean_field_optional(
-    parser: argparse.ArgumentParser,
-    field: pydantic.fields.ModelField,
-    ) -> None:
-    """Adds optional boolean pydantic field to argument parser.
-
-    Args:
-        parser (argparse.ArgumentParser): Argument parser to add to.
-        field (pydantic.fields.ModelField): Field to be added to parser.
-    """
     # Get Default
     default = field.get_default()
 
-    # Add Optional Boolean Field
-    if default:
-        # Optional (Default True)
+    # Booleans can be treated as required or optional flags
+    if field.required:
+        # Add Required Boolean Field
         parser.add_argument(
-            utils.argument_name("no-" + field.name),
+            utils.argument_name(field.name),
+            action=argparse.BooleanOptionalAction,
+            help=utils.argument_description(field.field_info.description),
+            dest=field.name,
+            required=True,
+        )
+
+    elif default:
+        # Add Optional Boolean Field (Default True)
+        parser.add_argument(
+            utils.argument_name(f"no-{field.name}"),
             action=argparse._StoreFalseAction,  # pylint: disable=protected-access
             default=default,
             help=utils.argument_description(field.field_info.description, default),
@@ -81,7 +66,7 @@ def _parse_boolean_field_optional(
         )
 
     else:
-        # Optional (Default False)
+        # Add Optional Boolean Field (Default False)
         parser.add_argument(
             utils.argument_name(field.name),
             action=argparse._StoreTrueAction,  # pylint: disable=protected-access
