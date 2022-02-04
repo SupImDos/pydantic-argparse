@@ -17,10 +17,7 @@ be compatible with an IDE, linter or type checker.
 
 # Standard
 import argparse
-import collections
-import enum
 import sys
-import typing
 
 # Third-Party
 import pydantic
@@ -31,7 +28,7 @@ from pydantic_argparse import utils
 from . import actions
 
 # Typing
-from typing import Any, Generic, Literal, NoReturn, Optional, TypeVar  # pylint: disable=wrong-import-order
+from typing import Any, Generic, NoReturn, Optional, TypeVar  # pylint: disable=wrong-import-order
 
 
 # Constants
@@ -210,6 +207,27 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         # Raise Error
         raise argparse.ArgumentError(None, f"{self.prog}: error: {message}")
 
+    def _commands(self) -> argparse._SubParsersAction:
+        """Creates and Retrieves Subcommands Action for the ArgumentParser.
+
+        Returns:
+            argparse._SubParsersAction: SubParsersAction for the subcommands.
+        """
+        # Check for Existing Sub-Commands Group
+        if not self._subcommands:
+            # Add Sub-Commands Group
+            self._subcommands = self.add_subparsers(
+                title=ArgumentParser.COMMANDS,
+                action=actions.SubParsersAction,
+                required=True,
+            )
+
+            # Shuffle Group to the Top for Help Message
+            self._action_groups.insert(0, self._action_groups.pop())
+
+        # Return
+        return self._subcommands
+
     def _add_help_flag(self) -> None:
         """Adds help flag to argparser."""
         # Add help flag
@@ -248,47 +266,31 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         Args:
             field (pydantic.fields.ModelField): Field to be added to parser.
         """
-        # Get Field Type and Possible Origin
-        field_type = field.outer_type_
-        field_origin = typing.get_origin(field_type)
-
         # Switch on Field Type
-        if field_type is bool:
-            # Add Boolean Field
-            parsers.parse_boolean_field(self, field)
-
-        elif field_origin in (list, tuple, set, frozenset, collections.deque):
-            # Add Container Field
-            parsers.parse_container_field(self, field)
-
-        elif field_origin is dict:
-            # Add Dictionary (JSON) Field
-            parsers.parse_json_field(self, field)
-
-        elif field_origin is Literal:
-            # Add Literal Field
-            parsers.parse_literal_field(self, field)
-
-        elif isinstance(field_type, enum.EnumMeta):
-            # Add Enum Field
-            parsers.parse_enum_field(self, field)
-
-        elif isinstance(field_type, pydantic.main.ModelMetaclass):
-            # Check for Sub-Commands Group
-            if not self._subcommands:
-                # Add Sub-Commands Group
-                self._subcommands = self.add_subparsers(
-                    title=ArgumentParser.COMMANDS,
-                    action=actions.SubParsersAction,
-                    required=True,
-                )
-
-                # Shuffle it to the top
-                self._action_groups.insert(0, self._action_groups.pop())
-
+        if parsers.command.should_parse(field):
             # Add Command
-            parsers.parse_command_field(self._subcommands, field)
+            parsers.command.parse_field(self._commands(), field)
+
+        elif parsers.boolean.should_parse(field):
+            # Add Boolean Field
+            parsers.boolean.parse_field(self, field)
+
+        elif parsers.container.should_parse(field):
+            # Add Container Field
+            parsers.container.parse_field(self, field)
+
+        elif parsers.mapping.should_parse(field):
+            # Add Mapping Field
+            parsers.mapping.parse_field(self, field)
+
+        elif parsers.literal.should_parse(field):
+            # Add Literal Field
+            parsers.literal.parse_field(self, field)
+
+        elif parsers.enum.should_parse(field):
+            # Add Enum Field
+            parsers.enum.parse_field(self, field)
 
         else:
-            # Add Other Standard Field
-            parsers.parse_standard_field(self, field)
+            # Add Standard Field
+            parsers.standard.parse_field(self, field)

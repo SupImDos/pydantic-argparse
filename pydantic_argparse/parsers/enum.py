@@ -1,7 +1,9 @@
 """Parses Enum Pydantic Fields to Command-Line Arguments.
 
-The `enum` module contains the `parse_enum_field` method, which parses enum
-`pydantic` model fields to `ArgumentParser` command-line arguments.
+The `enum` module contains the `should_parse` function, which checks whether
+this module should be used to parse the field, as well as the `parse_field`
+function, which parses enum `pydantic` model fields to `ArgumentParser`
+command-line arguments.
 """
 
 
@@ -23,60 +25,24 @@ from typing import TypeVar  # pylint: disable=wrong-import-order
 EnumT = TypeVar("EnumT", bound=enum.Enum)
 
 
-def parse_enum_field(
+def should_parse(field: pydantic.fields.ModelField) -> bool:
+    """Checks whether this field should be parsed as an `enum`.
+
+    Args:
+        field (pydantic.fields.ModelField): Field to check.
+
+    Returns:
+        bool: Whether this field should be parsed as an `enum`.
+    """
+    # Check and Return
+    return isinstance(field.outer_type_, enum.EnumMeta)
+
+
+def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
     ) -> None:
     """Adds enum pydantic field to argument parser.
-
-    Args:
-        parser (argparse.ArgumentParser): Argument parser to add to.
-        field (pydantic.fields.ModelField): Field to be added to parser.
-    """
-    # Enums are treated as choices
-    if field.required:
-        # Required
-        _parse_enum_field_required(parser, field)
-
-    else:
-        # Optional
-        _parse_enum_field_optional(parser, field)
-
-
-def _parse_enum_field_required(
-    parser: argparse.ArgumentParser,
-    field: pydantic.fields.ModelField,
-    ) -> None:
-    """Adds required enum pydantic field to argument parser.
-
-    Args:
-        parser (argparse.ArgumentParser): Argument parser to add to.
-        field (pydantic.fields.ModelField): Field to be added to parser.
-    """
-    # Get Enum Type
-    enum_type: type[enum.Enum] = field.outer_type_
-
-    # Define Custom Type Caster
-    caster = utils.type_caster(field.name, _arg_to_enum_member, enum_type=enum_type)
-
-    # Add Required Enum Field
-    parser.add_argument(
-        utils.argument_name(field.name),
-        action=argparse._StoreAction,  # pylint: disable=protected-access
-        type=caster,
-        choices=enum_type,
-        help=utils.argument_description(field.field_info.description),
-        dest=field.name,
-        metavar=field.name.upper(),
-        required=True,
-    )
-
-
-def _parse_enum_field_optional(
-    parser: argparse.ArgumentParser,
-    field: pydantic.fields.ModelField,
-    ) -> None:
-    """Adds optional enum pydantic field to argument parser.
 
     Args:
         parser (argparse.ArgumentParser): Argument parser to add to.
@@ -91,42 +57,53 @@ def _parse_enum_field_optional(
     # Get Default
     default = field.get_default()
 
-    # Add Optional Enum Field
-    if len(enum_type) == 1:
-        # Optional Flag
-        if default is not None and field.allow_none:
-            # Optional Flag (Default Not None)
-            parser.add_argument(
-                utils.argument_name("no-" + field.name),
-                action=argparse._StoreConstAction,  # pylint: disable=protected-access
-                const=None,
-                default=default,
-                help=utils.argument_description(field.field_info.description, default),
-                dest=field.name,
-                metavar=field.name.upper(),
-                required=False,
-            )
-
-        else:
-            # Optional Flag (Default None)
-            parser.add_argument(
-                utils.argument_name(field.name),
-                action=argparse._StoreConstAction,  # pylint: disable=protected-access
-                const=list(enum_type)[0],
-                default=default,
-                help=utils.argument_description(field.field_info.description, default),
-                dest=field.name,
-                metavar=field.name.upper(),
-                required=False,
-            )
-
-    else:
-        # Optional Choice
+    # Enums are treated as choices
+    if field.required:
+        # Add Required Enum Field
         parser.add_argument(
             utils.argument_name(field.name),
             action=argparse._StoreAction,  # pylint: disable=protected-access
             type=caster,
             choices=enum_type,
+            help=utils.argument_description(field.field_info.description),
+            dest=field.name,
+            metavar=field.name.upper(),
+            required=True,
+        )
+
+    elif len(enum_type) > 1:
+        # Add Optional Choice
+        parser.add_argument(
+            utils.argument_name(field.name),
+            action=argparse._StoreAction,  # pylint: disable=protected-access
+            type=caster,
+            choices=enum_type,
+            default=default,
+            help=utils.argument_description(field.field_info.description, default),
+            dest=field.name,
+            metavar=field.name.upper(),
+            required=False,
+        )
+
+    elif default is not None and field.allow_none:
+        # Add Optional Flag (Default Not None)
+        parser.add_argument(
+            utils.argument_name(f"no-{field.name}"),
+            action=argparse._StoreConstAction,  # pylint: disable=protected-access
+            const=None,
+            default=default,
+            help=utils.argument_description(field.field_info.description, default),
+            dest=field.name,
+            metavar=field.name.upper(),
+            required=False,
+        )
+
+    else:
+        # Add Optional Flag (Default None)
+        parser.add_argument(
+            utils.argument_name(field.name),
+            action=argparse._StoreConstAction,  # pylint: disable=protected-access
+            const=list(enum_type)[0],
             default=default,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.name,

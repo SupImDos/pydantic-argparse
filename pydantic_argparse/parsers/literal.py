@@ -1,7 +1,9 @@
 """Parses Literal Pydantic Fields to Command-Line Arguments.
 
-The `literal` module contains the `parse_literal_field` method, which parses
-literal `pydantic` model fields to `ArgumentParser` command-line arguments.
+The `literal` module contains the `should_parse` function, which checks whether
+this module should be used to parse the field, as well as the `parse_field`
+function, which parses literal `pydantic` model fields to `ArgumentParser`
+command-line arguments.
 """
 
 
@@ -16,67 +18,34 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import TypeVar  # pylint: disable=wrong-import-order
+from typing import Literal, TypeVar  # pylint: disable=wrong-import-order
 
 
 # Constants
 T = TypeVar("T")
 
 
-def parse_literal_field(
+def should_parse(field: pydantic.fields.ModelField) -> bool:
+    """Checks whether this field should be parsed as a `literal`.
+
+    Args:
+        field (pydantic.fields.ModelField): Field to check.
+
+    Returns:
+        bool: Whether this field should be parsed as a `literal`.
+    """
+    # Get Field Type or Origin
+    field_type = typing.get_origin(field.outer_type_) or field.outer_type_
+
+    # Check and Return
+    return field_type is Literal
+
+
+def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
     ) -> None:
     """Adds enum pydantic field to argument parser.
-
-    Args:
-        parser (argparse.ArgumentParser): Argument parser to add to.
-        field (pydantic.fields.ModelField): Field to be added to parser.
-    """
-    # Literals are treated as constant flags, or choices
-    if field.required:
-        # Required
-        _parse_literal_field_required(parser, field)
-
-    else:
-        # Optional
-        _parse_literal_field_optional(parser, field)
-
-
-def _parse_literal_field_required(
-    parser: argparse.ArgumentParser,
-    field: pydantic.fields.ModelField,
-    ) -> None:
-    """Adds required literal pydantic field to argument parser.
-
-    Args:
-        parser (argparse.ArgumentParser): Argument parser to add to.
-        field (pydantic.fields.ModelField): Field to be added to parser.
-    """
-    # Get choices from literal
-    choices = list(typing.get_args(field.outer_type_))
-
-    # Define Custom Type Caster
-    caster = utils.type_caster(field.name, _arg_to_choice, choices=choices)
-
-    # Add Required Literal Field
-    parser.add_argument(
-        utils.argument_name(field.name),
-        action=argparse._StoreAction,  # pylint: disable=protected-access
-        type=caster,
-        choices=choices,
-        help=utils.argument_description(field.field_info.description),
-        dest=field.name,
-        metavar=field.name.upper(),
-        required=True,
-    )
-
-
-def _parse_literal_field_optional(
-    parser: argparse.ArgumentParser,
-    field: pydantic.fields.ModelField,
-    ) -> None:
-    """Adds optional literal pydantic field to argument parser.
 
     Args:
         parser (argparse.ArgumentParser): Argument parser to add to.
@@ -91,42 +60,53 @@ def _parse_literal_field_optional(
     # Get Default
     default = field.get_default()
 
-    # Add Optional Literal Field
-    if len(choices) == 1:
-        # Optional Flag
-        if default is not None and field.allow_none:
-            # Optional Flag (Default Not None)
-            parser.add_argument(
-                utils.argument_name("no-" + field.name),
-                action=argparse._StoreConstAction,  # pylint: disable=protected-access
-                const=None,
-                default=default,
-                help=utils.argument_description(field.field_info.description, default),
-                dest=field.name,
-                metavar=field.name.upper(),
-                required=False,
-            )
-
-        else:
-            # Optional Flag (Default None)
-            parser.add_argument(
-                utils.argument_name(field.name),
-                action=argparse._StoreConstAction,  # pylint: disable=protected-access
-                const=choices[0],
-                default=default,
-                help=utils.argument_description(field.field_info.description, default),
-                dest=field.name,
-                metavar=field.name.upper(),
-                required=False,
-            )
-
-    else:
-        # Optional Choice
+    # Literals are treated as constant flags, or choices
+    if field.required:
+        # Add Required Literal Field
         parser.add_argument(
             utils.argument_name(field.name),
             action=argparse._StoreAction,  # pylint: disable=protected-access
             type=caster,
             choices=choices,
+            help=utils.argument_description(field.field_info.description),
+            dest=field.name,
+            metavar=field.name.upper(),
+            required=True,
+        )
+
+    elif len(choices) > 1:
+        # Add Optional Choice
+        parser.add_argument(
+            utils.argument_name(field.name),
+            action=argparse._StoreAction,  # pylint: disable=protected-access
+            type=caster,
+            choices=choices,
+            default=default,
+            help=utils.argument_description(field.field_info.description, default),
+            dest=field.name,
+            metavar=field.name.upper(),
+            required=False,
+        )
+
+    elif default is not None and field.allow_none:
+        # Add Optional Flag (Default Not None)
+        parser.add_argument(
+            utils.argument_name(f"no-{field.name}"),
+            action=argparse._StoreConstAction,  # pylint: disable=protected-access
+            const=None,
+            default=default,
+            help=utils.argument_description(field.field_info.description, default),
+            dest=field.name,
+            metavar=field.name.upper(),
+            required=False,
+        )
+
+    else:
+        # Add Optional Flag (Default None)
+        parser.add_argument(
+            utils.argument_name(field.name),
+            action=argparse._StoreConstAction,  # pylint: disable=protected-access
+            const=choices[0],
             default=default,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.name,
