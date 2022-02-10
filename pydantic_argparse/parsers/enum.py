@@ -35,7 +35,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
         bool: Whether this field should be parsed as an `enum`.
     """
     # Check and Return
-    return isinstance(field.outer_type_, enum.EnumMeta)
+    return utils.is_field_a(field, enum.Enum)
 
 
 def parse_field(

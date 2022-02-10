@@ -13,6 +13,9 @@ import argparse
 # Third-Party
 import pydantic
 
+# Local
+from pydantic_argparse import utils
+
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
     """Checks whether this field should be parsed as a `command`.
@@ -24,7 +27,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
         bool: Whether this field should be parsed as a `command`.
     """
     # Check and Return
-    return isinstance(field.outer_type_, pydantic.main.ModelMetaclass)
+    return utils.is_field_a(field, pydantic.BaseModel)
 
 
 def parse_field(

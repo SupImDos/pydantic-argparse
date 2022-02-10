@@ -11,7 +11,6 @@ command-line arguments.
 import argparse
 import ast
 import collections.abc
-import typing
 
 # Third-Party
 import pydantic
@@ -29,11 +28,8 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
     Returns:
         bool: Whether this field should be parsed as a `literal`.
     """
-    # Get Field Type or Origin
-    field_type = typing.get_origin(field.outer_type_) or field.outer_type_
-
     # Check and Return
-    return isinstance(field_type, type) and issubclass(field_type, collections.abc.Mapping)
+    return utils.is_field_a(field, collections.abc.Mapping)
 
 
 def parse_field(

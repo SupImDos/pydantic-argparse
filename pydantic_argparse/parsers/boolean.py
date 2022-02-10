@@ -27,7 +27,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
         bool: Whether this field should be parsed as a `boolean`.
     """
     # Check and Return
-    return field.outer_type_ is bool
+    return utils.is_field_a(field, bool)
 
 
 def parse_field(

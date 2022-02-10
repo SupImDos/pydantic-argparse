@@ -34,11 +34,8 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
     Returns:
         bool: Whether this field should be parsed as a `literal`.
     """
-    # Get Field Type or Origin
-    field_type = typing.get_origin(field.outer_type_) or field.outer_type_
-
     # Check and Return
-    return field_type is Literal
+    return utils.is_field_a(field, Literal)
 
 
 def parse_field(
