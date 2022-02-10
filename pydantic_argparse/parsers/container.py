@@ -10,7 +10,7 @@ whether this module should be used to parse the field, as well as the
 # Standard
 import argparse
 import collections.abc
-import typing
+import enum
 
 # Third-Party
 import pydantic
@@ -28,16 +28,10 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
     Returns:
         bool: Whether this field should be parsed as a `container`.
     """
-    # Get Field Type or Origin
-    field_type = typing.get_origin(field.outer_type_) or field.outer_type_
-
     # Check and Return
-    return all(
-        (
-            isinstance(field_type, type) and issubclass(field_type, collections.abc.Container),
-            isinstance(field_type, type) and not issubclass(field_type, collections.abc.Mapping),
-            field_type not in (str, bytes),
-        )
+    return (
+        utils.is_field_a(field, collections.abc.Container)
+        and not utils.is_field_a(field, (collections.abc.Mapping, enum.Enum, str, bytes))
     )
 
 

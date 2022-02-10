@@ -7,15 +7,20 @@ all branches of all functions.
 
 # Standard
 import argparse
+import collections
+import collections.abc
+import enum
 
 # Third-Party
+import pydantic
 import pytest
 
 # Local
 from pydantic_argparse.utils import utils
+import tests.conftest as conf
 
 # Typing
-from typing import Any, Optional  # pylint: disable=wrong-import-order
+from typing import Any, Literal, Optional  # pylint: disable=wrong-import-order
 
 
 @pytest.mark.parametrize(
@@ -127,3 +132,65 @@ def test_type_caster() -> None:
     # Assert
     assert result.__name__ == "abc"
     assert result("x") == "xyz"
+
+
+@pytest.mark.parametrize(
+    [
+        "field_type",
+        "expected_type",
+    ],
+    [
+        (bool,                   bool),
+        (int,                    int),
+        (float,                  float),
+        (str,                    str),
+        (bytes,                  bytes),
+        (list,                   list),
+        (list,                   collections.abc.Container),
+        (list[str],              list),
+        (list[str],              collections.abc.Container),
+        (tuple,                  tuple),
+        (tuple,                  collections.abc.Container),
+        (tuple[str, ...],        tuple),
+        (tuple[str, ...],        collections.abc.Container),
+        (set,                    set),
+        (set,                    collections.abc.Container),
+        (set[str],               set),
+        (set[str],               collections.abc.Container),
+        (frozenset,              frozenset),
+        (frozenset,              collections.abc.Container),
+        (frozenset[str],         frozenset),
+        (frozenset[str],         collections.abc.Container),
+        (collections.deque,      collections.deque),
+        (collections.deque,      collections.abc.Container),
+        (collections.deque[str], collections.deque),
+        (collections.deque[str], collections.abc.Container),
+        (dict,                   dict),
+        (dict,                   collections.abc.Mapping),
+        (dict[str, int],         dict),
+        (dict[str, int],         collections.abc.Mapping),
+        (Literal["A"],           Literal),
+        (Literal[1, 2, 3],       Literal),
+        (conf.TestCommand,       pydantic.BaseModel),
+        (conf.TestCommands,      pydantic.BaseModel),
+        (conf.TestEnum,          enum.Enum),
+        (conf.TestEnumSingle,    enum.Enum),
+    ]
+)
+def test_is_field_a(field_type: Any, expected_type: Any) -> None:
+    """Tests utils.is_field_a Function.
+
+    Args:
+        field_type (Any): Field type to test.
+        expected_type (Any): Expected type to check for the field.
+    """
+    # Dynamically Create Field
+    field = pydantic.fields.ModelField(
+        name="test",
+        type_=field_type,
+        class_validators=None,
+        model_config=pydantic.BaseConfig,
+    )
+
+    # Check and Assert Field Type
+    assert utils.is_field_a(field, expected_type)
