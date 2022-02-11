@@ -20,13 +20,13 @@ from pydantic_argparse import utils
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
-    """Checks whether this field should be parsed as a `literal`.
+    """Checks whether the field should be parsed as a `literal`.
 
     Args:
         field (pydantic.fields.ModelField): Field to check.
 
     Returns:
-        bool: Whether this field should be parsed as a `literal`.
+        bool: Whether the field should be parsed as a `literal`.
     """
     # Check and Return
     return utils.is_field_a(field, collections.abc.Mapping)

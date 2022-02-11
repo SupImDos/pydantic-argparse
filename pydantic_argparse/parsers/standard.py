@@ -1,9 +1,11 @@
 """Parses Standard Pydantic Fields to Command-Line Arguments.
 
-The `standard` module contains the `should_parse` function, which checks
-whether this module should be used to parse the field, as well as the
-`parse_field` function, which parses standard `pydantic` model fields to
-`ArgumentParser` command-line arguments.
+The `standard` module contains the `parse_field` function, which parses
+standard `pydantic` model fields to `ArgumentParser` command-line arguments.
+
+Unlike the other `parser` modules, the `standard` module does not contain a
+`should_parse` function. This is because it is the fallback case, where fields
+that do not match any other types and require no special handling are parsed.
 """
 
 

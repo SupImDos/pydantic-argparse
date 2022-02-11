@@ -18,13 +18,13 @@ from pydantic_argparse import utils
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
-    """Checks whether this field should be parsed as a `boolean`.
+    """Checks whether the field should be parsed as a `boolean`.
 
     Args:
         field (pydantic.fields.ModelField): Field to check.
 
     Returns:
-        bool: Whether this field should be parsed as a `boolean`.
+        bool: Whether the field should be parsed as a `boolean`.
     """
     # Check and Return
     return utils.is_field_a(field, bool)
