@@ -20,13 +20,13 @@ from pydantic_argparse import utils
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
-    """Checks whether this field should be parsed as a `container`.
+    """Checks whether the field should be parsed as a `container`.
 
     Args:
         field (pydantic.fields.ModelField): Field to check.
 
     Returns:
-        bool: Whether this field should be parsed as a `container`.
+        bool: Whether the field should be parsed as a `container`.
     """
     # Check and Return
     return (

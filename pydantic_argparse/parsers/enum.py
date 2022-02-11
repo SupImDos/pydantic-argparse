@@ -26,13 +26,13 @@ EnumT = TypeVar("EnumT", bound=enum.Enum)
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
-    """Checks whether this field should be parsed as an `enum`.
+    """Checks whether the field should be parsed as an `enum`.
 
     Args:
         field (pydantic.fields.ModelField): Field to check.
 
     Returns:
-        bool: Whether this field should be parsed as an `enum`.
+        bool: Whether the field should be parsed as an `enum`.
     """
     # Check and Return
     return utils.is_field_a(field, enum.Enum)
