@@ -13,7 +13,7 @@ edit_uri: ""
 nav:
   - Overview: index.md
   - Usage:
-    - Getting Started: usage/getting_started.md
+    - Argument Parser: usage/argument_parser.md
     - Models: usage/models.md
     - Data Types:
       - Standard: usage/data_types/standard.md
