@@ -1,8 +1,8 @@
 <div align="center">
-    <h1 style="margin-bottom:0;font-size:3em;">
+    <h1>
         Pydantic Argparse
     </h1>
-    <p style="margin-top:0;">
+    <p>
         <em>Typed Argument Parsing with Pydantic</em>
     </p>
     <a href="https://pypi.python.org/pypi/pydantic-argparse">
@@ -18,7 +18,6 @@
         <img src="https://img.shields.io/github/license/SupImDos/pydantic-argparse.svg">
     </a>
 </div>
-<h1></h1>
 
 ## Help
 See [documentation](https://supimdos.github.io/pydantic-argparse/) for help.
