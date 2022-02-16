@@ -1,10 +1,25 @@
-# pydantic-argparse
-[![pypi](https://img.shields.io/pypi/v/pydantic-argparse.svg)](https://pypi.python.org/pypi/pydantic-argparse)
-[![downloads](https://pepy.tech/badge/pydantic-argparse)](https://pepy.tech/project/pydantic-argparse)
-[![versions](https://img.shields.io/pypi/pyversions/pydantic-argparse.svg)](https://github.com/SupImDos/pydantic-argparse)
-[![license](https://img.shields.io/github/license/SupImDos/pydantic-argparse.svg)](https://github.com/SupImDos/pydantic-argparse/blob/master/LICENSE)
+<div align="center">
+    <h3 style="margin-bottom:0;font-size:3em;">
+        Pydantic Argparse
+    </h3>
+    <p style="margin-top:0;">
+        <em>Typed Argument Parsing with Pydantic</em>
+    </p>
+    <a href="https://pypi.python.org/pypi/pydantic-argparse">
+        <img src="https://img.shields.io/pypi/v/pydantic-argparse.svg">
+    </a>
+    <a href="https://pepy.tech/project/pydantic-argparse">
+        <img src="https://pepy.tech/badge/pydantic-argparse">
+    </a>
+    <a href="https://github.com/SupImDos/pydantic-argparse">
+        <img src="https://img.shields.io/pypi/pyversions/pydantic-argparse.svg">
+    </a>
+    <a href="https://github.com/SupImDos/pydantic-argparse/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/SupImDos/pydantic-argparse.svg">
+    </a>
+</div>
 
-Typed Argument Parsing with Pydantic
+---
 
 ## Help
 See [documentation](https://supimdos.github.io/pydantic-argparse/) for help.
