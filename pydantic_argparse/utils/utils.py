@@ -157,7 +157,7 @@ def is_field_a(
     # Check `isinstance` and `issubclass` validity
     # In order for `isinstance` and `issubclass` to be valid, all arguments
     # should be instances of `type`, otherwise `TypeError` *may* be raised.
-    is_valid = all(isinstance(t, type) for t in types + (field_type, ))
+    is_valid = all(isinstance(t, type) for t in (*types, field_type))
 
     # Perform checks and return
     return (
