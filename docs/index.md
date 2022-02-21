@@ -34,7 +34,7 @@ $ pip install pydantic-argparse
 ```
 
 ## Quick Start
---8<-- "docs/docs/examples/simple.md"
+--8<-- "docs/examples/simple.md"
 
 ## Credits
 This project is made possible by [`pydantic`](https://pydantic-docs.helpmanual.io/).
