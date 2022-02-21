@@ -106,25 +106,25 @@ The `pydantic-argparse` command-line interface construction is simple.
 The `pydantic-argparse` parsed `args` support auto-completion in your IDE.
 
 === "Pydantic Argparse"
-    ![Pydantic Argparse - Auto Completion](assets/images/showcase_1a.png)
+    ![Pydantic Argparse - Auto Completion](assets/images/showcase_01.png)
 
 === "Argparse"
-    ![Argparse - Auto Completion](assets/images/showcase_1b.png)
+    ![Argparse - Auto Completion](assets/images/showcase_02.png)
 
 ### Type Hints
 The `pydantic-argparse` parsed `args` support type-hinting in your IDE.
 
 === "Pydantic Argparse"
-    ![Pydantic Argparse - Type Hints](assets/images/showcase_2a.png)
+    ![Pydantic Argparse - Type Hints](assets/images/showcase_03.png)
 
 === "Argparse"
-    ![Argparse - Type Hints](assets/images/showcase_2b.png)
+    ![Argparse - Type Hints](assets/images/showcase_04.png)
 
 ### Type Safety
 The `pydantic-argparse` parsed `args` support type-safety with `mypy`.
 
 === "Pydantic Argparse"
-    ![Pydantic Argparse - Type Safety](assets/images/showcase_3a.png)
+    ![Pydantic Argparse - Type Safety](assets/images/showcase_05.png)
 
 === "Argparse"
-    ![Argparse - Type Safety](assets/images/showcase_3b.png)
+    ![Argparse - Type Safety](assets/images/showcase_06.png)
