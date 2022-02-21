@@ -2,7 +2,7 @@
 site_name: Pydantic Argparse
 site_description: Typed Argument Parsing with Pydantic
 site_url: https://supimdos.github.io/pydantic-argparse/
-site_author: Hayden Richards
+site_author: SupImDos
 
 # Repository
 repo_name: SupImDos/pydantic-argparse
@@ -12,6 +12,8 @@ edit_uri: ""
 # Navigation
 nav:
   - Overview: index.md
+  - Background: background.md
+  - Showcase: showcase.md
   - Usage:
     - Argument Parser: usage/argument_parser.md
     - Models: usage/models.md
@@ -46,23 +48,27 @@ theme:
         name: Switch to light mode
   features:
     - navigation.instant
-    - navigation.tracking
     - navigation.top
     - navigation.sections
     - navigation.indexes
     - search.suggest
     - search.highlight
 
-# Extra CSS
+# Extras
 extra_css:
-  - stylesheet.css
+  - assets/stylesheets/reference.css
 
 # Markdown Extensions
 markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.emoji
   - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true 
 
 # Plugins
 plugins:
@@ -76,5 +82,6 @@ plugins:
             members_order: source
   - gen-files:
       scripts:
-        - docs/docs/reference/reference.py
+        - docs/reference/reference.py
   - literate-nav
+  - autorefs
