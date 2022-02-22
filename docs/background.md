@@ -5,9 +5,14 @@ necessary to explore and understand why you may want to use this package.
 ## Tenets
 The design goals of `pydantic-argparse` are summarised by these core tenets.
 
-1. Simple
-2. Opinionated
-3. Typed
+#### Simple
+:  `pydantic-argparse` has a simple API and code-base.
+
+#### Opinionated
+:  `pydantic-argparse` is deliberately limited with *one way* of doing things.
+
+#### Typed
+:  `pydantic-argparse` fully supports type-hinting and `mypy`.
 
 ## Rationale
 There are many benefits to using `pydantic-argparse` over a more traditional
