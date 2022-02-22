@@ -61,6 +61,7 @@ extra_css:
 # Markdown Extensions
 markdown_extensions:
   - admonition
+  - def_list
   - tables
   - pymdownx.emoji
   - pymdownx.highlight
