@@ -21,7 +21,7 @@
 ---
 
 ## Overview
-`pydantic-argparse` is a Python package built on top of [`pydantic`](https://pydantic-docs.helpmanual.io/) which
+`pydantic-argparse` is a Python package built on top of [`pydantic`][1] which
 provides declarative *typed* argument parsing using `pydantic` models.
 
 ## Requirements
@@ -37,7 +37,10 @@ $ pip install pydantic-argparse
 --8<-- "docs/examples/simple.md"
 
 ## Credits
-This project is made possible by [`pydantic`](https://pydantic-docs.helpmanual.io/).
+This project is made possible by [`pydantic`][1].
 
 ## License
 This project is licensed under the terms of the MIT license.
+
+<!--- Reference -->
+[1]: https://pydantic-docs.helpmanual.io/
