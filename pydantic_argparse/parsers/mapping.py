@@ -43,7 +43,7 @@ def parse_field(
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Define Custom Type Caster
-    caster = utils.type_caster(field.name, ast.literal_eval)
+    caster = utils.type_caster(field.alias, ast.literal_eval)
 
     # Get Default
     default = field.get_default()
@@ -52,24 +52,24 @@ def parse_field(
     if field.required:
         # Add Required Mapping Field
         parser.add_argument(
-            utils.argument_name(field.name),
+            utils.argument_name(field.alias),
             action=argparse._StoreAction,  # pylint: disable=protected-access
             type=caster,
             help=utils.argument_description(field.field_info.description),
-            dest=field.name,
-            metavar=field.name.upper(),
+            dest=field.alias,
+            metavar=field.alias.upper(),
             required=True,
         )
 
     else:
         # Add Optional Mapping Field
         parser.add_argument(
-            utils.argument_name(field.name),
+            utils.argument_name(field.alias),
             action=argparse._StoreAction,  # pylint: disable=protected-access
             type=caster,
             default=default,
             help=utils.argument_description(field.field_info.description, default),
-            dest=field.name,
-            metavar=field.name.upper(),
+            dest=field.alias,
+            metavar=field.alias.upper(),
             required=False,
         )

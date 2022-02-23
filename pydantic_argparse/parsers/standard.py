@@ -36,22 +36,22 @@ def parse_field(
     if field.required:
         # Add Required Standard Field
         parser.add_argument(
-            utils.argument_name(field.name),
+            utils.argument_name(field.alias),
             action=argparse._StoreAction,  # pylint: disable=protected-access
             help=utils.argument_description(field.field_info.description),
-            dest=field.name,
-            metavar=field.name.upper(),
+            dest=field.alias,
+            metavar=field.alias.upper(),
             required=True,
         )
 
     else:
         # Add Optional Standard Field
         parser.add_argument(
-            utils.argument_name(field.name),
+            utils.argument_name(field.alias),
             action=argparse._StoreAction,  # pylint: disable=protected-access
             default=default,
             help=utils.argument_description(field.field_info.description, default),
-            dest=field.name,
-            metavar=field.name.upper(),
+            dest=field.alias,
+            metavar=field.alias.upper(),
             required=False,
         )

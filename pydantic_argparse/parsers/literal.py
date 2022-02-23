@@ -52,7 +52,7 @@ def parse_field(
     choices = list(typing.get_args(field.outer_type_))
 
     # Define Custom Type Caster
-    caster = utils.type_caster(field.name, _arg_to_choice, choices=choices)
+    caster = utils.type_caster(field.alias, _arg_to_choice, choices=choices)
 
     # Get Default
     default = field.get_default()
@@ -61,53 +61,53 @@ def parse_field(
     if field.required:
         # Add Required Literal Field
         parser.add_argument(
-            utils.argument_name(field.name),
+            utils.argument_name(field.alias),
             action=argparse._StoreAction,  # pylint: disable=protected-access
             type=caster,
             choices=choices,
             help=utils.argument_description(field.field_info.description),
-            dest=field.name,
-            metavar=field.name.upper(),
+            dest=field.alias,
+            metavar=field.alias.upper(),
             required=True,
         )
 
     elif len(choices) > 1:
         # Add Optional Choice
         parser.add_argument(
-            utils.argument_name(field.name),
+            utils.argument_name(field.alias),
             action=argparse._StoreAction,  # pylint: disable=protected-access
             type=caster,
             choices=choices,
             default=default,
             help=utils.argument_description(field.field_info.description, default),
-            dest=field.name,
-            metavar=field.name.upper(),
+            dest=field.alias,
+            metavar=field.alias.upper(),
             required=False,
         )
 
     elif default is not None and field.allow_none:
         # Add Optional Flag (Default Not None)
         parser.add_argument(
-            utils.argument_name(f"no-{field.name}"),
+            utils.argument_name(f"no-{field.alias}"),
             action=argparse._StoreConstAction,  # pylint: disable=protected-access
             const=None,
             default=default,
             help=utils.argument_description(field.field_info.description, default),
-            dest=field.name,
-            metavar=field.name.upper(),
+            dest=field.alias,
+            metavar=field.alias.upper(),
             required=False,
         )
 
     else:
         # Add Optional Flag (Default None)
         parser.add_argument(
-            utils.argument_name(field.name),
+            utils.argument_name(field.alias),
             action=argparse._StoreConstAction,  # pylint: disable=protected-access
             const=choices[0],
             default=default,
             help=utils.argument_description(field.field_info.description, default),
-            dest=field.name,
-            metavar=field.name.upper(),
+            dest=field.alias,
+            metavar=field.alias.upper(),
             required=False,
         )
 
