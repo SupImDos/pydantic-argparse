@@ -42,7 +42,7 @@ def parse_field(
     """
     # Add Command
     subparser.add_parser(
-        field.name,
+        field.alias,
         help=field.field_info.description,
         model=field.outer_type_,
         exit_on_error=False,  # Allow top level parser to handle exiting

@@ -47,31 +47,31 @@ def parse_field(
     if field.required:
         # Add Required Boolean Field
         parser.add_argument(
-            utils.argument_name(field.name),
+            utils.argument_name(field.alias),
             action=argparse.BooleanOptionalAction,
             help=utils.argument_description(field.field_info.description),
-            dest=field.name,
+            dest=field.alias,
             required=True,
         )
 
     elif default:
         # Add Optional Boolean Field (Default True)
         parser.add_argument(
-            utils.argument_name(f"no-{field.name}"),
+            utils.argument_name(f"no-{field.alias}"),
             action=argparse._StoreFalseAction,  # pylint: disable=protected-access
             default=default,
             help=utils.argument_description(field.field_info.description, default),
-            dest=field.name,
+            dest=field.alias,
             required=False,
         )
 
     else:
         # Add Optional Boolean Field (Default False)
         parser.add_argument(
-            utils.argument_name(field.name),
+            utils.argument_name(field.alias),
             action=argparse._StoreTrueAction,  # pylint: disable=protected-access
             default=default,
             help=utils.argument_description(field.field_info.description, default),
-            dest=field.name,
+            dest=field.alias,
             required=False,
         )
