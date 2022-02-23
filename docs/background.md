@@ -82,20 +82,20 @@ that you agree with. Some of the possible drawbacks are outlined below.
 There are many alternative argument parsing packages that already exist for
 Python. Some of the most popular are outlined below.
 
-#### [Argparse](https://docs.python.org/3/library/argparse.html)
+#### [Argparse][1]
 > `argparse` is a module that makes it easy to write user-friendly command-line
 > interfaces. The program defines what arguments it requires, and `argparse`
 > will figure out how to parse those out of `sys.argv`. The `argparse` module
 > also automatically generates help and usage messages and issues errors when
 > users give the program invalid arguments.
 
-#### [Click](https://click.palletsprojects.com/)
+#### [Click][2]
 > `click` is a Python package for creating beautiful command line interfaces in
 > a composable way with as little code as necessary. It’s the “Command Line
 > Interface Creation Kit”. It’s highly configurable but comes with sensible
 > defaults out of the box.
 
-#### [Typer](https://typer.tiangolo.com/)
+#### [Typer][3]
 > `typer` is a library for building CLI applications that users will love using
 > and developers will love creating. Based on Python 3.6+ type hints. The key
 > features are that it is intuitive to write, easy to use, short and starts
@@ -129,3 +129,8 @@ A feature comparison matrix of the alternatives outlined above is shown below.
 | **Extra Features**                                                                                                   |
 | *Typing Hinting*                |                    | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
 | *Shell Completion*              |                    | :white_check_mark: | :white_check_mark: |                     |
+
+<!--- Reference -->
+[1]: https://docs.python.org/3/library/argparse.html
+[2]: https://click.palletsprojects.com/
+[3]: https://typer.tiangolo.com/
