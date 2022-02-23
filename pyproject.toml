@@ -15,7 +15,7 @@ keywords = [
     "validation",
 ]
 include = [
-    "LICENSE",
+    "LICENSE.md",
 ]
 
 [tool.poetry.dependencies]
