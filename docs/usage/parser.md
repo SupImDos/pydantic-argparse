@@ -8,7 +8,7 @@ standard library `argparse.ArgumentParser`, in an attempt to provide as close
 to a drop-in-replacement as possible.
 
 ## Instantiation
-Instantiation of the `ArgumentParser` is as follows:
+To create an instance of the `ArgumentParser`:
 ```python
 parser = pydantic_argparse.ArgumentParser(
     model=Arguments,
@@ -24,13 +24,8 @@ parser = pydantic_argparse.ArgumentParser(
 ### Required Parameters
 The *required* parameters for the `ArgumentParser` are outlined below:
 
-* `model` (`pydantic.BaseModel`):
-    `pydantic` model that defines the command-line arguments
-
-!!! note
-    The supplied `pydantic` model is at the very core of `pydantic-argparse`,
-    and its declaration and functionality are explained in further detail in
-    the next section.
+* `model` (`type[pydantic.BaseModel]`):
+    The model that defines the command-line arguments
 
 ### Optional Parameters
 The *optional* parameters for the `ArgumentParser` are outlined below:
@@ -44,9 +39,9 @@ The *optional* parameters for the `ArgumentParser` are outlined below:
 * `epilog` (`Optional[str]`):
     The program epilog that appears in the help message
 * `add_help` (`bool`):
-    Whether to add the `-h / --help` help message
+    Whether to add the `-h / --help` help message action
 * `exit_on_error` (`bool`):
-    Whether to exit on error, or just raise an `ArgumentError`
+    Whether to exit, or raise an `ArgumentError` upon an error
 
 ## Parsing
 To parse command-line arguments into the `model` using the `ArgumentParser`:

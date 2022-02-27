@@ -15,8 +15,8 @@ nav:
   - Background: background.md
   - Showcase: showcase.md
   - Usage:
-    - Argument Parser: usage/argument_parser.md
-    - Models: usage/models.md
+    - Arguments: usage/arguments.md
+    - Parser: usage/parser.md
     - Data Types:
       - Standard: usage/data_types/standard.md
       - Flags: usage/data_types/flags.md
