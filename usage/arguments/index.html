@@ -9,19 +9,21 @@
         <meta name="description" content="Typed Argument Parsing with Pydantic">
       
       
-        <meta name="author" content="Hayden Richards">
+        <meta name="author" content="SupImDos">
       
+      
+        <link rel="canonical" href="https://supimdos.github.io/pydantic-argparse/usage/arguments/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.8">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.11">
     
     
       
-        <title>Models - Pydantic Argparse</title>
+        <title>Arguments - Pydantic Argparse</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e60f8b8.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50e68009.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -40,7 +42,7 @@
     
       <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../stylesheet.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/reference.css">
     
     <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -70,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#models" class="md-skip">
+        <a href="#overview" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Models
+              Arguments
             
           </span>
         </div>
@@ -174,7 +176,7 @@
         <a href="https://github.com/SupImDos/pydantic-argparse" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     SupImDos/pydantic-argparse
@@ -219,7 +221,7 @@
       <a href="https://github.com/SupImDos/pydantic-argparse" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     SupImDos/pydantic-argparse
@@ -250,6 +252,36 @@
 
   
   
+  
+    <li class="md-nav__item">
+      <a href="../../background/" class="md-nav__link">
+        Background
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../showcase/" class="md-nav__link">
+        Showcase
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
     
   
   
@@ -259,7 +291,7 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
       
       
@@ -274,31 +306,17 @@
         
       
       
-        <label class="md-nav__link" for="__nav_2">
+        <label class="md-nav__link" for="__nav_4">
           Usage
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Usage" data-md-level="1">
-        <label class="md-nav__title" for="__nav_2">
+        <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           Usage
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../getting_started/" class="md-nav__link">
-        Getting Started
-      </a>
-    </li>
-  
-
-            
           
             
               
@@ -314,12 +332,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Models
+          Arguments
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Models
+        Arguments
       </a>
       
         
@@ -336,9 +354,77 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#models" class="md-nav__link">
-    Models
+  <a href="#overview" class="md-nav__link">
+    Overview
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pydantic" class="md-nav__link">
+    Pydantic
+  </a>
+  
+    <nav class="md-nav" aria-label="Pydantic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model" class="md-nav__link">
+    Model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fields" class="md-nav__link">
+    Fields
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    Arguments
+  </a>
+  
+    <nav class="md-nav" aria-label="Arguments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    Required
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional" class="md-nav__link">
+    Optional
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descriptions" class="md-nav__link">
+    Descriptions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aliases" class="md-nav__link">
+    Aliases
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -356,11 +442,25 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../parser/" class="md-nav__link">
+        Parser
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
       
       
       
@@ -375,13 +475,13 @@
         
       
       
-        <label class="md-nav__link" for="__nav_2_3">
+        <label class="md-nav__link" for="__nav_4_3">
           Data Types
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Data Types" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_3">
+        <label class="md-nav__title" for="__nav_4_3">
           <span class="md-nav__icon md-icon"></span>
           Data Types
         </label>
@@ -483,7 +583,7 @@
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
       
       
       
@@ -494,13 +594,13 @@
         
       
       
-        <label class="md-nav__link" for="__nav_3">
+        <label class="md-nav__link" for="__nav_5">
           Examples
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Examples" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
+        <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           Examples
         </label>
@@ -553,7 +653,7 @@
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
       
       
       
@@ -562,13 +662,13 @@
         
       
       
-        <label class="md-nav__link" for="__nav_4">
+        <label class="md-nav__link" for="__nav_6">
           Reference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_4">
+        <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Reference
         </label>
@@ -583,7 +683,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_1" type="checkbox" id="__nav_6_1" >
       
       
       
@@ -605,14 +705,14 @@
         <div class="md-nav__link md-nav__link--index ">
           <a href="../../reference/pydantic_argparse/">pydantic_argparse</a>
           
-            <label for="__nav_4_1">
+            <label for="__nav_6_1">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="pydantic_argparse" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_1">
+        <label class="md-nav__title" for="__nav_6_1">
           <span class="md-nav__icon md-icon"></span>
           pydantic_argparse
         </label>
@@ -629,7 +729,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2" type="checkbox" id="__nav_4_1_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_1_2" type="checkbox" id="__nav_6_1_2" >
       
       
       
@@ -649,14 +749,14 @@
         <div class="md-nav__link md-nav__link--index ">
           <a href="../../reference/pydantic_argparse/argparse/">argparse</a>
           
-            <label for="__nav_4_1_2">
+            <label for="__nav_6_1_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="argparse" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_1_2">
+        <label class="md-nav__title" for="__nav_6_1_2">
           <span class="md-nav__icon md-icon"></span>
           argparse
         </label>
@@ -708,7 +808,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_3" type="checkbox" id="__nav_4_1_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_1_3" type="checkbox" id="__nav_6_1_3" >
       
       
       
@@ -738,14 +838,14 @@
         <div class="md-nav__link md-nav__link--index ">
           <a href="../../reference/pydantic_argparse/parsers/">parsers</a>
           
-            <label for="__nav_4_1_3">
+            <label for="__nav_6_1_3">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="parsers" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_1_3">
+        <label class="md-nav__title" for="__nav_6_1_3">
           <span class="md-nav__icon md-icon"></span>
           parsers
         </label>
@@ -815,8 +915,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/pydantic_argparse/parsers/json/" class="md-nav__link">
-        json.py
+      <a href="../../reference/pydantic_argparse/parsers/literal/" class="md-nav__link">
+        literal.py
       </a>
     </li>
   
@@ -829,8 +929,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/pydantic_argparse/parsers/literal/" class="md-nav__link">
-        literal.py
+      <a href="../../reference/pydantic_argparse/parsers/mapping/" class="md-nav__link">
+        mapping.py
       </a>
     </li>
   
@@ -867,7 +967,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_4" type="checkbox" id="__nav_4_1_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_1_4" type="checkbox" id="__nav_6_1_4" >
       
       
       
@@ -885,14 +985,14 @@
         <div class="md-nav__link md-nav__link--index ">
           <a href="../../reference/pydantic_argparse/utils/">utils</a>
           
-            <label for="__nav_4_1_4">
+            <label for="__nav_6_1_4">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="utils" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_1_4">
+        <label class="md-nav__title" for="__nav_6_1_4">
           <span class="md-nav__icon md-icon"></span>
           utils
         </label>
@@ -959,9 +1059,77 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#models" class="md-nav__link">
-    Models
+  <a href="#overview" class="md-nav__link">
+    Overview
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pydantic" class="md-nav__link">
+    Pydantic
+  </a>
+  
+    <nav class="md-nav" aria-label="Pydantic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model" class="md-nav__link">
+    Model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fields" class="md-nav__link">
+    Fields
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    Arguments
+  </a>
+  
+    <nav class="md-nav" aria-label="Arguments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    Required
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional" class="md-nav__link">
+    Optional
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descriptions" class="md-nav__link">
+    Descriptions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aliases" class="md-nav__link">
+    Aliases
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -978,10 +1146,95 @@
               
                 
 
-  <h1>Models</h1>
+  <h1>Arguments</h1>
 
-<h2 id="models">Models</h2>
-<p>...</p>
+<h2 id="overview">Overview</h2>
+<p>At the core of <code>pydantic-argparse</code> is the <code>pydantic</code> <em>model</em>, in which
+arguments are declared with <code>pydantic</code> <em>fields</em>. This combination of the
+<em>model</em> and its <em>fields</em> defines the <em>schema</em> for your command-line arguments.</p>
+<h2 id="pydantic">Pydantic</h2>
+<h3 id="model">Model</h3>
+<p>A <code>pydantic</code> model is simply a <em>dataclass-like</em> class that inherits from the
+<code>pydantic.BaseModel</code> base class. In <code>pydantic-argparse</code>, this model is used to
+declaratively define your command-line arguments.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="c1"># Required</span>
+    <span class="n">string</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">integer</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="c1"># Optional</span>
+    <span class="n">boolean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div>
+<p>Arbitrary data, such as raw command-line arguments, can be passed to a model.
+After parsing and validation <code>pydantic</code> guarantees that the fields of the
+resultant model instance will conform to the field types defined on the model.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>For more information about <code>pydantic</code> models, see the <code>pydantic</code> <a href="https://pydantic-docs.helpmanual.io/usage/models/">docs</a>.</p>
+</div>
+<h3 id="fields">Fields</h3>
+<p>A <code>pydantic</code> model contains <em>fields</em>, which are the model class attributes.
+These fields define each <code>pydantic-argparse</code> command-line argument, and they
+can be declared either <em>implicitly</em> (as above), or <em>explicitly</em> (as below).</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="c1"># Required</span>
+    <span class="n">string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;this argument is a string&quot;</span><span class="p">)</span>
+    <span class="n">integer</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;this argument is an integer&quot;</span><span class="p">)</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;this argument is a number&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Optional</span>
+    <span class="n">boolean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;this argument is a boolean&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Explicitly defining fields can provide extra information about an argument,
+either for the command-line interface, the model schema or features such as
+complex validation.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>For more information about <code>pydantic</code> fields, see the <code>pydantic</code> <a href="https://pydantic-docs.helpmanual.io/usage/schema/#field-customization">docs</a>.</p>
+</div>
+<h2 id="arguments">Arguments</h2>
+<h3 id="required">Required</h3>
+<p>A field defines a required argument if it has no default value, or a default
+value of the <code>Ellipses</code> (<code>...</code>) singleton object.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">b</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">c</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">d</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="optional">Optional</h3>
+<p>A field defines an optional argument if it has a default value.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="n">b</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</code></pre></div>
+<p>A field can also define an optional argument if it is type-hinted as
+<code>Optional</code>. This type-hinting also allows the value of <code>None</code> for the field.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">b</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">c</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">d</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="descriptions">Descriptions</h3>
+<p>A field can be provided with a <code>description</code>, which will appear in the
+command-line interface help message.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is the command-line description!&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="aliases">Aliases</h3>
+<p>A field can be provided with an <code>alias</code>, which will change the argument name in
+the command-line interface.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This feature allows you to define arguments that use a reserved python
+keyword as the name, e.g., <code>class</code>, <code>continue</code>, <code>async</code>, etc...</p>
+</div>
+<!--- Reference -->
 
               
             </article>
@@ -1000,7 +1253,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../getting_started/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started" rel="prev">
+        <a href="../../showcase/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Showcase" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1009,20 +1262,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Getting Started
+              Showcase
             </div>
           </div>
         </a>
       
       
         
-        <a href="../data_types/standard/" class="md-footer__link md-footer__link--next" aria-label="Next: Standard" rel="next">
+        <a href="../parser/" class="md-footer__link md-footer__link--next" aria-label="Next: Parser" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Standard
+              Parser
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -1052,10 +1305,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.top", "navigation.sections", "navigation.indexes", "search.suggest", "search.highlight"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.top", "navigation.sections", "navigation.indexes", "search.suggest", "search.highlight"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.960e086b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.5a9542cf.min.js"></script>
       
     
   </body>
