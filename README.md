@@ -20,7 +20,7 @@
 </div>
 
 ## Help
-See [documentation](https://supimdos.github.io/pydantic-argparse/) for help.
+See [documentation](https://pydantic-argparse.supimdos.com) for help.
 
 ## Installation
 Installation with `pip` is simple:
