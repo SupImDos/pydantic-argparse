@@ -1,7 +1,7 @@
 # Site
 site_name: Pydantic Argparse
 site_description: Typed Argument Parsing with Pydantic
-site_url: https://supimdos.github.io/pydantic-argparse/
+site_url: https://pydantic-argparse.supimdos.com
 site_author: SupImDos
 
 # Repository
