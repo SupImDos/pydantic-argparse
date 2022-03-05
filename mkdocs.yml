@@ -33,18 +33,21 @@ theme:
   name: material
   icon:
     logo: material/filter-plus
+    repo: fontawesome/brands/github
   palette:
-    - scheme: default
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
       primary: deep purple
       accent: deep purple
       toggle:
-        icon: material/lightbulb
+        icon: material/toggle-switch
         name: Switch to dark mode
-    - scheme: slate
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
       primary: deep purple
       accent: deep purple
       toggle:
-        icon: material/lightbulb-outline
+        icon: material/toggle-switch-off-outline
         name: Switch to light mode
   features:
     - navigation.instant
