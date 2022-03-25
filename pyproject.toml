@@ -199,6 +199,7 @@ disable = [
     # "trailing-newlines",
     "unichr-builtin",
     "unicode-builtin",
+    "unnecessary-ellipsis",
     # "unnecessary-pass",
     "unpacking-in-except",
     # "useless-else-on-loop",
