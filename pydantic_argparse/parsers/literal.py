@@ -18,7 +18,7 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import Literal, TypeVar  # pylint: disable=wrong-import-order
+from typing import Any, Iterable, Literal, TypeVar  # pylint: disable=wrong-import-order
 
 
 # Constants
@@ -67,7 +67,7 @@ def parse_field(
             choices=choices,
             help=utils.argument_description(field.field_info.description),
             dest=field.alias,
-            metavar=field.alias.upper(),
+            metavar=_iterable_choices_metavar(choices),
             required=True,
         )
 
@@ -81,7 +81,7 @@ def parse_field(
             default=default,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
-            metavar=field.alias.upper(),
+            metavar=_iterable_choices_metavar(choices),
             required=False,
         )
 
@@ -135,3 +135,16 @@ def _arg_to_choice(
 
     # Raise Error
     raise ValueError
+
+
+def _iterable_choices_metavar(iterable: Iterable[Any]) -> str:
+    """Generates a string metavar from iterable choices.
+
+    Args:
+        iterable (Iterable[Any]): Iterable object to generate metavar for.
+
+    Returns:
+        str: Generated metavar
+    """
+    # Generate and Return
+    return f"{{{', '.join(i for i in iterable)}}}"
