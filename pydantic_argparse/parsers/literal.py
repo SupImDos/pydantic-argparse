@@ -147,4 +147,4 @@ def _iterable_choices_metavar(iterable: Iterable[Any]) -> str:
         str: Generated metavar
     """
     # Generate and Return
-    return f"{{{', '.join(i for i in iterable)}}}"
+    return f"{{{', '.join(str(i) for i in iterable)}}}"
