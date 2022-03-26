@@ -17,12 +17,13 @@ nav:
   - Usage:
     - Arguments: usage/arguments.md
     - Parser: usage/parser.md
-    - Data Types:
-      - Standard: usage/data_types/standard.md
-      - Flags: usage/data_types/flags.md
-      - Enums & Literals: usage/data_types/enums_literals.md
-      - Containers & Mappings: usage/data_types/containers_mappings.md
-    - Commands: usage/commands.md
+    - Argument Types:
+      - Overview: usage/argument_types/index.md
+      - Singular: usage/argument_types/singular.md
+      - Variadic: usage/argument_types/variadic.md
+      - Flags: usage/argument_types/flags.md
+      - Choices: usage/argument_types/choices.md
+      - Commands: usage/argument_types/commands.md
   - Examples:
     - Simple: examples/simple.md
     - Commands: examples/commands.md
