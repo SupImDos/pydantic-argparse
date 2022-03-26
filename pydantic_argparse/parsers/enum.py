@@ -67,7 +67,7 @@ def parse_field(
             choices=enum_type,
             help=utils.argument_description(field.field_info.description),
             dest=field.alias,
-            metavar=field.alias.upper(),
+            metavar=_enum_choices_metavar(enum_type),
             required=True,
         )
 
@@ -81,7 +81,7 @@ def parse_field(
             default=default,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
-            metavar=field.alias.upper(),
+            metavar=_enum_choices_metavar(enum_type),
             required=False,
         )
 
@@ -133,3 +133,16 @@ def _arg_to_enum_member(
         return enum_type[argument]
     except KeyError as exc:
         raise ValueError from exc
+
+
+def _enum_choices_metavar(enum_type: type[EnumT]) -> str:
+    """Generates a string metavar from enum choices.
+
+    Args:
+        enum_type (type[EnumT]): Enum type to generate metavar for.
+
+    Returns:
+        str: Generated metavar
+    """
+    # Generate and Return
+    return f"{{{', '.join(e.name for e in enum_type)}}}"
