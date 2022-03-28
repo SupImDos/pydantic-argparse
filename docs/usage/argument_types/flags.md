@@ -116,7 +116,7 @@ Enum flags can be created by defining a `pydantic` `Field` with a type of an
 different kinds of enum flag arguments, which are outlined below.
 
 ### Optional (Default `None`)
-An *optional* constant flag with a default of `None` is defined as follows:
+An *optional* enum flag with a default of `None` is defined as follows:
 
 ```python
 class Constant(enum.Enum):
@@ -146,8 +146,7 @@ Outcomes:
 * Omitting this argument will set `args.constant` to `None` (the default).
 
 ### Optional (Default `Constant`)
-An *optional* constant flag with a constant default value is defined as
-follows:
+An *optional* enum flag with a constant default value is defined as follows:
 
 ```python
 class Constant(enum.Enum):
@@ -182,7 +181,7 @@ Literal flags can be created by defining a `pydantic` `Field` with a type of
 are different kinds of literal flag arguments, which are outlined below.
 
 ### Optional (Default `None`)
-An *optional* constant flag with a default of `None` is defined as follows:
+An *optional* literal flag with a default of `None` is defined as follows:
 
 ```python
 class Arguments(BaseModel):
@@ -209,8 +208,7 @@ Outcomes:
 * Omitting this argument will set `args.constant` to `None` (the default).
 
 ### Optional (Default `Constant`)
-An *optional* constant flag with a constant default value is defined as
-follows:
+An *optional* literal flag with a constant default value is defined as follows:
 
 ```python
 class Arguments(BaseModel):
