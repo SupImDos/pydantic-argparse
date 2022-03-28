@@ -61,7 +61,7 @@ An *optional* boolean flag with a default of `False` is defined as follows:
 
 ```python
 class Arguments(BaseModel):
-    # Optional Flag (Default True)
+    # Optional Flag (Default False)
     flag: bool = Field(False, description="this is an optional flag")
 ```
 
@@ -123,7 +123,7 @@ class Constant(enum.Enum):
     VALUE = enum.auto()
 
 class Arguments(BaseModel):
-    # Required Flag
+    # Optional Flag (Default None)
     constant: Optional[Constant] = Field(description="this is a constant flag")
 ```
 
@@ -153,7 +153,7 @@ class Constant(enum.Enum):
     VALUE = enum.auto()
 
 class Arguments(BaseModel):
-    # Required Flag
+    # Optional Flag (Default Constant.VALUE)
     constant: Optional[Constant] = Field(Constant.VALUE, description="this is a constant flag")
 ```
 
@@ -185,7 +185,7 @@ An *optional* literal flag with a default of `None` is defined as follows:
 
 ```python
 class Arguments(BaseModel):
-    # Required Flag
+    # Optional Flag (Default None)
     constant: Optional[Literal["VALUE"]] = Field(description="this is a constant flag")
 ```
 
@@ -212,7 +212,7 @@ An *optional* literal flag with a constant default value is defined as follows:
 
 ```python
 class Arguments(BaseModel):
-    # Required Flag
+    # Optional Flag (Default "VALUE")
     constant: Optional[Literal["VALUE"]] = Field("VALUE", description="this is a constant flag")
 ```
 
