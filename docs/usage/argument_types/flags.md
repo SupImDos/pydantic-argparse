@@ -177,8 +177,8 @@ Outcomes:
 
 ## Literals
 Literal flags can be created by defining a `pydantic` `Field` with a type of
-`:::python typing.Literal["X"]`, which contains only one literal value. There
-are different kinds of literal flag arguments, which are outlined below.
+`:::python typing.Literal`, which contains only one literal value. There are
+different kinds of literal flag arguments, which are outlined below.
 
 ### Optional (Default `None`)
 An *optional* literal flag with a default of `None` is defined as follows:
