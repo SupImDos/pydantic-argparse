@@ -1,18 +1,22 @@
 ## Overview
 `pydantic-argparse` provides functionality for flag arguments. A flag is a
-command-line argument that has no value following it. For example: `--flag` or
+command-line argument that has no following value. For example: `--flag` or
 `--no-flag`.
 
 This section covers the following standard `argparse` argument functionality:
 
-* `:::python action=argparse.BooleanOptionalAction`
-* `:::python action="store_true"`
-* `:::python action="store_false"`
-* `:::python action="store_const", const="A"`
-* `:::python action="store_const", const=Enum.A`
+```python
+# Boolean Flags
+parser.add_argument("--flag", action=argparse.BooleanOptionalAction)
+parser.add_argument("--flag", action="store_true")
+parser.add_argument("--no-flag", action="store_false")
+# Constant Flags
+parser.add_argument("--flag", action="store_const", const="A")
+parser.add_argument("--flag", action="store_const", const=Enum.A)
+```
 
 ## Usage
-The intended usage of flags are to enable or disable features. For example:
+The intended usage of flags is to enable or disable features. For example:
 
 ```console
 $ python3 example.py --debug

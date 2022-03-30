@@ -5,8 +5,12 @@ command-line argument that allows a restricted set of values. For example:
 
 This section covers the following standard `argparse` argument functionality:
 
-* `:::python choices=[Enum.A, Enum.B, Enum.B]`
-* `:::python choices=["A", "B", "C"]`
+```python
+# Enum Choices
+parser.add_argument("--choice", choices=[Enum.A, Enum.B, Enum.B])
+# Literal Choices
+parser.add_argument("--choice", choices=["A", "B", "C"])
+```
 
 ## Usage
 The intended usage of choice arguments is to restrict the set of valid options
