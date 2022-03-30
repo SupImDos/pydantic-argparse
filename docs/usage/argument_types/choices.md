@@ -3,8 +3,9 @@
 command-line argument that allows a restricted set of values. For example:
 `--choice X` or `--choice Y`.
 
-This covers the standard `argparse` functionality of:
+This section covers the following standard `argparse` argument functionality:
 
+* `:::python choices=[Enum.A, Enum.B, Enum.B]`
 * `:::python choices=["A", "B", "C"]`
 
 ## Usage

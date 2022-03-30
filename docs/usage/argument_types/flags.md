@@ -3,12 +3,13 @@
 command-line argument that has no value following it. For example: `--flag` or
 `--no-flag`.
 
-This covers the standard `argparse` functionality of:
+This section covers the following standard `argparse` argument functionality:
 
 * `:::python action=argparse.BooleanOptionalAction`
 * `:::python action="store_true"`
 * `:::python action="store_false"`
-* `:::python action="store_const"`
+* `:::python action="store_const", const="A"`
+* `:::python action="store_const", const=Enum.A`
 
 ## Usage
 The intended usage of flags are to enable or disable features. For example:
