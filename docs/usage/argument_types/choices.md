@@ -17,18 +17,18 @@ The intended usage of choice arguments is to restrict the set of valid options
 for the user. For example:
 
 ```console
-$ python3 example.py --choice A
+$ python3 example.py --choice PAPER
 ```
 
 ```python
-if args.choice == "A":
-    # Choice A
+if args.choice == "PAPER":
+    # Choice PAPER
     ...
-elif args.choice == "B":
-    # Choice B
+elif args.choice == "SCISSORS":
+    # Choice SCISSORS
     ...
-elif args.choice == "C":
-    # Choice C
+elif args.choice == "ROCK":
+    # Choice ROCK
     ...
 else:
     # This cannot occur!

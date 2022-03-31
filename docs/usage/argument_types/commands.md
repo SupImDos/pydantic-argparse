@@ -17,14 +17,14 @@ The intended usage of commands is to provide the user with different
 application behaviours, each with their own subset of arguments. For example:
 
 ```console
-$ python3 example.py command --arg abc
+$ python3 example.py serve --address 127.0.0.1 --port 8080
 ```
 
 ```python
-if args.command:
-    # This command was chosen
+if args.serve:
+    # The serve command was chosen
     # We have typed access to any of the command model arguments we defined
-    # For example: `args.command.arg`, etc.
+    # For example: `args.serve.address`, `args.serve.port`, etc.
     ...
 ```
 
