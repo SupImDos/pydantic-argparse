@@ -1,16 +1,15 @@
 ## Overview
 `pydantic-argparse` provides functionality for commands. A command is a
-positional command-line argument that is followed by its own subset of
-command-line arguments. For example: `serve --address 0.0.0.0 --port 8080` or
-`build --path abc --mode xyz`.
+positional command-line argument that can be followed by its own specific
+subset of command-line arguments. For example: `command --arg abc`.
 
 This section covers the following standard `argparse` argument functionality:
 
 ```python
 # Subparser Commands
 subparsers = parser.add_subparsers()
-serve = subparsers.add_parser("serve")
-serve.add_argument(...)
+command = subparsers.add_parser("command")
+command.add_argument(...)
 ```
 
 ## Usage
@@ -18,89 +17,84 @@ The intended usage of commands is to provide the user with different
 application behaviours, each with their own subset of arguments. For example:
 
 ```console
-$ python3 example.py serve --address 0.0.0.0 --port 8080
+$ python3 example.py command --arg abc
 ```
 
 ```python
-if args.serve:
-    # Serve Command
-    # We have typed access to any of the serve model arguments we defined
-    # For example: `args.serve.address`, `args.serve.port`, etc.
+if args.command:
+    # This command was chosen
+    # We have typed access to any of the command model arguments we defined
+    # For example: `args.command.arg`, etc.
     ...
 ```
 
 ## Pydantic Models
-Commands can be created by first defining a `pydantic` model for the command,
-containing its own subset of arguments. The command can then be added by
-defining a `pydantic` field with a type of `:::python Optional[Command]`.
-Despite each command itself being *optional*, overall a command is *always*
-required, as outlined below.
+Commands can be created by first defining a `pydantic` model for the command
+(e.g., `Command`), containing its own subset of arguments. The command can then
+be added to the command-line interface by adding a `pydantic` field with the
+type of `Optional[Command]`. Despite each command itself being *optional*,
+overall a command is *always* required, as outlined below.
 
 ### Required
 *Required* commands are defined as follows:
 
 ```python
-class Build(BaseModel):
-    path: str = Field(description="build path")
-    mode: str = Field(descroption="build mode")
+class Command1(BaseModel):
+    arg1: str = Field(description="this is sub-argument 1")
 
-class Serve(BaseModel):
-    address: str = Field(description="serve address")
-    port: int = Field(description="serve port")
+class Command2(BaseModel):
+    arg2: str = Field(description="this is sub-argument 2")
 
 class Arguments(BaseModel):
     # Commands
-    build: Optional[Build] = Field(description="build command")
-    serve: Optional[Serve] = Field(description="serve command")
+    command1: Optional[Command1] = Field(description="this is command 1")
+    command2: Optional[Command2] = Field(description="this is command 2")
 ```
 
 This `Arguments` model generates the following command-line interface:
 
 ```console
 $ python3 example.py --help
-usage: example.py [-h] {build,serve} ...
+usage: example.py [-h] {command1,command2} ...
 
 commands:
-  {build,serve}
-    build        build command
-    serve        serve command
+  {command1,command2}
+    command1           this is command 1
+    command2           this is command 2
 
 help:
-  -h, --help     show this help message and exit
+  -h, --help           show this help message and exit
 ```
 
 This `Arguments` model also generates command-line interfaces for each of its
 commands:
 
 ```console
-$ python3 example.py build --help
-usage: example.py build [-h] --path PATH --mode MODE
+$ python3 example.py command1 --help
+usage: example.py command1 [-h] --arg1 ARG1
 
 required arguments:
-  --path PATH  build path
-  --mode MODE  build mode
+  --arg1 ARG1  this is sub-argument 1
 
 help:
   -h, --help   show this help message and exit
 ```
 
 ```console
-$ python3 example.py serve --help
-usage: example.py serve [-h] --address ADDRESS --port PORT
+$ python3 example.py command2 --help
+usage: example.py command2 [-h] --arg2 ARG2
 
 required arguments:
-  --address ADDRESS  serve address
-  --port PORT        serve port
+  --arg2 ARG2  this is sub-argument 2
 
 help:
-  -h, --help         show this help message and exit
+  -h, --help   show this help message and exit
 ```
 
 Outcomes:
 
-* Providing arguments of `build --path abc --mode xyz` will set `args.build`
-  to `:::python Build(path="abc", mode="xyz")`, and `args.serve` to `None`.
-* Providing arguments of `serve --address 127.0.0.1 --port 8080` will set
-  `args.serve` to `:::python Serve(address="127.0.0.1", port=8080)`, and
-  `args.build` to `None`.
+* Providing arguments of `command1 --arg1 abc` will set `args.command1` to
+  to `:::python Command1(arg1="abc")`, and `args.command2` to `None`.
+* Providing arguments of `command2 --arg2 xyz` will set `args.command2` to
+  to `:::python Command2(arg2="xyz")`, and `args.command1` to `None`.
 * Commands cannot be omitted.

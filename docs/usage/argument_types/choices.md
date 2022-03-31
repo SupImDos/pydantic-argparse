@@ -37,7 +37,7 @@ else:
 ```
 
 ## Enums
-Enum choices can be created by defining a `pydantic` `Field` with a type of an
+Enum choices can be created by adding a `pydantic` `Field` with the type of an
 `:::python enum.Enum` class, which contains more than one enumeration. There
 are different kinds of enum choice arguments, which are outlined below.
 
@@ -145,7 +145,7 @@ Outcomes:
 * Omitting this argument will set `args.choice` to `Choices.A` (the default).
 
 ## Literals
-Literal choices can be created by defining a `pydantic` `Field` with a type of
+Literal choices can be created by adding a `pydantic` `Field` with the type of
 `:::python typing.Literal`, which contains more than one literal value. There
 are different kinds of literal flag arguments, which are outlined below.
 
