@@ -59,9 +59,9 @@ that you agree with. Some of the possible drawbacks are outlined below.
 #### Extra Dependencies
 !!! warning ""
     While `pydantic-argparse` itself depends *only* on `pydantic`, it has many
-    transient dependencies due to the large number of dependencies in
-    `pydantic`. If your application is small, it may not be suitable to pull
-    in all of `pydantic`'s dependencies for a simple command-line interface.
+    more transient dependencies due to the dependencies of `pydantic` itself.
+    If your application is small, it may not be suitable to pull in all of
+    `pydantic`'s dependencies for a simple command-line interface.
 
 #### Opinionated Design
 !!! warning ""
