@@ -42,6 +42,7 @@ A *required* container variadic argument is defined as follows:
 ```python
 class Arguments(BaseModel):
     # Required Container Argument
+    # Note: `list[int]` is just an example, any container type could be used
     arg: list[int] = Field(description="this is a required variadic argument")
 ```
 
@@ -71,6 +72,7 @@ as follows:
 ```python
 class Arguments(BaseModel):
     # Optional Container Argument
+    # Note: `list[int]` is just an example, any container type could be used
     arg: Optional[list[int]] = Field(description="this is an optional variadic argument")
 ```
 
@@ -100,6 +102,7 @@ defined as follows:
 ```python
 class Arguments(BaseModel):
     # Optional Container Argument
+    # Note: `list[int]` is just an example, any container type could be used
     arg: list[int] = Field([4, 5, 6], description="this is an optional variadic argument")
 ```
 
