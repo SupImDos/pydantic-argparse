@@ -147,7 +147,7 @@ def is_field_a(
     Returns:
         bool: Whether the field *is* considered one of the types.
     """
-    # Create tuple if only a singular type was provided
+    # Create tuple if only one type was provided
     if not isinstance(types, tuple):
         types = (types, )
 
