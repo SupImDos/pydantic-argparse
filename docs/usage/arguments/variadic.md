@@ -23,9 +23,9 @@ for file in args.files:
     ...
 ```
 
-## Containers
-Container variadic arguments can be created by adding a `pydantic` `Field` with
-any `:::python collections.abc.Container` type. For example:
+## Container Types
+Variadic arguments can be created by adding a `pydantic` `Field` with any
+type that is a `:::python collections.abc.Container` type. For example:
 
 * `list[T]`
 * `tuple[T]`

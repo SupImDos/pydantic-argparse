@@ -15,15 +15,14 @@ nav:
   - Background: background.md
   - Showcase: showcase.md
   - Usage:
-    - Arguments: usage/arguments.md
-    - Parser: usage/parser.md
-    - Argument Types:
-      - Overview: usage/argument_types/index.md
-      - Singular: usage/argument_types/singular.md
-      - Variadic: usage/argument_types/variadic.md
-      - Flags: usage/argument_types/flags.md
-      - Choices: usage/argument_types/choices.md
-      - Commands: usage/argument_types/commands.md
+    - Argument Parser: usage/argument_parser.md
+    - Arguments:
+      - Arguments: usage/arguments/index.md
+      - Regular: usage/arguments/regular.md
+      - Variadic: usage/arguments/variadic.md
+      - Flags: usage/arguments/flags.md
+      - Choices: usage/arguments/choices.md
+      - Commands: usage/arguments/commands.md
   - Examples:
     - Simple: examples/simple.md
     - Commands: examples/commands.md
