@@ -58,10 +58,10 @@ that you agree with. Some of the possible drawbacks are outlined below.
 
 #### Extra Dependencies
 !!! warning ""
-    While `pydantic-argparse` itself depends *only* on `pydantic`, it has many
-    more transient dependencies due to the dependencies of `pydantic` itself.
-    If your application is small, it may not be suitable to pull in all of
-    `pydantic`'s dependencies for a simple command-line interface.
+    While `pydantic-argparse` itself depends *only* on `pydantic`, it has a
+    number of transient dependencies due to the dependencies of `pydantic`
+    itself. If your application is small, it may not be suitable to pull in
+    `pydantic` and its dependencies for a simple command-line interface.
 
 #### Opinionated Design
 !!! warning ""
@@ -83,11 +83,11 @@ There are many alternative argument parsing packages that already exist for
 Python. Some of the most popular are outlined below.
 
 #### [Argparse][1]
-> `argparse` is a module that makes it easy to write user-friendly command-line
-> interfaces. The program defines what arguments it requires, and `argparse`
-> will figure out how to parse those out of `sys.argv`. The `argparse` module
-> also automatically generates help and usage messages and issues errors when
-> users give the program invalid arguments.
+> `argparse` is a standard-library module that makes it easy to write
+> user-friendly command-line interfaces. The program defines what arguments it
+> requires, and `argparse` will figure out how to parse those out of
+> `sys.argv`. The `argparse` module also automatically generates help and usage
+> messages and issues errors when users give the program invalid arguments.
 
 #### [Click][2]
 > `click` is a Python package for creating beautiful command line interfaces in
@@ -112,11 +112,11 @@ A feature comparison matrix of the alternatives outlined above is shown below.
 | *Required Arguments*            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
 | *Positional Arguments*          | :white_check_mark: | :white_check_mark: | :white_check_mark: |                     |
 | *Sub-Commands*                  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
-| **Data Types**                                                                                                       |
-| *Standard Singular Types*       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
-| *Boolean Flags*                 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
-| *Enums & Literals*              | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
-| *Containers & Mappings*         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
+| **Argument Types**                                                                                                   |
+| *Regular Arguments*             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
+| *Variadic Arguments*            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
+| *Flag Arguments*                | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
+| *Choice Arguments*              | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
 | **Validation**                                                                                                       |
 | *Type Validation*               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
 | *Automatic Validation*          |                    |                    | :white_check_mark: | :white_check_mark:  |

@@ -98,12 +98,18 @@ the command-line interface.
 
 ```python
 class Arguments(BaseModel):
-    a: int = Field(alias="class")
+    # We want our argument to be named `class` (i.e., `--class`), but `class`
+    # is a reserved keyword in Python. To accomplish this, we can use the Field
+    # `alias` to override the argument name.
+    class_argument: int = Field(alias="class")
 ```
 
 !!! tip
     This feature allows you to define arguments that use a reserved python
-    keyword as the name, e.g., `class`, `continue`, `async`, etc...
+    keyword as the name. For example: `class`, `continue`, `async`.
+
+    You can see the list of reserved keywords in Python at any time by typing
+    `:::python help("keywords")` into the Python interpreter.
 
 <!--- Reference -->
 [1]: https://pydantic-docs.helpmanual.io/usage/models/
