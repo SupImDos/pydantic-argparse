@@ -4,7 +4,7 @@ arguments are declared with `pydantic` *fields*. This combination of the
 *model* and its *fields* defines the *schema* for your command-line arguments.
 
 ## Pydantic
-### Model
+### Models
 A `pydantic` model is simply a *dataclass-like* class that inherits from the
 `pydantic.BaseModel` base class. In `pydantic-argparse`, this model is used to
 declaratively define your command-line arguments.
@@ -110,6 +110,43 @@ class Arguments(BaseModel):
 
     You can see the list of reserved keywords in Python at any time by typing
     `:::python help("keywords")` into the Python interpreter.
+
+## Validation
+When parsing command-line arguments with `parser.parse_typed_args()`, the raw
+values are parsed and validated using `pydantic`. The parser has different
+behaviours depending on whether the supplied command-line arguments are valid.
+
+Consider the following example model:
+
+```python
+class Arguments(BaseModel):
+    integer: int
+```
+
+### Success
+When the provided command-line arguments satisfy the `pydantic` model, a
+populated instance of the model is returned
+
+```console
+$ python3 example.py --integer 42
+Arguments(integer=42)
+```
+
+### Failure
+When the provided command-line arguments do not satisfy the `pydantic` model,
+the `ArgumentParser` will provide an error to the user. For example:
+
+```console
+$ python3 example.py --integer hello
+usage: example.py [-h] --integer INTEGER
+example.py: error: 1 validation error for Arguments
+integer
+  value is not a valid integer (type=type_error.integer)
+```
+
+!!! note
+    The validation error shown to the user is the same as the error that
+    `pydantic` returns to the user with a `ValidationError`
 
 <!--- Reference -->
 [1]: https://pydantic-docs.helpmanual.io/usage/models/
