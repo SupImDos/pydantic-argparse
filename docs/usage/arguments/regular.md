@@ -120,6 +120,35 @@ Outcomes:
 * Providing an argument of `--arg 42` will set `args.arg` to `42`.
 * Omitting this argument will set `args.arg` to `None` (the default).
 
+### Optional (Default `Value`)
+An *optional* container variadic argument with a constant default value is
+defined as follows:
+
+```python
+class Arguments(BaseModel):
+    # Optional Singular Argument
+    # Note: `int` is just an example, any singular type could be used
+    arg: int = Field(42, description="this is an optional singular argument")
+```
+
+This `Arguments` model generates the following command-line interface:
+
+```console
+$ python3 example.py --help
+usage: example.py [-h] [--arg ARG]
+
+optional arguments:
+  --arg ARG   this is a required singular argument (default: 42)
+
+help:
+  -h, --help  show this help message and exit
+```
+
+Outcomes:
+
+* Providing an argument of `--arg 7` will set `args.arg` to `7`.
+* Omitting this argument will set `args.arg` to `42` (the default).
+
 <!--- Reference -->
 [1]: https://pydantic-docs.helpmanual.io/usage/types/#standard-library-types
 [2]: https://pydantic-docs.helpmanual.io/usage/types/#pydantic-types

@@ -7,7 +7,7 @@ This `ArgumentParser` class presents a very *similar* interface to the `python`
 standard library `argparse.ArgumentParser`, in an attempt to provide as close
 to a drop-in-replacement as possible.
 
-## Instantiation
+## Parser Instantiation
 To create an instance of the `ArgumentParser`:
 ```python
 parser = pydantic_argparse.ArgumentParser(
@@ -43,7 +43,7 @@ The *optional* parameters for the `ArgumentParser` are outlined below:
 * `exit_on_error` (`bool`):
     Whether to exit, or raise an `ArgumentError` upon an error
 
-## Parsing
+## Argument Parsing
 To parse command-line arguments into the `model` using the `ArgumentParser`:
 ```python
 args = parser.parse_typed_args()

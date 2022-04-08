@@ -2,7 +2,7 @@
 This showcase demonstrates how `pydantic-argparse` can be useful, by
 highlighting some of its features and showing how they can be utilised.
 
-### Construction
+### CLI Construction
 The `pydantic-argparse` command-line interface construction is simple.
 
 === "Pydantic Argparse"
