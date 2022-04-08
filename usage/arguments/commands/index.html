@@ -12,7 +12,7 @@
         <meta name="author" content="SupImDos">
       
       
-        <link rel="canonical" href="https://pydantic-argparse.supimdos.com/usage/argument_types/commands/">
+        <link rel="canonical" href="https://pydantic-argparse.supimdos.com/usage/arguments/commands/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.7">
@@ -301,8 +301,6 @@
         
           
         
-          
-        
       
       
         <label class="md-nav__link" for="__nav_4">
@@ -323,22 +321,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../arguments/" class="md-nav__link">
-        Arguments
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../parser/" class="md-nav__link">
-        Parser
+      <a href="../../argument_parser/" class="md-nav__link">
+        Argument Parser
       </a>
     </li>
   
@@ -356,7 +340,7 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" checked>
       
       
       
@@ -380,18 +364,18 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../">Argument Types</a>
+          <a href="../">Arguments</a>
           
-            <label for="__nav_4_3">
+            <label for="__nav_4_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
-      <nav class="md-nav" aria-label="Argument Types" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_3">
+      <nav class="md-nav" aria-label="Arguments" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
           <span class="md-nav__icon md-icon"></span>
-          Argument Types
+          Arguments
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -403,8 +387,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../singular/" class="md-nav__link">
-        Singular
+      <a href="../regular/" class="md-nav__link">
+        Regular
       </a>
     </li>
   
@@ -492,6 +476,33 @@
   <a href="#overview" class="md-nav__link">
     Overview
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pydantic-models" class="md-nav__link">
+    Pydantic Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Pydantic Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    Required
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1012,6 +1023,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pydantic-models" class="md-nav__link">
+    Pydantic Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Pydantic Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    Required
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1029,7 +1067,85 @@
   <h1>Commands</h1>
 
 <h2 id="overview">Overview</h2>
-<p><em>Coming Soon...</em></p>
+<p><code>pydantic-argparse</code> provides functionality for commands. A command is a
+positional command-line argument that can be followed by its own specific
+subset of command-line arguments. For example: <code>command --arg abc</code>.</p>
+<p>This section covers the following standard <code>argparse</code> argument functionality:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Subparser Commands</span>
+<span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">()</span>
+<span class="n">command</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s2">&quot;command&quot;</span><span class="p">)</span>
+<span class="n">command</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="usage">Usage</h2>
+<p>The intended usage of commands is to provide the user with different
+application behaviours, each with their own subset of arguments. For example:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py serve --address <span class="m">127</span>.0.0.1 --port <span class="m">8080</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">serve</span><span class="p">:</span>
+    <span class="c1"># The serve command was chosen</span>
+    <span class="c1"># We have typed access to any of the command model arguments we defined</span>
+    <span class="c1"># For example: `args.serve.address`, `args.serve.port`, etc.</span>
+    <span class="o">...</span>
+</code></pre></div>
+<h2 id="pydantic-models">Pydantic Models</h2>
+<p>Commands can be created by first defining a <code>pydantic</code> model for the command
+(e.g., <code>Command</code>), containing its own subset of arguments. The command can then
+be added to the command-line interface by adding a <code>pydantic</code> field with the
+type of <code>Optional[Command]</code>. Despite each command itself being <em>optional</em>,
+overall a command is <em>always</em> required, as outlined below.</p>
+<h3 id="required">Required</h3>
+<p><em>Required</em> commands are defined as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Command1</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">arg1</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is sub-argument 1&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Command2</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">arg2</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is sub-argument 2&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="c1"># Commands</span>
+    <span class="n">command1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Command1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is command 1&quot;</span><span class="p">)</span>
+    <span class="n">command2</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Command2</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is command 2&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>This <code>Arguments</code> model generates the following command-line interface:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py --help
+<span class="go">usage: example.py [-h] {command1,command2} ...</span>
+
+<span class="go">commands:</span>
+<span class="go">  {command1,command2}</span>
+<span class="go">    command1           this is command 1</span>
+<span class="go">    command2           this is command 2</span>
+
+<span class="go">help:</span>
+<span class="go">  -h, --help           show this help message and exit</span>
+</code></pre></div>
+<p>This <code>Arguments</code> model also generates command-line interfaces for each of its
+commands:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py command1 --help
+<span class="go">usage: example.py command1 [-h] --arg1 ARG1</span>
+
+<span class="go">required arguments:</span>
+<span class="go">  --arg1 ARG1  this is sub-argument 1</span>
+
+<span class="go">help:</span>
+<span class="go">  -h, --help   show this help message and exit</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py command2 --help
+<span class="go">usage: example.py command2 [-h] --arg2 ARG2</span>
+
+<span class="go">required arguments:</span>
+<span class="go">  --arg2 ARG2  this is sub-argument 2</span>
+
+<span class="go">help:</span>
+<span class="go">  -h, --help   show this help message and exit</span>
+</code></pre></div>
+<p>Outcomes:</p>
+<ul>
+<li>Providing arguments of <code>command1 --arg1 abc</code> will set <code>args.command1</code> to
+  to <code class="highlight"><span class="n">Command1</span><span class="p">(</span><span class="n">arg1</span><span class="o">=</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span></code>, and <code>args.command2</code> to <code>None</code>.</li>
+<li>Providing arguments of <code>command2 --arg2 xyz</code> will set <code>args.command2</code> to
+  to <code class="highlight"><span class="n">Command2</span><span class="p">(</span><span class="n">arg2</span><span class="o">=</span><span class="s2">&quot;xyz&quot;</span><span class="p">)</span></code>, and <code>args.command1</code> to <code>None</code>.</li>
+<li>Commands cannot be omitted.</li>
+</ul>
 
               
             </article>

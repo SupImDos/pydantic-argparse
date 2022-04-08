@@ -493,8 +493,6 @@
         
           
         
-          
-        
       
       
         <label class="md-nav__link" for="__nav_4">
@@ -515,22 +513,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/arguments/" class="md-nav__link">
-        Arguments
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../usage/parser/" class="md-nav__link">
-        Parser
+      <a href="../usage/argument_parser/" class="md-nav__link">
+        Argument Parser
       </a>
     </li>
   
@@ -546,7 +530,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
       
       
       
@@ -570,18 +554,18 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../usage/argument_types/">Argument Types</a>
+          <a href="../usage/arguments/">Arguments</a>
           
-            <label for="__nav_4_3">
+            <label for="__nav_4_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
-      <nav class="md-nav" aria-label="Argument Types" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_3">
+      <nav class="md-nav" aria-label="Arguments" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
           <span class="md-nav__icon md-icon"></span>
-          Argument Types
+          Arguments
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -593,8 +577,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/argument_types/singular/" class="md-nav__link">
-        Singular
+      <a href="../usage/arguments/regular/" class="md-nav__link">
+        Regular
       </a>
     </li>
   
@@ -607,7 +591,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/argument_types/variadic/" class="md-nav__link">
+      <a href="../usage/arguments/variadic/" class="md-nav__link">
         Variadic
       </a>
     </li>
@@ -621,7 +605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/argument_types/flags/" class="md-nav__link">
+      <a href="../usage/arguments/flags/" class="md-nav__link">
         Flags
       </a>
     </li>
@@ -635,7 +619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/argument_types/choices/" class="md-nav__link">
+      <a href="../usage/arguments/choices/" class="md-nav__link">
         Choices
       </a>
     </li>
@@ -649,7 +633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/argument_types/commands/" class="md-nav__link">
+      <a href="../usage/arguments/commands/" class="md-nav__link">
         Commands
       </a>
     </li>
@@ -1397,10 +1381,10 @@ size of your project, the features you require and the programming paradigms
 that you agree with. Some of the possible drawbacks are outlined below.</p>
 <h4 id="extra-dependencies">Extra Dependencies</h4>
 <div class="admonition warning">
-<p>While <code>pydantic-argparse</code> itself depends <em>only</em> on <code>pydantic</code>, it has many
-transient dependencies due to the large number of dependencies in
-<code>pydantic</code>. If your application is small, it may not be suitable to pull
-in all of <code>pydantic</code>'s dependencies for a simple command-line interface.</p>
+<p>While <code>pydantic-argparse</code> itself depends <em>only</em> on <code>pydantic</code>, it has a
+number of transient dependencies due to the dependencies of <code>pydantic</code>
+itself. If your application is small, it may not be suitable to pull in
+<code>pydantic</code> and its dependencies for a simple command-line interface.</p>
 </div>
 <h4 id="opinionated-design">Opinionated Design</h4>
 <div class="admonition warning">
@@ -1422,11 +1406,11 @@ number of <code>pydantic</code> models.</p>
 Python. Some of the most popular are outlined below.</p>
 <h4 id="argparse"><a href="https://docs.python.org/3/library/argparse.html">Argparse</a></h4>
 <blockquote>
-<p><code>argparse</code> is a module that makes it easy to write user-friendly command-line
-interfaces. The program defines what arguments it requires, and <code>argparse</code>
-will figure out how to parse those out of <code>sys.argv</code>. The <code>argparse</code> module
-also automatically generates help and usage messages and issues errors when
-users give the program invalid arguments.</p>
+<p><code>argparse</code> is a standard-library module that makes it easy to write
+user-friendly command-line interfaces. The program defines what arguments it
+requires, and <code>argparse</code> will figure out how to parse those out of
+<code>sys.argv</code>. The <code>argparse</code> module also automatically generates help and usage
+messages and issues errors when users give the program invalid arguments.</p>
 </blockquote>
 <h4 id="click"><a href="https://click.palletsprojects.com/">Click</a></h4>
 <blockquote>
@@ -1492,35 +1476,35 @@ interfaces.</p>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 </tr>
 <tr>
-<td align="right"><strong>Data Types</strong></td>
+<td align="right"><strong>Argument Types</strong></td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="right"><em>Standard Singular Types</em></td>
+<td align="right"><em>Regular Arguments</em></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 </tr>
 <tr>
-<td align="right"><em>Boolean Flags</em></td>
+<td align="right"><em>Variadic Arguments</em></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 </tr>
 <tr>
-<td align="right"><em>Enums &amp; Literals</em></td>
+<td align="right"><em>Flag Arguments</em></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 </tr>
 <tr>
-<td align="right"><em>Containers &amp; Mappings</em></td>
+<td align="right"><em>Choice Arguments</em></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>
 <td align="center"><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2705.png" title=":white_check_mark:" /></td>

@@ -12,14 +12,14 @@
         <meta name="author" content="SupImDos">
       
       
-        <link rel="canonical" href="https://pydantic-argparse.supimdos.com/usage/argument_types/choices/">
+        <link rel="canonical" href="https://pydantic-argparse.supimdos.com/usage/arguments/flags/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.7">
     
     
       
-        <title>Choices - Pydantic Argparse</title>
+        <title>Flags - Pydantic Argparse</title>
       
     
     
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Choices
+              Flags
             
           </span>
         </div>
@@ -301,8 +301,6 @@
         
           
         
-          
-        
       
       
         <label class="md-nav__link" for="__nav_4">
@@ -323,22 +321,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../arguments/" class="md-nav__link">
-        Arguments
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../parser/" class="md-nav__link">
-        Parser
+      <a href="../../argument_parser/" class="md-nav__link">
+        Argument Parser
       </a>
     </li>
   
@@ -356,7 +340,7 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" checked>
       
       
       
@@ -380,18 +364,18 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../">Argument Types</a>
+          <a href="../">Arguments</a>
           
-            <label for="__nav_4_3">
+            <label for="__nav_4_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
-      <nav class="md-nav" aria-label="Argument Types" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_3">
+      <nav class="md-nav" aria-label="Arguments" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
           <span class="md-nav__icon md-icon"></span>
-          Argument Types
+          Arguments
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -403,8 +387,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../singular/" class="md-nav__link">
-        Singular
+      <a href="../regular/" class="md-nav__link">
+        Regular
       </a>
     </li>
   
@@ -429,20 +413,6 @@
               
   
   
-  
-    <li class="md-nav__item">
-      <a href="../flags/" class="md-nav__link">
-        Flags
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -453,12 +423,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Choices
+          Flags
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Choices
+        Flags
       </a>
       
         
@@ -481,10 +451,119 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#booleans" class="md-nav__link">
+    Booleans
+  </a>
+  
+    <nav class="md-nav" aria-label="Booleans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    Required
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-false" class="md-nav__link">
+    Optional (Default False)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-true" class="md-nav__link">
+    Optional (Default True)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enums" class="md-nav__link">
+    Enums
+  </a>
+  
+    <nav class="md-nav" aria-label="Enums">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-none" class="md-nav__link">
+    Optional (Default None)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-constant" class="md-nav__link">
+    Optional (Default Constant)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literals" class="md-nav__link">
+    Literals
+  </a>
+  
+    <nav class="md-nav" aria-label="Literals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-none_1" class="md-nav__link">
+    Optional (Default None)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-constant_1" class="md-nav__link">
+    Optional (Default Constant)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../choices/" class="md-nav__link">
+        Choices
+      </a>
     </li>
   
 
@@ -1012,6 +1091,101 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#booleans" class="md-nav__link">
+    Booleans
+  </a>
+  
+    <nav class="md-nav" aria-label="Booleans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    Required
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-false" class="md-nav__link">
+    Optional (Default False)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-true" class="md-nav__link">
+    Optional (Default True)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enums" class="md-nav__link">
+    Enums
+  </a>
+  
+    <nav class="md-nav" aria-label="Enums">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-none" class="md-nav__link">
+    Optional (Default None)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-constant" class="md-nav__link">
+    Optional (Default Constant)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literals" class="md-nav__link">
+    Literals
+  </a>
+  
+    <nav class="md-nav" aria-label="Literals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-none_1" class="md-nav__link">
+    Optional (Default None)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-default-constant_1" class="md-nav__link">
+    Optional (Default Constant)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1026,10 +1200,195 @@
                 
 
 
-  <h1>Choices</h1>
+  <h1>Flags</h1>
 
 <h2 id="overview">Overview</h2>
-<p><em>Coming Soon...</em></p>
+<p><code>pydantic-argparse</code> provides functionality for flag arguments. A flag is a
+command-line argument that has no following value. For example: <code>--flag</code> or
+<code>--no-flag</code>.</p>
+<p>This section covers the following standard <code>argparse</code> argument functionality:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Boolean Flags</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--flag&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">BooleanOptionalAction</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--flag&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--no-flag&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">)</span>
+<span class="c1"># Constant Flags</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--flag&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_const&quot;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--flag&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_const&quot;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="n">Enum</span><span class="o">.</span><span class="n">A</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="usage">Usage</h2>
+<p>The intended usage of flags is to enable or disable features. For example:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py --debug
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+    <span class="c1"># Set logging to DEBUG</span>
+    <span class="o">...</span>
+</code></pre></div>
+<h2 id="booleans">Booleans</h2>
+<p>Boolean flags can be created by adding a <code>pydantic</code> <code>Field</code> with the type of
+<code class="highlight"><span class="nb">bool</span></code>. There are different kinds of boolean flag arguments, which
+are outlined below.</p>
+<h3 id="required">Required</h3>
+<p>A <em>required</em> boolean flag is defined as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="c1"># Required Flag</span>
+    <span class="n">flag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is a required flag&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>This <code>Arguments</code> model generates the following command-line interface:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py --help
+<span class="go">usage: example.py [-h] --flag | --no-flag</span>
+
+<span class="go">required arguments:</span>
+<span class="go">  --flag, --no-flag  this is a required flag</span>
+
+<span class="go">help:</span>
+<span class="go">  -h, --help         show this help message and exit</span>
+</code></pre></div>
+<p>Outcomes:</p>
+<ul>
+<li>Providing an argument of <code>--flag</code> will set <code>args.flag</code> to <code>True</code>.</li>
+<li>Providing an argument of <code>--no-flag</code> will set <code>args.flag</code> to <code>False</code>.</li>
+<li>This argument cannot be omitted.</li>
+</ul>
+<h3 id="optional-default-false">Optional (Default <code>False</code>)</h3>
+<p>An <em>optional</em> boolean flag with a default of <code>False</code> is defined as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="c1"># Optional Flag (Default False)</span>
+    <span class="n">flag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is an optional flag&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>This <code>Arguments</code> model generates the following command-line interface:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py --help
+<span class="go">usage: example.py [-h] [--flag]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  --flag      this is an optional flag (default: False)</span>
+
+<span class="go">help:</span>
+<span class="go">  -h, --help  show this help message and exit</span>
+</code></pre></div>
+<p>Outcomes:</p>
+<ul>
+<li>Providing an argument of <code>--flag</code> will set <code>args.flag</code> to <code>True</code>.</li>
+<li>Omitting this argument will set <code>args.flag</code> to <code>False</code> (the default).</li>
+</ul>
+<h3 id="optional-default-true">Optional (Default <code>True</code>)</h3>
+<p>An <em>optional</em> boolean flag with a default of <code>True</code> is defined as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="c1"># Optional Flag (Default True)</span>
+    <span class="n">flag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is an optional flag&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>This <code>Arguments</code> model generates the following command-line interface:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py --help
+<span class="go">usage: example.py [-h] [--no-flag]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  --no-flag   this is an optional flag (default: True)</span>
+
+<span class="go">help:</span>
+<span class="go">  -h, --help  show this help message and exit</span>
+</code></pre></div>
+<p>Outcomes:</p>
+<ul>
+<li>Providing an argument of <code>--no-flag</code> will set <code>args.flag</code> to <code>False</code>.</li>
+<li>Omitting this argument will set <code>args.flag</code> to <code>True</code> (the default).</li>
+</ul>
+<h2 id="enums">Enums</h2>
+<p>Enum flags can be created by adding a <code>pydantic</code> <code>Field</code> with the type of an
+<code class="highlight"><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span></code> class, which contains only one enumeration. There are
+different kinds of enum flag arguments, which are outlined below.</p>
+<h3 id="optional-default-none">Optional (Default <code>None</code>)</h3>
+<p>An <em>optional</em> enum flag with a default of <code>None</code> is defined as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Constant</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">VALUE</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="c1"># Optional Flag (Default None)</span>
+    <span class="n">constant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Constant</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is a constant flag&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>This <code>Arguments</code> model generates the following command-line interface:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py --help
+<span class="go">usage: example.py [-h] [--constant]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  --constant  this is a constant flag (default: None)</span>
+
+<span class="go">help:</span>
+<span class="go">  -h, --help  show this help message and exit</span>
+</code></pre></div>
+<p>Outcomes:</p>
+<ul>
+<li>Providing an argument of <code>--constant</code> will set <code>args.constant</code> to <code>Constant.VALUE</code>.</li>
+<li>Omitting this argument will set <code>args.constant</code> to <code>None</code> (the default).</li>
+</ul>
+<h3 id="optional-default-constant">Optional (Default <code>Constant</code>)</h3>
+<p>An <em>optional</em> enum flag with a constant default value is defined as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Constant</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">VALUE</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="c1"># Optional Flag (Default Constant.VALUE)</span>
+    <span class="n">constant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Constant</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">Constant</span><span class="o">.</span><span class="n">VALUE</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is a constant flag&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>This <code>Arguments</code> model generates the following command-line interface:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py --help
+<span class="go">usage: example.py [-h] [--no-constant]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  --no-constant  this is a constant flag (default: Constant.VALUE)</span>
+
+<span class="go">help:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+</code></pre></div>
+<p>Outcomes:</p>
+<ul>
+<li>Providing an argument of <code>--no-constant</code> will set <code>args.constant</code> to <code>None</code>.</li>
+<li>Omitting this argument will set <code>args.constant</code> to <code>Constant.VALUE</code> (the default).</li>
+</ul>
+<h2 id="literals">Literals</h2>
+<p>Literal flags can be created by adding a <code>pydantic</code> <code>Field</code> with the type of
+<code class="highlight"><span class="n">typing</span><span class="o">.</span><span class="n">Literal</span></code>, which contains only one literal value. There are
+different kinds of literal flag arguments, which are outlined below.</p>
+<h3 id="optional-default-none_1">Optional (Default <code>None</code>)</h3>
+<p>An <em>optional</em> literal flag with a default of <code>None</code> is defined as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="c1"># Optional Flag (Default None)</span>
+    <span class="n">constant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;VALUE&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is a constant flag&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>This <code>Arguments</code> model generates the following command-line interface:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py --help
+<span class="go">usage: example.py [-h] [--constant]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  --constant  this is a constant flag (default: None)</span>
+
+<span class="go">help:</span>
+<span class="go">  -h, --help  show this help message and exit</span>
+</code></pre></div>
+<p>Outcomes:</p>
+<ul>
+<li>Providing an argument of <code>--constant</code> will set <code>args.constant</code> to <code>"VALUE"</code>.</li>
+<li>Omitting this argument will set <code>args.constant</code> to <code>None</code> (the default).</li>
+</ul>
+<h3 id="optional-default-constant_1">Optional (Default <code>Constant</code>)</h3>
+<p>An <em>optional</em> literal flag with a constant default value is defined as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="c1"># Optional Flag (Default &quot;VALUE&quot;)</span>
+    <span class="n">constant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;VALUE&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;VALUE&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;this is a constant flag&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>This <code>Arguments</code> model generates the following command-line interface:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3 example.py --help
+<span class="go">usage: example.py [-h] [--no-constant]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  --no-constant  this is a constant flag (default: VALUE)</span>
+
+<span class="go">help:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+</code></pre></div>
+<p>Outcomes:</p>
+<ul>
+<li>Providing an argument of <code>--no-constant</code> will set <code>args.constant</code> to <code>None</code>.</li>
+<li>Omitting this argument will set <code>args.constant</code> to <code>"VALUE"</code> (the default).</li>
+</ul>
 
               
             </article>
@@ -1048,7 +1407,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../flags/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Flags" rel="prev">
+        <a href="../variadic/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Variadic" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1057,20 +1416,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Flags
+              Variadic
             </div>
           </div>
         </a>
       
       
         
-        <a href="../commands/" class="md-footer__link md-footer__link--next" aria-label="Next: Commands" rel="next">
+        <a href="../choices/" class="md-footer__link md-footer__link--next" aria-label="Next: Choices" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Commands
+              Choices
             </div>
           </div>
           <div class="md-footer__button md-icon">
