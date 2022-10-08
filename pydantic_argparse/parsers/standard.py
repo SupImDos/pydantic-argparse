@@ -49,7 +49,6 @@ def parse_field(
         parser.add_argument(
             utils.argument_name(field.alias),
             action=argparse._StoreAction,  # pylint: disable=protected-access
-            default=default,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
             metavar=field.alias.upper(),

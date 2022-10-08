@@ -95,6 +95,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             epilog=epilog,
             exit_on_error=exit_on_error,
             add_help=False,  # Always disable the automatic help flag.
+            argument_default=argparse.SUPPRESS,  # Allow `pydantic` to handle defaults.
         )
 
         # Set Model
