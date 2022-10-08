@@ -52,6 +52,7 @@ def parse_field(
             help=utils.argument_description(field.field_info.description),
             dest=field.alias,
             required=True,
+            default=None,  # Bug workaround: https://bugs.python.org/issue46080
         )
 
     elif default:
