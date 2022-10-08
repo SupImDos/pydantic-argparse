@@ -59,7 +59,6 @@ def parse_field(
         parser.add_argument(
             utils.argument_name(f"no-{field.alias}"),
             action=argparse._StoreFalseAction,  # pylint: disable=protected-access
-            default=default,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
             required=False,
@@ -70,7 +69,6 @@ def parse_field(
         parser.add_argument(
             utils.argument_name(field.alias),
             action=argparse._StoreTrueAction,  # pylint: disable=protected-access
-            default=default,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
             required=False,

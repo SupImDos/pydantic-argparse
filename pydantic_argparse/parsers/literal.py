@@ -78,7 +78,6 @@ def parse_field(
             action=argparse._StoreAction,  # pylint: disable=protected-access
             type=caster,
             choices=choices,
-            default=default,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
             metavar=_iterable_choices_metavar(choices),
@@ -91,7 +90,6 @@ def parse_field(
             utils.argument_name(f"no-{field.alias}"),
             action=argparse._StoreConstAction,  # pylint: disable=protected-access
             const=None,
-            default=default,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
             metavar=field.alias.upper(),
@@ -104,7 +102,6 @@ def parse_field(
             utils.argument_name(field.alias),
             action=argparse._StoreConstAction,  # pylint: disable=protected-access
             const=choices[0],
-            default=default,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
             metavar=field.alias.upper(),
