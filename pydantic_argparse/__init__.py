@@ -11,3 +11,9 @@ The public interface exposed by this package is the declarative and typed
 # Local
 from .__version__ import __title__, __description__, __version__, __author__, __license__
 from .argparse import ArgumentParser
+
+__all__ = [
+    # Arg parser
+    'ArgumentParser'
+]
+
