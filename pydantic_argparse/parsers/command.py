@@ -33,7 +33,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     subparser: argparse._SubParsersAction,
     field: pydantic.fields.ModelField,
-    ) -> None:
+) -> None:
     """Adds command pydantic field to argument parser.
 
     Args:

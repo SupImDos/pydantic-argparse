@@ -22,7 +22,7 @@ from pydantic_argparse import utils
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-    ) -> None:
+) -> None:
     """Adds standard pydantic field to argument parser.
 
     Args:
@@ -37,7 +37,7 @@ def parse_field(
         # Add Required Standard Field
         parser.add_argument(
             utils.argument_name(field.alias),
-            action=argparse._StoreAction,  # pylint: disable=protected-access
+            action=argparse._StoreAction,
             help=utils.argument_description(field.field_info.description),
             dest=field.alias,
             metavar=field.alias.upper(),
@@ -48,7 +48,7 @@ def parse_field(
         # Add Optional Standard Field
         parser.add_argument(
             utils.argument_name(field.alias),
-            action=argparse._StoreAction,  # pylint: disable=protected-access
+            action=argparse._StoreAction,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
             metavar=field.alias.upper(),

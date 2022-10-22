@@ -1,4 +1,4 @@
-"""Single-Source of Truth Package Versioning and Metadata
+"""Single-Source of Truth Package Versioning and Metadata.
 
 The `pydantic-argparse` package uses the `pyproject.toml` file as a
 single-source of truth for the package metadata. As such, rather than

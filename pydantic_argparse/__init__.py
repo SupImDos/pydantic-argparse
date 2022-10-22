@@ -1,4 +1,4 @@
-"""Declarative Typed Argument Parsing with Pydantic Models
+"""Declarative Typed Argument Parsing with Pydantic Models.
 
 This is the `pydantic-argparse` package, which contains the classes, methods
 and functions required for declarative and typed argument parsing with

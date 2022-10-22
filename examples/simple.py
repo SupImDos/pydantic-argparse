@@ -1,4 +1,4 @@
-"""Simple Example"""
+"""Simple Example."""
 
 
 # Third-Party
@@ -7,7 +7,7 @@ import pydantic_argparse
 
 
 class Arguments(pydantic.BaseModel):
-    """Simple Command-Line Arguments"""
+    """Simple Command-Line Arguments."""
     # Required Args
     string: str = pydantic.Field(description="a required string")
     integer: int = pydantic.Field(description="a required integer")
@@ -19,7 +19,7 @@ class Arguments(pydantic.BaseModel):
 
 
 def main() -> None:
-    """Simple Main Function"""
+    """Simple Main Function."""
     # Create Parser and Parse Args
     parser = pydantic_argparse.ArgumentParser(
         model=Arguments,

@@ -18,7 +18,7 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import TypeVar  # pylint: disable=wrong-import-order
+from typing import TypeVar
 
 
 # Constants
@@ -41,7 +41,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-    ) -> None:
+) -> None:
     """Adds enum pydantic field to argument parser.
 
     Args:
@@ -62,7 +62,7 @@ def parse_field(
         # Add Required Enum Field
         parser.add_argument(
             utils.argument_name(field.alias),
-            action=argparse._StoreAction,  # pylint: disable=protected-access
+            action=argparse._StoreAction,
             type=caster,
             choices=enum_type,
             help=utils.argument_description(field.field_info.description),
@@ -75,7 +75,7 @@ def parse_field(
         # Add Optional Choice
         parser.add_argument(
             utils.argument_name(field.alias),
-            action=argparse._StoreAction,  # pylint: disable=protected-access
+            action=argparse._StoreAction,
             type=caster,
             choices=enum_type,
             help=utils.argument_description(field.field_info.description, default),
@@ -88,7 +88,7 @@ def parse_field(
         # Add Optional Flag (Default Not None)
         parser.add_argument(
             utils.argument_name(f"no-{field.alias}"),
-            action=argparse._StoreConstAction,  # pylint: disable=protected-access
+            action=argparse._StoreConstAction,
             const=None,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
@@ -100,7 +100,7 @@ def parse_field(
         # Add Optional Flag (Default None)
         parser.add_argument(
             utils.argument_name(field.alias),
-            action=argparse._StoreConstAction,  # pylint: disable=protected-access
+            action=argparse._StoreConstAction,
             const=list(enum_type)[0],
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
@@ -112,7 +112,7 @@ def parse_field(
 def _arg_to_enum_member(
     argument: str,
     enum_type: type[EnumT],
-    ) -> EnumT:
+) -> EnumT:
     """Attempts to convert string argument to a supplied enum member.
 
     Args:

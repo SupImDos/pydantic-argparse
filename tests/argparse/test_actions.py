@@ -52,7 +52,7 @@ def test_valid_command(sub_parsers_action: actions.SubParsersAction) -> None:
     )
 
     # Assert
-    assert getattr(namespace, "test") == argparse.Namespace()
+    assert getattr(namespace, "test") == argparse.Namespace()  # noqa: B009
 
 
 def test_unrecognised_args(sub_parsers_action: actions.SubParsersAction) -> None:
@@ -75,8 +75,8 @@ def test_unrecognised_args(sub_parsers_action: actions.SubParsersAction) -> None
     )
 
     # Assert
-    assert getattr(namespace, "test") == argparse.Namespace()
-    assert getattr(namespace, argparse._UNRECOGNIZED_ARGS_ATTR) == ["--flag"]  # pylint: disable=protected-access
+    assert getattr(namespace, "test") == argparse.Namespace()  # noqa: B009
+    assert getattr(namespace, argparse._UNRECOGNIZED_ARGS_ATTR) == ["--flag"]
 
 
 def test_deep_unrecognised_args(sub_parsers_action: actions.SubParsersAction) -> None:
@@ -100,5 +100,5 @@ def test_deep_unrecognised_args(sub_parsers_action: actions.SubParsersAction) ->
     )
 
     # Assert
-    assert getattr(namespace, "test") == argparse.Namespace(deep=argparse.Namespace())
-    assert getattr(namespace, argparse._UNRECOGNIZED_ARGS_ATTR) == ["--a", "--b"]  # pylint: disable=protected-access
+    assert getattr(namespace, "test") == argparse.Namespace(deep=argparse.Namespace())  # noqa: B009
+    assert getattr(namespace, argparse._UNRECOGNIZED_ARGS_ATTR) == ["--a", "--b"]

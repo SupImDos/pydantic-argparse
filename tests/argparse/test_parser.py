@@ -22,19 +22,19 @@ import pydantic_argparse
 import tests.conftest as conf
 
 # Typing
-from typing import Any, Literal, Optional, Tuple, TypeVar  # pylint: disable=wrong-import-order
+from typing import Any, Literal, Optional, Tuple, TypeVar
 
 
 # Constants
 ArgumentT = TypeVar("ArgumentT")
 
 
-@pytest.mark.parametrize(["prog"],          [("AA",), (None,)])
-@pytest.mark.parametrize(["description"],   [("BB",), (None,)])
-@pytest.mark.parametrize(["version"],       [("CC",), (None,)])
-@pytest.mark.parametrize(["epilog"],        [("DD",), (None,)])
-@pytest.mark.parametrize(["add_help"],      [(True,), (False,)])
-@pytest.mark.parametrize(["exit_on_error"], [(True,), (False,)])
+@pytest.mark.parametrize("prog",          ["AA", None])
+@pytest.mark.parametrize("description",   ["BB", None])
+@pytest.mark.parametrize("version",       ["CC", None])
+@pytest.mark.parametrize("epilog",        ["DD", None])
+@pytest.mark.parametrize("add_help",      [True, False])
+@pytest.mark.parametrize("exit_on_error", [True, False])
 def test_create_argparser(
     prog: Optional[str],
     description: Optional[str],
@@ -42,7 +42,7 @@ def test_create_argparser(
     epilog: Optional[str],
     add_help: bool,
     exit_on_error: bool,
-    ) -> None:
+) -> None:
     """Tests Constructing the ArgumentParser.
 
     Args:
@@ -69,12 +69,12 @@ def test_create_argparser(
 
 
 @pytest.mark.parametrize(
-    [
+    (
         "argument_type",
         "argument_default",
         "arguments",
         "result",
-    ],
+    ),
     [
         # Required Arguments
         (int,                    ..., "--test 123",              123),
@@ -185,12 +185,8 @@ def test_create_argparser(
         (Optional[conf.TestEnum],        None, "", None),
 
         # Special Enums and Literals Optional Flag Behaviour
-        (Optional[Literal["A"]],         None,                  "--test",    "A"),
-        (Optional[Literal["A"]],         None,                  "",          None),
         (Optional[Literal["A"]],         "A",                   "--no-test", None),
         (Optional[Literal["A"]],         "A",                   "",          "A"),
-        (Optional[conf.TestEnumSingle],  None,                  "--test",    conf.TestEnumSingle.D),
-        (Optional[conf.TestEnumSingle],  None,                  "",          None),
         (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "--no-test", None),
         (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "",          conf.TestEnumSingle.D),
 
@@ -209,14 +205,14 @@ def test_create_argparser(
         (Optional[conf.TestCommands], ..., "test cmd_01 --flag", conf.TestCommands(cmd_01=conf.TestCommand(flag=True))),
         (Optional[conf.TestCommands], ..., "test cmd_02 --flag", conf.TestCommands(cmd_02=conf.TestCommand(flag=True))),
         (Optional[conf.TestCommands], ..., "test cmd_03 --flag", conf.TestCommands(cmd_03=conf.TestCommand(flag=True))),
-    ]
+    ],
 )
 def test_valid_arguments(
     argument_type: type[ArgumentT],
     argument_default: ArgumentT,
     arguments: str,
     result: ArgumentT,
-    ) -> None:
+) -> None:
     """Tests ArgumentParser Valid Arguments.
 
     Args:
@@ -243,11 +239,11 @@ def test_valid_arguments(
 
 
 @pytest.mark.parametrize(
-    [
+    (
         "argument_type",
         "argument_default",
         "arguments",
-    ],
+    ),
     [
         # Invalid Arguments
         (int,                  ..., "--test invalid"),
@@ -355,17 +351,17 @@ def test_valid_arguments(
         (Optional[conf.TestCommand],  ..., "invalid"),
         (Optional[conf.TestCommands], ..., "test"),
         (Optional[conf.TestCommands], ..., "test invalid"),
-    ]
+    ],
 )
 @pytest.mark.parametrize(
-    [
+    (
         "exit_on_error",
         "error"
-    ],
+    ),
     [
         (True,  SystemExit),
         (False, argparse.ArgumentError),
-    ]
+    ],
 )
 def test_invalid_arguments(
     argument_type: type[ArgumentT],
@@ -373,7 +369,7 @@ def test_invalid_arguments(
     arguments: str,
     exit_on_error: bool,
     error: type[Exception],
-    ) -> None:
+) -> None:
     """Tests ArgumentParser Invalid Arguments.
 
     Args:
@@ -471,17 +467,17 @@ def test_version_message(capsys: pytest.CaptureFixture[str]) -> None:
 
 
 @pytest.mark.parametrize(
-    [
+    (
         "argument_name",
         "argument_field",
-    ],
+    ),
     conf.TestModel.__fields__.items()
 )
 def test_argument_descriptions(
     argument_name: str,
     argument_field: pydantic.fields.ModelField,
     capsys: pytest.CaptureFixture[str],
-    ) -> None:
+) -> None:
     """Tests Argument Descriptions.
 
     Args:
