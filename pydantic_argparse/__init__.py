@@ -9,11 +9,15 @@ The public interface exposed by this package is the declarative and typed
 """
 
 # Local
-from .__version__ import __title__, __description__, __version__, __author__, __license__
 from .argparse import ArgumentParser
+from .metadata import __title__, __description__, __version__, __author__, __license__
 
-__all__ = [
-    # Arg parser
-    'ArgumentParser'
-]
-
+# Public Re-Exports
+__all__ = (
+    "ArgumentParser",
+    "__title__",
+    "__description__",
+    "__version__",
+    "__author__",
+    "__license__",
+)
