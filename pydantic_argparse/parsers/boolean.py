@@ -33,7 +33,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-    ) -> None:
+) -> None:
     """Adds boolean pydantic field to argument parser.
 
     Args:
@@ -59,7 +59,7 @@ def parse_field(
         # Add Optional Boolean Field (Default True)
         parser.add_argument(
             utils.argument_name(f"no-{field.alias}"),
-            action=argparse._StoreFalseAction,  # pylint: disable=protected-access
+            action=argparse._StoreFalseAction,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
             required=False,
@@ -69,7 +69,7 @@ def parse_field(
         # Add Optional Boolean Field (Default False)
         parser.add_argument(
             utils.argument_name(field.alias),
-            action=argparse._StoreTrueAction,  # pylint: disable=protected-access
+            action=argparse._StoreTrueAction,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,
             required=False,

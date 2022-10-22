@@ -35,7 +35,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-    ) -> None:
+) -> None:
     """Adds mapping pydantic field to argument parser.
 
     Args:
@@ -53,7 +53,7 @@ def parse_field(
         # Add Required Mapping Field
         parser.add_argument(
             utils.argument_name(field.alias),
-            action=argparse._StoreAction,  # pylint: disable=protected-access
+            action=argparse._StoreAction,
             type=caster,
             help=utils.argument_description(field.field_info.description),
             dest=field.alias,
@@ -65,7 +65,7 @@ def parse_field(
         # Add Optional Mapping Field
         parser.add_argument(
             utils.argument_name(field.alias),
-            action=argparse._StoreAction,  # pylint: disable=protected-access
+            action=argparse._StoreAction,
             type=caster,
             help=utils.argument_description(field.field_info.description, default),
             dest=field.alias,

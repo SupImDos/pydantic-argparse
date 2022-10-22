@@ -20,23 +20,23 @@ from pydantic_argparse.utils import utils
 import tests.conftest as conf
 
 # Typing
-from typing import Any, Literal, Optional  # pylint: disable=wrong-import-order
+from typing import Any, Literal, Optional
 
 
 @pytest.mark.parametrize(
-    [
+    (
         "name",
         "expected",
-    ],
+    ),
     [
         ("test", "--test"),
         ("test_two", "--test-two"),
-    ]
+    ],
 )
 def test_argument_name(
     name: str,
     expected: str,
-    ) -> None:
+) -> None:
     """Tests utils.argument_name Function.
 
     Args:
@@ -51,11 +51,11 @@ def test_argument_name(
 
 
 @pytest.mark.parametrize(
-    [
+    (
         "description",
         "default",
         "expected",
-    ],
+    ),
     [
         ("A",  "A",           "A (default: A)"),
         ("A",  5,             "A (default: 5)"),
@@ -65,13 +65,13 @@ def test_argument_name(
         (None, 5,             "(default: 5)"),
         (None, None,          "(default: None)"),
         (None, utils.MISSING, ""),
-    ]
+    ],
 )
 def test_argument_description(
     description: Optional[str],
     default: Optional[Any],
     expected: str,
-    ) -> None:
+) -> None:
     """Tests utils.argument_description Function.
 
     Args:
@@ -124,7 +124,7 @@ def test_namespace_to_dict() -> None:
 def test_type_caster() -> None:
     """Tests utils.type_caster Function."""
     # Create Lambda to Test
-    test = lambda x, y, z: x + y + z
+    test = lambda x, y, z: x + y + z  # noqa: E731
 
     # Generate Type Caster
     result = utils.type_caster("abc", test, y="y", z="z")
@@ -135,10 +135,10 @@ def test_type_caster() -> None:
 
 
 @pytest.mark.parametrize(
-    [
+    (
         "field_type",
         "expected_type",
-    ],
+    ),
     [
         (bool,                   bool),
         (int,                    int),
@@ -175,7 +175,7 @@ def test_type_caster() -> None:
         (conf.TestCommands,      pydantic.BaseModel),
         (conf.TestEnum,          enum.Enum),
         (conf.TestEnumSingle,    enum.Enum),
-    ]
+    ],
 )
 def test_is_field_a(field_type: Any, expected_type: Any) -> None:
     """Tests utils.is_field_a Function.

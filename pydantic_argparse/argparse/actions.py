@@ -1,4 +1,4 @@
-"""Recursively Nesting Sub-Parsers Action for Typed Argument Parsing
+"""Recursively Nesting Sub-Parsers Action for Typed Argument Parsing.
 
 The `actions` module contains the `SubParsersAction` class, which is an action
 that provides recursive namespace nesting when parsing sub-commands.
@@ -12,8 +12,8 @@ import argparse
 from typing import Any, Optional, Sequence, Union, cast
 
 
-class SubParsersAction(argparse._SubParsersAction):  # pylint: disable=protected-access
-    """Recursively Nesting Sub-Parsers Action for Typed Argument Parsing
+class SubParsersAction(argparse._SubParsersAction):
+    """Recursively Nesting Sub-Parsers Action for Typed Argument Parsing.
 
     This custom action differs in functionality from the existing standard
     argparse SubParsersAction because it nests the resultant sub-namespace
@@ -64,10 +64,12 @@ class SubParsersAction(argparse._SubParsersAction):  # pylint: disable=protected
         parser: argparse.ArgumentParser,
         namespace: argparse.Namespace,
         values: Union[str, Sequence[Any], None],
-        option_string: Optional[str]=None,
-        ) -> None:
-        """Parses arguments with the specified subparser, then embeds the
-        resultant sub-namespace into the supplied parent namespace.
+        option_string: Optional[str] = None,
+    ) -> None:
+        """Parses arguments into a namespace with the specified subparser.
+
+        This custom method parses arguments with the specified subparser, then
+        embeds the resultant sub-namespace into the supplied parent namespace.
 
         Args:
             parser (argparse.ArgumentParser): Parent argument parser object.

@@ -23,7 +23,7 @@ import typing
 import pydantic
 
 # Typing
-from typing import Any, Callable, Optional, TypeVar, Union  # pylint: disable=wrong-import-order
+from typing import Any, Callable, Optional, TypeVar, Union
 
 
 # Constants
@@ -54,8 +54,8 @@ def argument_name(name: str) -> str:
 
 def argument_description(
     description: Optional[str],
-    default: Optional[Any]=MISSING,
-    ) -> str:
+    default: Optional[Any] = MISSING,
+) -> str:
     """Standardises argument description.
 
     Examples:
@@ -106,7 +106,7 @@ def type_caster(
     name: str,
     function: Callable[..., T],
     **kwargs: Any,
-    ) -> Callable[[str], T]:
+) -> Callable[[str], T]:
     """Wraps a function to provide a type caster.
 
     Args:
@@ -117,18 +117,19 @@ def type_caster(
     Returns:
         Callable[[str], T]: Type caster named partial function.
     """
-    # Create Partial Function and Set Name
-    function = functools.partial(function, **kwargs)
-    setattr(function, "__name__", name)
+    # Set Name, Create Partial Function and Update Wrapper
+    function.__name__ = name
+    partial = functools.partial(function, **kwargs)
+    functools.update_wrapper(partial, function)
 
     # Return
-    return function
+    return partial
 
 
 def is_field_a(
     field: pydantic.fields.ModelField,
     types: Union[Any, tuple[Any, ...]],
-    ) -> bool:
+) -> bool:
     """Checks whether the subject *is* any of the supplied types.
 
     The checks are performed as follows:

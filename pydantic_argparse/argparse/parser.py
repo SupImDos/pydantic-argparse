@@ -28,7 +28,7 @@ from pydantic_argparse import utils
 from . import actions
 
 # Typing
-from typing import Any, Generic, NoReturn, Optional, TypeVar  # pylint: disable=wrong-import-order
+from typing import Any, Generic, NoReturn, Optional, TypeVar
 
 
 # Constants
@@ -70,13 +70,13 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
     def __init__(
         self,
         model: type[PydanticModelT],
-        prog: Optional[str]=None,
-        description: Optional[str]=None,
-        version: Optional[str]=None,
-        epilog: Optional[str]=None,
-        add_help: bool=True,
-        exit_on_error: bool=True,
-        ) -> None:
+        prog: Optional[str] = None,
+        description: Optional[str] = None,
+        version: Optional[str] = None,
+        epilog: Optional[str] = None,
+        add_help: bool = True,
+        exit_on_error: bool = True,
+    ) -> None:
         """Instantiates the Typed Argument Parser with its `pydantic` model.
 
         Args:
@@ -126,8 +126,8 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
 
     def parse_typed_args(
         self,
-        args: Optional[list[str]]=None,
-        ) -> PydanticModelT:
+        args: Optional[list[str]] = None,
+    ) -> PydanticModelT:
         """Parses command line arguments.
 
         If `args` are not supplied by the user, then they are automatically
@@ -166,7 +166,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         self,
         *args: Any,
         **kwargs: Any,
-        ) -> argparse.Action:
+    ) -> argparse.Action:
         """Adds an argument to the ArgumentParser.
 
         Args:
@@ -235,7 +235,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         self._help_group.add_argument(
             "-h",
             "--help",
-            action=argparse._HelpAction,  # pylint: disable=protected-access
+            action=argparse._HelpAction,
             help="show this help message and exit",
         )
 
@@ -245,7 +245,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         self._help_group.add_argument(
             "-v",
             "--version",
-            action=argparse._VersionAction,  # pylint: disable=protected-access
+            action=argparse._VersionAction,
             help="show program's version number and exit",
         )
 

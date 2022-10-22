@@ -1,4 +1,4 @@
-"""Configures Testing and Defines Pytest Fixtures
+"""Configures Testing and Defines Pytest Fixtures.
 
 The `conftest.py` file serves as a means of providing fixtures for an entire
 directory. Fixtures defined in a `conftest.py` can be used by any test in the
@@ -20,12 +20,12 @@ import pytest
 from pydantic_argparse.argparse import actions
 
 # Typing
-from typing import Literal, Optional  # pylint: disable=wrong-import-order
+from typing import Literal, Optional
 
 
-@pytest.fixture
+@pytest.fixture()
 def sub_parsers_action() -> actions.SubParsersAction:
-    """PyTest Fixture for actions.SubParsersAction.
+    """Pytest Fixture for actions.SubParsersAction.
 
     Returns:
         actions.SubParsersAction.
@@ -42,31 +42,31 @@ def sub_parsers_action() -> actions.SubParsersAction:
 
 
 class TestEnum(enum.Enum):
-    """Test Enum for Testing"""
+    """Test Enum for Testing."""
     A = enum.auto()
     B = enum.auto()
     C = enum.auto()
 
 
 class TestEnumSingle(enum.Enum):
-    """Test Enum with Single Member for Testing"""
+    """Test Enum with Single Member for Testing."""
     D = enum.auto()
 
 
 class TestCommand(pydantic.BaseModel):
-    """Test Command Model for Testing"""
+    """Test Command Model for Testing."""
     flag: bool = pydantic.Field(False, description="flag")
 
 
 class TestCommands(pydantic.BaseModel):
-    """Test Commands Model for Testing"""
+    """Test Commands Model for Testing."""
     cmd_01: Optional[TestCommand] = pydantic.Field(description="cmd_01")
     cmd_02: Optional[TestCommand] = pydantic.Field(description="cmd_02")
     cmd_03: Optional[TestCommand] = pydantic.Field(description="cmd_03")
 
 
 class TestModel(pydantic.BaseModel):
-    """Test Model for Testing"""
+    """Test Model for Testing."""
     # Required Arguments
     arg_01: int = pydantic.Field(description="arg_01")
     arg_02: float = pydantic.Field(description="arg_02")
