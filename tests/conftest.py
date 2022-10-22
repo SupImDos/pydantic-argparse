@@ -60,9 +60,9 @@ class TestCommand(pydantic.BaseModel):
 
 class TestCommands(pydantic.BaseModel):
     """Test Commands Model for Testing."""
-    cmd_01: Optional[TestCommand] = pydantic.Field(description="cmd_01")
-    cmd_02: Optional[TestCommand] = pydantic.Field(description="cmd_02")
-    cmd_03: Optional[TestCommand] = pydantic.Field(description="cmd_03")
+    cmd_01: Optional[TestCommand] = pydantic.Field(None, description="cmd_01")
+    cmd_02: Optional[TestCommand] = pydantic.Field(None, description="cmd_02")
+    cmd_03: Optional[TestCommand] = pydantic.Field(None, description="cmd_03")
 
 
 class TestModel(pydantic.BaseModel):
@@ -94,7 +94,7 @@ class TestModel(pydantic.BaseModel):
     arg_22: str = pydantic.Field("ABC", description="arg_22")
     arg_23: bytes = pydantic.Field(b"ABC", description="arg_23")
     arg_24: list[str] = pydantic.Field(list(("A", "B", "C")), description="arg_24")
-    arg_25: tuple[str, str, str] = pydantic.Field(tuple(("A", "B", "C")), description="arg_25")
+    arg_25: tuple[str, str, str] = pydantic.Field(("A", "B", "C"), description="arg_25")
     arg_26: set[str] = pydantic.Field(set(("A", "B", "C")), description="arg_26")
     arg_27: frozenset[str] = pydantic.Field(frozenset(("A", "B", "C")), description="arg_27")
     arg_28: collections.deque[str] = pydantic.Field(collections.deque(("A", "B", "C")), description="arg_28")
@@ -105,8 +105,8 @@ class TestModel(pydantic.BaseModel):
     arg_33: datetime.timedelta = pydantic.Field(datetime.timedelta(hours=5), description="arg_33")
     arg_34: bool = pydantic.Field(False, description="arg_34")
     arg_35: bool = pydantic.Field(True, description="arg_35")
-    arg_36: Literal["A"] = pydantic.Field("A", description="arg_36")
-    arg_37: Literal["A", 1] = pydantic.Field("A", description="arg_37")
+    arg_36: Literal["A"] = pydantic.Field("A", description="arg_36")  # type: ignore[assignment]
+    arg_37: Literal["A", 1] = pydantic.Field("A", description="arg_37")  # type: ignore[assignment]
     arg_38: TestEnumSingle = pydantic.Field(TestEnumSingle.D, description="arg_38")
     arg_39: TestEnum = pydantic.Field(TestEnum.A, description="arg_39")
 
@@ -133,7 +133,7 @@ class TestModel(pydantic.BaseModel):
 
     # Special Enums and Literals Optional Flag Behaviour
     arg_59: Optional[Literal["A"]] = pydantic.Field(description="arg_59")
-    arg_60: Optional[Literal["A"]] = pydantic.Field("A", description="arg_60")
+    arg_60: Optional[Literal["A"]] = pydantic.Field("A", description="arg_60")  # type: ignore[assignment]
     arg_61: Optional[TestEnumSingle] = pydantic.Field(description="arg_61")
     arg_62: Optional[TestEnumSingle] = pydantic.Field(TestEnumSingle.D, description="arg_62")
 
