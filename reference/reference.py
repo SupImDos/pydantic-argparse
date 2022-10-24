@@ -21,7 +21,7 @@ DOT_MD = ".md"
 PREFIX_H1 = "# "
 PREFIX_H2 = "## "
 PREFIX_CODE = "::: "
-ESCAPE_MD = "_", r"\_"
+ESCAPE_MD = "_", "_\u200B", 1  # Hack to stop underscores being rendered as italics
 
 
 def generate(package: pathlib.Path, docs: pathlib.Path) -> None:
