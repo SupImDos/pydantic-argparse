@@ -20,6 +20,19 @@
     <a href="https://github.com/SupImDos/pydantic-argparse/blob/master/LICENSE">
         <img src="https://img.shields.io/github/license/SupImDos/pydantic-argparse.svg">
     </a>
+    <br>
+    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/tests.yml">
+        <img src="https://img.shields.io/github/workflow/status/supimdos/pydantic-argparse/Tests?label=tests">
+    </a>
+    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/tests.yml">
+        <img src="https://img.shields.io/coveralls/github/SupImDos/pydantic-argparse">
+    </a>
+    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/linting.yml">
+        <img src="https://img.shields.io/github/workflow/status/supimdos/pydantic-argparse/Linting?label=linting">
+    </a>
+    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/typing.yml">
+        <img src="https://img.shields.io/github/workflow/status/supimdos/pydantic-argparse/Typing?label=typing">
+    </a>
 </div>
 
 ## Help
