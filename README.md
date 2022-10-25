@@ -5,9 +5,6 @@
     <p>
         <em>Typed Argument Parsing with Pydantic</em>
     </p>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/ci.yml">
-        <img src="https://github.com/SupImDos/pydantic-argparse/actions/workflows/ci.yml/badge.svg">
-    </a>
     <a href="https://pypi.python.org/pypi/pydantic-argparse">
         <img src="https://img.shields.io/pypi/v/pydantic-argparse.svg">
     </a>
