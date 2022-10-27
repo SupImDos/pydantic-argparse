@@ -2,137 +2,137 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://pydantic-argparse.supimdos.com/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/background/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/showcase/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/examples/commands/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/examples/simple/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>None</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/argparse/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/argparse/actions/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/argparse/parser/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/parsers/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/parsers/boolean/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/parsers/command/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/parsers/container/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/parsers/enum/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/parsers/literal/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/parsers/mapping/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/parsers/standard/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/utils/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/utils/utils/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/usage/argument_parser/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/usage/arguments/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/usage/arguments/choices/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/usage/arguments/commands/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/usage/arguments/flags/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/usage/arguments/regular/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://pydantic-argparse.supimdos.com/usage/arguments/variadic/</loc>
-         <lastmod>2022-10-24</lastmod>
+         <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
