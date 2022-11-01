@@ -1,4 +1,7 @@
 <div align="center">
+    <a href="https://pydantic-argparse.supimdos.com">
+        <img src="docs/assets/images/logo.svg" width="50%">
+    </a>
     <h1>
         Pydantic Argparse
     </h1>
