@@ -22,16 +22,16 @@
     </a>
     <br>
     <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/tests.yml">
-        <img src="https://img.shields.io/github/workflow/status/supimdos/pydantic-argparse/Tests?label=tests">
+        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/tests.yml?label=tests">
     </a>
     <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/tests.yml">
         <img src="https://img.shields.io/coveralls/github/SupImDos/pydantic-argparse">
     </a>
     <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/linting.yml">
-        <img src="https://img.shields.io/github/workflow/status/supimdos/pydantic-argparse/Linting?label=linting">
+        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/linting.yml?label=linting">
     </a>
     <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/typing.yml">
-        <img src="https://img.shields.io/github/workflow/status/supimdos/pydantic-argparse/Typing?label=typing">
+        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/typing.yml?label=typing">
     </a>
 </div>
 ---
