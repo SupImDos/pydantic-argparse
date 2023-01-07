@@ -10,9 +10,11 @@ argument parsing.
 """
 
 # Local
+from .actions import BooleanOptionalAction
 from .parser import ArgumentParser
 
 # Public Re-Exports
 __all__ = (
     "ArgumentParser",
+    "BooleanOptionalAction"
 )

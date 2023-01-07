@@ -9,7 +9,7 @@ that provides recursive namespace nesting when parsing sub-commands.
 import argparse
 
 # Typing
-from typing import Any, Optional, Sequence, Union, cast
+from typing import Any, Callable, Iterable, List, Optional, Sequence, Tuple, TypeVar, Union, cast
 
 
 class SubParsersAction(argparse._SubParsersAction):
@@ -113,3 +113,90 @@ class SubParsersAction(argparse._SubParsersAction):
         if arg_strings:
             vars(namespace).setdefault(argparse._UNRECOGNIZED_ARGS_ATTR, [])
             getattr(namespace, argparse._UNRECOGNIZED_ARGS_ATTR).extend(arg_strings)
+
+
+_T = TypeVar("_T")
+
+
+class BooleanOptionalAction(argparse.Action):
+    """Action for storing optional boolean arguments.
+
+    This backported action allows using GNU-style optional boolean arguments,
+    for example "--foo/--no-foo".
+
+    Source:
+    https://github.com/python/cpython/blob/72263f2a20002ceff443e3a231c713f2e14fe3fe/Lib/argparse.py#L878
+    """
+    def __init__(
+        self,
+        option_strings: Sequence[str],
+        dest: str,
+        default: Optional[Union[_T, str]] = None,
+        type: Optional[Union[Callable[[str], _T], argparse.FileType]] = None,  # noqa: A002
+        choices: Optional[Iterable[_T]] = None,
+        required: bool = False,
+        help: Optional[str] = None,  # noqa: A002
+        metavar: Optional[Union[str, Tuple[str, ...]]] = None
+    ) -> None:
+        """Initializes the option.
+
+        This initializes a default option, but adds "--no-<OPT>" as an allowed
+        option string.
+
+        Args:
+            option_strings (Sequence[str]): Option strings.
+            dest (str): Variable to save the value to.
+            default (Optional[Union[_T, str]]): Default value of the option.
+            type (Optional[Union[Callable[[str], _T], argparse.FileType]]): Type to cast the option to.
+            choices (Optional[Iterable[_T]]): Allowed values for the option.
+            required (bool): Whether the option is required.
+            help (Optional[str]): Help string for the option.
+            metavar (Optional[Union[str, Tuple[str, ...]]]): Meta variable name for the option.
+        """
+        _option_strings = []
+        for option_string in option_strings:
+            _option_strings.append(option_string)
+
+            if option_string.startswith('--'):
+                option_string = '--no-' + option_string[2:]
+                _option_strings.append(option_string)
+
+        super().__init__(
+            option_strings=_option_strings,
+            dest=dest,
+            nargs=0,
+            default=default,
+            type=type,
+            choices=choices,
+            required=required,
+            help=help,
+            metavar=metavar)
+
+    def __call__(
+        self,
+        parser: argparse.ArgumentParser,
+        namespace: argparse.Namespace,
+        values: Optional[Union[str, Sequence[Any]]],
+        option_string: Optional[str] = None
+    ) -> None:
+        """Parses arguments into a namespace, excluding "--no-opt".
+
+        This custom method parses arguments while omitting the options with
+        "--no".
+
+        Args:
+            parser (argparse.ArgumentParser): Parent argument parser object.
+            namespace (argparse.Namespace): Parent namespace being parsed to.
+            values (Optional[Union[str, Sequence[Any]]]): Arguments to parse.
+            option_string (Optional[str]): Optional option string.
+        """
+        if option_string in self.option_strings:
+            setattr(namespace, self.dest, not option_string.startswith('--no-'))
+
+    def format_usage(self) -> str:
+        """Formats the usage string.
+
+        Returns:
+            str: Usage string for the option.
+        """
+        return ' | '.join(self.option_strings)

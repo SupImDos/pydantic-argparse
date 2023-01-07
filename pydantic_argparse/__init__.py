@@ -9,12 +9,13 @@ The public interface exposed by this package is the declarative and typed
 """
 
 # Local
-from .argparse import ArgumentParser
+from .argparse import ArgumentParser, BooleanOptionalAction
 from .__metadata__ import __title__, __description__, __version__, __author__, __license__
 
 # Public Re-Exports
 __all__ = (
     "ArgumentParser",
+    "BooleanOptionalAction",
     "__title__",
     "__description__",
     "__version__",
