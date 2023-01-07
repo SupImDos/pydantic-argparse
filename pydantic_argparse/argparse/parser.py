@@ -89,14 +89,23 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             exit_on_error (bool): Whether to exit on error.
         """
         # Initialise Super Class
-        super().__init__(
-            prog=prog,
-            description=description,
-            epilog=epilog,
-            exit_on_error=exit_on_error,
-            add_help=False,  # Always disable the automatic help flag.
-            argument_default=argparse.SUPPRESS,  # Allow `pydantic` to handle defaults.
-        )
+        if sys.version_info < (3, 9):
+            super().__init__(
+                prog=prog,
+                description=description,
+                epilog=epilog,
+                add_help=False,  # Always disable the automatic help flag.
+                argument_default=argparse.SUPPRESS,  # Allow `pydantic` to handle defaults.
+            )
+        else:
+            super().__init__(
+                prog=prog,
+                description=description,
+                epilog=epilog,
+                exit_on_error=exit_on_error,
+                add_help=False,  # Always disable the automatic help flag.
+                argument_default=argparse.SUPPRESS,  # Allow `pydantic` to handle defaults.
+            )
 
         # Set Model
         self.model = model
