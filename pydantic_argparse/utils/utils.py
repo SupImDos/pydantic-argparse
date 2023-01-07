@@ -23,7 +23,7 @@ import typing
 import pydantic
 
 # Typing
-from typing import Any, Callable, Optional, TypeVar, Union
+from typing import Any, Callable, Dict, Optional, Tuple, TypeVar, Union
 
 
 # Constants
@@ -79,7 +79,7 @@ def argument_description(
     return " ".join(filter(None, [description, default]))
 
 
-def namespace_to_dict(namespace: argparse.Namespace) -> dict[str, Any]:
+def namespace_to_dict(namespace: argparse.Namespace) -> Dict[str, Any]:
     """Converts a nested namespace to a dictionary recursively.
 
     Args:
@@ -128,7 +128,7 @@ def type_caster(
 
 def is_field_a(
     field: pydantic.fields.ModelField,
-    types: Union[Any, tuple[Any, ...]],
+    types: Union[Any, Tuple[Any, ...]],
 ) -> bool:
     """Checks whether the subject *is* any of the supplied types.
 

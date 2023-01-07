@@ -18,7 +18,7 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import TypeVar
+from typing import Type, TypeVar
 
 
 # Constants
@@ -111,7 +111,7 @@ def parse_field(
 
 def _arg_to_enum_member(
     argument: str,
-    enum_type: type[EnumT],
+    enum_type: Type[EnumT],
 ) -> EnumT:
     """Attempts to convert string argument to a supplied enum member.
 
@@ -132,7 +132,7 @@ def _arg_to_enum_member(
         raise ValueError from exc
 
 
-def _enum_choices_metavar(enum_type: type[EnumT]) -> str:
+def _enum_choices_metavar(enum_type: Type[EnumT]) -> str:
     """Generates a string metavar from enum choices.
 
     Args:
