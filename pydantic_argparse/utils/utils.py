@@ -17,7 +17,7 @@ utility functions.
 # Standard
 import argparse
 import functools
-import typing
+from typing_extensions import get_origin
 
 # Third-Party
 import pydantic
@@ -153,7 +153,7 @@ def is_field_a(
         types = (types, )
 
     # Get field type, or origin if applicable
-    field_type = typing.get_origin(field.outer_type_) or field.outer_type_
+    field_type = get_origin(field.outer_type_) or field.outer_type_
 
     # Check `isinstance` and `issubclass` validity
     # In order for `isinstance` and `issubclass` to be valid, all arguments
