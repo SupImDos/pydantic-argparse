@@ -359,7 +359,7 @@ typing-extensions = {version = ">=3.7.4.3", markers = "python_version < \"3.8\""
 name = "importlib-metadata"
 version = "4.2.0"
 description = "Read metadata from Python packages"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1267,7 +1267,7 @@ test = ["pytest (>=3.0.0)"]
 name = "zipp"
 version = "3.9.0"
 description = "Backport of pathlib-compatible object wrapper for zip files"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1282,4 +1282,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "c21a48f5283ad108db4af0dee44e96f3f1e3fce8d32e3662d3af4f106d515fae"
+content-hash = "b8df8f7a24fb30a33ebe8c49f188f09b27bf7ce4a70856b89eb1ee263e1837ae"
