@@ -11,7 +11,12 @@ The metadata exported are the `title`, `description`, `version`, `author` and
 
 
 # Standard
-from importlib import metadata
+import sys
+
+if sys.version_info < (3, 8):
+    import importlib_metadata as metadata
+else:
+    from importlib import metadata
 
 
 # Retrieve Metadata from Package

@@ -21,6 +21,8 @@ include = [
 [tool.poetry.dependencies]
 python = "^3.7"
 pydantic = "^1.9.0"
+importlib_metadata = { version = "^6.0.0", python = "<3.8" }
+typing_extensions = { version = "^4.4.0", python = "<3.8" }
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "^0.12.2"

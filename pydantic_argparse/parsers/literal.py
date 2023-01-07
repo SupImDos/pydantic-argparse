@@ -18,7 +18,8 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import Any, Iterable, Literal, TypeVar
+from typing import Any, Iterable, List, TypeVar
+from typing_extensions import Literal
 
 
 # Constants
@@ -111,7 +112,7 @@ def parse_field(
 
 def _arg_to_choice(
     argument: str,
-    choices: list[T],
+    choices: List[T],
 ) -> T:
     """Attempts to convert string argument to a supplied choice.
 

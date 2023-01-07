@@ -28,7 +28,7 @@ from pydantic_argparse import utils
 from . import actions
 
 # Typing
-from typing import Any, Generic, NoReturn, Optional, TypeVar
+from typing import Any, Generic, List, NoReturn, Optional, Type, TypeVar
 
 
 # Constants
@@ -69,7 +69,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
 
     def __init__(
         self,
-        model: type[PydanticModelT],
+        model: Type[PydanticModelT],
         prog: Optional[str] = None,
         description: Optional[str] = None,
         version: Optional[str] = None,
@@ -126,7 +126,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
 
     def parse_typed_args(
         self,
-        args: Optional[list[str]] = None,
+        args: Optional[List[str]] = None,
     ) -> PydanticModelT:
         """Parses command line arguments.
 
@@ -249,7 +249,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             help="show program's version number and exit",
         )
 
-    def _add_model(self, model: type[PydanticModelT]) -> None:
+    def _add_model(self, model: Type[PydanticModelT]) -> None:
         """Adds pydantic model to argument parser.
 
         Args:
