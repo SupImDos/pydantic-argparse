@@ -86,7 +86,7 @@ class SubParsersAction(argparse._SubParsersAction):
         # such, this function signature also accepts 'str' and 'None' types for
         # the values argument. However, in reality, this should only ever be a
         # list of strings here, so we just do a type cast.
-        values = cast(list[str], values)
+        values = cast(List[str], values)
 
         # Get Parser Name and Remaining Argument Strings
         parser_name, *arg_strings = values
