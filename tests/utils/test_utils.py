@@ -23,6 +23,7 @@ import tests.conftest as conf
 from typing import Any, Deque, Dict, FrozenSet, List, Optional, Set, Tuple
 from typing_extensions import Literal
 
+
 @pytest.mark.parametrize(
     (
         "name",
