@@ -9,7 +9,7 @@ command-line arguments.
 
 # Standard
 import argparse
-import typing
+from typing_extensions import get_args
 
 # Third-Party
 import pydantic
@@ -50,7 +50,7 @@ def parse_field(
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Get choices from literal
-    choices = list(typing.get_args(field.outer_type_))
+    choices = list(get_args(field.outer_type_))
 
     # Define Custom Type Caster
     caster = utils.type_caster(field.alias, _arg_to_choice, choices=choices)
