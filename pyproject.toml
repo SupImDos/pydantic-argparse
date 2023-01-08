@@ -22,7 +22,7 @@ include = [
 python = "^3.7"
 pydantic = "^1.9.0"
 importlib_metadata = { version = ">=4", python = "<3.8" }
-typing_extensions = { version = ">=4", python = "<3.8" }
+typing_extensions = { version = ">=4" }
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "^0.12.2"
