@@ -191,7 +191,7 @@ class BooleanOptionalAction(argparse.Action):
             option_string (Optional[str]): Optional option string.
         """
         if option_string in self.option_strings:
-            setattr(namespace, self.dest, not option_string.startswith('--no-'))
+            setattr(namespace, self.dest, not option_string.startswith('--no-'))  # type: ignore[union-attr]
 
     def format_usage(self) -> str:
         """Formats the usage string.
