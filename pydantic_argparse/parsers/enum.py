@@ -49,7 +49,7 @@ def parse_field(
         field (pydantic.fields.ModelField): Field to be added to parser.
     """
     # Get Enum Type
-    enum_type: type[enum.Enum] = field.outer_type_
+    enum_type: Type[enum.Enum] = field.outer_type_
 
     # Define Custom Type Caster
     caster = utils.type_caster(field.alias, _arg_to_enum_member, enum_type=enum_type)
