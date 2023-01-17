@@ -11,6 +11,7 @@ import argparse
 import collections
 import datetime
 import enum
+import sys
 
 # Third-Party
 import pydantic
@@ -21,7 +22,10 @@ from pydantic_argparse.argparse import actions
 
 # Typing
 from typing import Deque, Dict, FrozenSet, List, Optional, Set, Tuple
-from typing_extensions import Literal
+if sys.version_info < (3, 8):  # pragma: <3.8 cover
+    from typing_extensions import Literal
+else:  # pragma: >=3.8 cover
+    from typing import Literal
 
 
 @pytest.fixture()

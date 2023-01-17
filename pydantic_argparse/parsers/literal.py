@@ -9,7 +9,11 @@ command-line arguments.
 
 # Standard
 import argparse
-from typing_extensions import get_args
+import sys
+if sys.version_info < (3, 8):  # pragma: <3.8 cover
+    from typing_extensions import get_args
+else:  # pragma: >=3.8 cover
+    from typing import get_args
 
 # Third-Party
 import pydantic
@@ -19,8 +23,11 @@ from pydantic_argparse import utils
 
 # Typing
 from typing import Any, Iterable, List, TypeVar
-from typing_extensions import Literal
 
+if sys.version_info < (3, 8):  # pragma: <3.8 cover
+    from typing_extensions import Literal
+else:  # pragma: >=3.8 cover
+    from typing import Literal
 
 # Constants
 T = TypeVar("T")
