@@ -42,6 +42,7 @@ mkdocstrings = {extras = ["python-legacy"], version = "^0.19.0"}
 mkdocs-gen-files = "^0.3.4"
 mkdocs-literate-nav = "^0.4.1"
 mkdocs-autorefs = "^0.3.1"
+covdefaults = "^2.2.2"
 
 [tool.poe.tasks]
 test = "pytest tests --cov=pydantic_argparse"
@@ -67,13 +68,7 @@ log_cli_format = "%(asctime)s.%(msecs)03d [%(levelname)-8s] (%(name)-11s): %(mes
 log_cli_date_format = "%Y%m%dT%H%M%S"
 
 [tool.coverage.run]
-branch = true
-
-[tool.coverage.report]
-show_missing = true
-exclude_lines = [
-    "if __name__ == .__main__.:",
-]
+plugins = ["covdefaults"]
 
 [tool.mypy]
 check_untyped_defs = true
