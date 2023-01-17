@@ -35,7 +35,7 @@ flake8-pyproject = "^1.1.0"
 flake8-pytest-style = "^1.6.0"
 mypy = "^0.921"
 pytest = "^6.2.5"
-pytest-cov = {extras = ["toml"], version = "^3.0.0"}
+pytest-cov = "^3.0.0"
 pytest-mock = "^3.6.1"
 mkdocs-material = "^8.1.8"
 mkdocstrings = {extras = ["python-legacy"], version = "^0.19.0"}
