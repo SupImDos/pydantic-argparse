@@ -10,6 +10,7 @@ argument parsing.
 """
 
 # Local
+import pydantic_argparse.argparse.patches
 from .actions import BooleanOptionalAction
 from .parser import ArgumentParser
 
