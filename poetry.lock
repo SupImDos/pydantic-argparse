@@ -109,6 +109,21 @@ files = [
 ]
 
 [[package]]
+name = "covdefaults"
+version = "2.2.2"
+description = "A coverage plugin to provide sensible default settings"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "covdefaults-2.2.2-py2.py3-none-any.whl", hash = "sha256:10c193cbf290675961a09166d7cdea8a783655e04009f5493d50685fe6ec82f3"},
+    {file = "covdefaults-2.2.2.tar.gz", hash = "sha256:e543862ee0347769b47b27fa586d690e6b91587a3dcaaf8552fcfb1fac03d061"},
+]
+
+[package.dependencies]
+coverage = ">=6.0.2"
+
+[[package]]
 name = "coverage"
 version = "6.5.0"
 description = "Code coverage measurement for Python"
@@ -1282,4 +1297,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "b8df8f7a24fb30a33ebe8c49f188f09b27bf7ce4a70856b89eb1ee263e1837ae"
+content-hash = "c356e82eb03fb62aa1057a952504236e49ce93bd140806c781b3ba1e0a95f9b5"
