@@ -118,7 +118,7 @@ class SubParsersAction(argparse._SubParsersAction):
 _T = TypeVar("_T")
 
 
-class BooleanOptionalAction(argparse.Action):
+class BooleanOptionalAction(argparse.Action):  # pragma: no cover
     """Action for storing optional boolean arguments.
 
     This backported action allows using GNU-style optional boolean arguments,
