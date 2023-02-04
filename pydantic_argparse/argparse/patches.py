@@ -21,7 +21,7 @@ from typing import Optional
 if sys.version_info < (3, 9):  # pragma: <3.9 cover
     def _get_action_name(argument: Optional[argparse.Action]) -> Optional[str]:
         """Returns the action name for an argument action.
-        
+
         For arguments with option strings, it concatenates those with a slash.
         For arguments with `metavar` or `dest`, it returns those. For arguments
         with `choices`, it returns the list of those.
