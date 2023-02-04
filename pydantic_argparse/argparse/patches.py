@@ -19,7 +19,7 @@ from typing import Optional
 # Here, we backport it to 3.7 and 3.8 as well, via monkey-patching
 # https://github.com/python/cpython/blob/v3.11.1/Lib/argparse.py#L739-L751
 if sys.version_info < (3, 9):  # pragma: <3.9 cover
-    def _get_action_name(argument: Optional[argparse.Action]) -> Optional[str]:
+    def _get_action_name(argument: Optional[argparse.Action]) -> Optional[str]:  # pragma: no cover
         """Returns the action name for an argument action.
 
         For arguments with option strings, it concatenates those with a slash.
