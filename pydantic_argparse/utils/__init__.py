@@ -9,10 +9,8 @@ The public interface exposed by this package is various utility helper methods.
 """
 
 # Local
-from .utils import (
-    argument_name,
-    argument_description,
-    namespace_to_dict,
-    type_caster,
-    is_field_a,
-)
+from pydantic_argparse.utils.utils import argument_description
+from pydantic_argparse.utils.utils import argument_name
+from pydantic_argparse.utils.utils import is_field_a
+from pydantic_argparse.utils.utils import namespace_to_dict
+from pydantic_argparse.utils.utils import type_caster
