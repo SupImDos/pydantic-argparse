@@ -14,8 +14,8 @@ import argparse
 import pydantic
 
 # Local
-from pydantic_argparse.argparse.actions import BooleanOptionalAction
 from pydantic_argparse import utils
+from pydantic_argparse.argparse import actions
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
@@ -49,7 +49,7 @@ def parse_field(
         # Add Required Boolean Field
         parser.add_argument(
             utils.argument_name(field.alias),
-            action=BooleanOptionalAction,
+            action=actions.BooleanOptionalAction,
             help=utils.argument_description(field.field_info.description),
             dest=field.alias,
             required=True,

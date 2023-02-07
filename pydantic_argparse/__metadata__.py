@@ -13,6 +13,7 @@ The metadata exported are the `title`, `description`, `version`, `author` and
 # Standard
 import sys
 
+# Version-Guarded
 if sys.version_info < (3, 8):  # pragma: <3.8 cover
     import importlib_metadata as metadata
 else:  # pragma: >=3.8 cover

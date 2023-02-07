@@ -25,7 +25,8 @@ import pydantic
 # Local
 from pydantic_argparse import parsers
 from pydantic_argparse import utils
-from . import actions
+from pydantic_argparse.argparse import actions
+from pydantic_argparse.argparse import patches  # noqa: F401
 
 # Typing
 from typing import Any, Generic, List, NoReturn, Optional, Type, TypeVar
@@ -97,6 +98,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 add_help=False,  # Always disable the automatic help flag.
                 argument_default=argparse.SUPPRESS,  # Allow `pydantic` to handle defaults.
             )
+
         else:  # pragma: >=3.9 cover
             super().__init__(
                 prog=prog,

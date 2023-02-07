@@ -18,16 +18,18 @@ utility functions.
 import argparse
 import functools
 import sys
-if sys.version_info < (3, 8):  # pragma: <3.8 cover
-    from typing_extensions import get_origin
-else:  # pragma: >=3.8 cover
-    from typing import get_origin
 
 # Third-Party
 import pydantic
 
 # Typing
 from typing import Any, Callable, Dict, Optional, Tuple, TypeVar, Union
+
+# Version-Guarded
+if sys.version_info < (3, 8):  # pragma: <3.8 cover
+    from typing_extensions import get_origin
+else:  # pragma: >=3.8 cover
+    from typing import get_origin
 
 
 # Constants
