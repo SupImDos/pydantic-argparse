@@ -28,7 +28,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
         bool: Whether the field should be parsed as a `boolean`.
     """
     # Check and Return
-    return utils.is_field_a(field, bool)
+    return utils.types.is_field_a(field, bool)
 
 
 def parse_field(
@@ -48,9 +48,9 @@ def parse_field(
     if field.required:
         # Add Required Boolean Field
         parser.add_argument(
-            utils.argument_name(field.alias),
+            utils.arguments.name(field.alias),
             action=actions.BooleanOptionalAction,
-            help=utils.argument_description(field.field_info.description),
+            help=utils.arguments.description(field.field_info.description),
             dest=field.alias,
             required=True,
             default=None,  # Bug workaround: https://bugs.python.org/issue46080
@@ -59,9 +59,9 @@ def parse_field(
     elif default:
         # Add Optional Boolean Field (Default True)
         parser.add_argument(
-            utils.argument_name(f"no-{field.alias}"),
+            utils.arguments.name(f"no-{field.alias}"),
             action=argparse._StoreFalseAction,
-            help=utils.argument_description(field.field_info.description, default),
+            help=utils.arguments.description(field.field_info.description, default),
             dest=field.alias,
             required=False,
         )
@@ -69,9 +69,9 @@ def parse_field(
     else:
         # Add Optional Boolean Field (Default False)
         parser.add_argument(
-            utils.argument_name(field.alias),
+            utils.arguments.name(field.alias),
             action=argparse._StoreTrueAction,
-            help=utils.argument_description(field.field_info.description, default),
+            help=utils.arguments.description(field.field_info.description, default),
             dest=field.alias,
             required=False,
         )

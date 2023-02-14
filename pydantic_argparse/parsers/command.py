@@ -27,7 +27,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
         bool: Whether the field should be parsed as a `command`.
     """
     # Check and Return
-    return utils.is_field_a(field, pydantic.BaseModel)
+    return utils.types.is_field_a(field, pydantic.BaseModel)
 
 
 def parse_field(

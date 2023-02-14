@@ -158,7 +158,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         namespace = self.parse_args(args)
 
         # Convert Namespace to Dictionary
-        arguments = utils.namespace_to_dict(namespace)
+        arguments = utils.namespaces.to_dict(namespace)
 
         # Handle Possible Validation Errors
         try:
@@ -168,7 +168,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         except pydantic.ValidationError as exc:
             # Catch exception, and use the ArgumentParser.error() method
             # to report it to the user
-            self.error(str(exc))
+            self.error(utils.errors.format(exc))
 
         # Return
         return model
