@@ -36,9 +36,9 @@ def parse_field(
     if field.required:
         # Add Required Standard Field
         parser.add_argument(
-            utils.argument_name(field.alias),
+            utils.arguments.name(field.alias),
             action=argparse._StoreAction,
-            help=utils.argument_description(field.field_info.description),
+            help=utils.arguments.description(field.field_info.description),
             dest=field.alias,
             metavar=field.alias.upper(),
             required=True,
@@ -47,9 +47,9 @@ def parse_field(
     else:
         # Add Optional Standard Field
         parser.add_argument(
-            utils.argument_name(field.alias),
+            utils.arguments.name(field.alias),
             action=argparse._StoreAction,
-            help=utils.argument_description(field.field_info.description, default),
+            help=utils.arguments.description(field.field_info.description, default),
             dest=field.alias,
             metavar=field.alias.upper(),
             required=False,
