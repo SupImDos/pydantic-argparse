@@ -1,12 +1,7 @@
 """Errors Utility Functions for Declarative Typed Argument Parsing.
 
-The `errors` module contains various utility functions, including:
-
-* `format`: Formats error messages.
-
-The functionality outlined above is so common throughout the typed argument
-parsing process that the functions have been refactored out into this module as
-utility functions.
+The `errors` module contains a utility function used for formatting `pydantic`
+Validation Errors to human readable messages.
 """
 
 

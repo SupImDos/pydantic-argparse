@@ -1,12 +1,7 @@
 """Namespaces Utility Functions for Declarative Typed Argument Parsing.
 
-The `namespaces` module contains various utility functions, including:
-
-* `to_dict`: Recursively parses `argparse.Namespace`s to `dict`s.
-
-The functionality outlined above is so common throughout the typed argument
-parsing process that the functions have been refactored out into this module as
-utility functions.
+The `namespaces` module contains a utility function used for recursively
+converting `argparse.Namespace`s to regular Python `dict`s.
 """
 
 

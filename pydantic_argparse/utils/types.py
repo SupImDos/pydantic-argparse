@@ -1,13 +1,8 @@
 """Types Utility Functions for Declarative Typed Argument Parsing.
 
-The `types` module contains various utility functions, including:
-
-* `caster`: Constructs named `functools.partial` type casting functions.
-* `is_field_a`: Checks and compares the types of `pydantic` fields.
-
-The functionality outlined above is so common throughout the typed argument
-parsing process that the functions have been refactored out into this module as
-utility functions.
+The `types` module contains utility functions used for constructing named
+`functools.partial` type casting functions and for determining and comparing
+the types of `pydantic fields.
 """
 
 
