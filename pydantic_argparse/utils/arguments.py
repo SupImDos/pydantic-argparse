@@ -1,13 +1,7 @@
 """Arguments Utility Functions for Declarative Typed Argument Parsing.
 
-The `arguments` module contains various utility functions, including:
-
-* `name`: Formats argument names.
-* `description`: Formats argument descriptions.
-
-The functionality outlined above is so common throughout the typed argument
-parsing process that the functions have been refactored out into this module as
-utility functions.
+The `arguments` module contains utility functions used for formatting argument
+names and formatting argument descriptions.
 """
 
 
