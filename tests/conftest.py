@@ -112,8 +112,8 @@ class TestModel(pydantic.BaseModel):
     arg_33: datetime.timedelta = pydantic.Field(datetime.timedelta(hours=5), description="arg_33")
     arg_34: bool = pydantic.Field(False, description="arg_34")
     arg_35: bool = pydantic.Field(True, description="arg_35")
-    arg_36: Literal["A"] = pydantic.Field("A", description="arg_36")  # type: ignore[assignment]
-    arg_37: Literal["A", 1] = pydantic.Field("A", description="arg_37")  # type: ignore[assignment]
+    arg_36: Literal["A"] = pydantic.Field("A", description="arg_36")
+    arg_37: Literal["A", 1] = pydantic.Field("A", description="arg_37")
     arg_38: TestEnumSingle = pydantic.Field(TestEnumSingle.D, description="arg_38")
     arg_39: TestEnum = pydantic.Field(TestEnum.A, description="arg_39")
 
@@ -140,7 +140,7 @@ class TestModel(pydantic.BaseModel):
 
     # Special Enums and Literals Optional Flag Behaviour
     arg_59: Optional[Literal["A"]] = pydantic.Field(description="arg_59")
-    arg_60: Optional[Literal["A"]] = pydantic.Field("A", description="arg_60")  # type: ignore[assignment]
+    arg_60: Optional[Literal["A"]] = pydantic.Field("A", description="arg_60")
     arg_61: Optional[TestEnumSingle] = pydantic.Field(description="arg_61")
     arg_62: Optional[TestEnumSingle] = pydantic.Field(TestEnumSingle.D, description="arg_62")
 
