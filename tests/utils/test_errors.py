@@ -21,7 +21,8 @@ from typing import Sequence, Tuple, Union
 
 
 # Shortcuts
-# We define an error definition as a tuple with an Exception and Location
+# An Error Definition is just a tuple containing an Exception and Location
+# This allows for more terse unit test parametrization and function typing
 ErrorDefinition = Tuple[Exception, Union[str, Tuple[str, ...]]]
 
 
@@ -43,17 +44,17 @@ ErrorDefinition = Tuple[Exception, Union[str, Tuple[str, ...]]]
         ),
         (
             [
-                (pydantic.errors.IPv4AddressError(), ("p", "x")),
-                (pydantic.errors.IntegerError(),     ("q", "y")),
-                (pydantic.errors.UUIDError(),        ("r", "z")),
+                (pydantic.errors.IPv4AddressError(), ("a", )),
+                (pydantic.errors.IntegerError(),     ("a", "b")),
+                (pydantic.errors.UUIDError(),        ("a", "b", "c")),
             ],
             """
             3 validation errors for TestModel
-            p -> x
+            a
               value is not a valid IPv4 address (type=value_error.ipv4address)
-            q -> y
+            a -> b
               value is not a valid integer (type=type_error.integer)
-            r -> z
+            a -> b -> c
               value is not a valid uuid (type=type_error.uuid)
             """,
         ),
