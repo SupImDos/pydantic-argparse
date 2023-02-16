@@ -134,7 +134,7 @@ class BooleanOptionalAction(argparse.Action):  # pragma: no cover
     backport the class and make it available here.
 
     Source:
-    https://github.com/python/cpython/blob/72263f2a20002ceff443e3a231c713f2e14fe3fe/Lib/argparse.py#L878
+    <https://github.com/python/cpython/blob/v3.11.0/Lib/argparse.py#L878-L914>
     """
     def __init__(
         self,
