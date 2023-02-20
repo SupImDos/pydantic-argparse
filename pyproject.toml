@@ -58,7 +58,7 @@ select = [
     "B",    # flake8-bugbear
     "A",    # flake8-builtins
     "D",    # flake8-docstrings
-    "PT",   # flake8-pytest--style
+    "PT",   # flake8-pytest-style
     "RUF",  # ruff
 ]
 ignore = [
