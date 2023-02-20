@@ -59,6 +59,7 @@ select = [
     "A",    # flake8-builtins
     "D",    # flake8-docstrings
     "PT",   # flake8-pytest-style
+    "Q",    # flake8-quotes
     "RUF",  # ruff
 ]
 ignore = [
