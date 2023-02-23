@@ -18,11 +18,11 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import Type, TypeVar
+from typing import Any, Optional, Type, Union, TypeVar
 
 
 # Constants
-EnumT = TypeVar("EnumT", bound=enum.Enum)
+T = TypeVar("T")
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
@@ -41,18 +41,18 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-) -> None:
+) -> Optional[utils.types.ValidatorT]:
     """Adds enum pydantic field to argument parser.
 
     Args:
         parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
+
+    Returns:
+        Optional[utils.types.ValidatorT]: Possible validator casting function.
     """
     # Get Enum Type
     enum_type: Type[enum.Enum] = field.outer_type_
-
-    # Define Custom Type Caster
-    caster = utils.types.caster(field.alias, _arg_to_enum_member, enum_type=enum_type)
 
     # Get Default
     default = field.get_default()
@@ -63,8 +63,6 @@ def parse_field(
         parser.add_argument(
             utils.arguments.name(field.alias),
             action=argparse._StoreAction,
-            type=caster,
-            choices=enum_type,
             help=utils.arguments.description(field.field_info.description),
             dest=field.alias,
             metavar=_enum_choices_metavar(enum_type),
@@ -76,8 +74,6 @@ def parse_field(
         parser.add_argument(
             utils.arguments.name(field.alias),
             action=argparse._StoreAction,
-            type=caster,
-            choices=enum_type,
             help=utils.arguments.description(field.field_info.description, default),
             dest=field.alias,
             metavar=_enum_choices_metavar(enum_type),
@@ -108,35 +104,24 @@ def parse_field(
             required=False,
         )
 
+    # Define Custom Type Caster
+    def __arg_to_enum_member(cls: Type[Any], value: T) -> Union[T, None, enum.Enum]:
+        if not value:
+            return None
+        try:
+            return enum_type[str(value)]
+        except KeyError:
+            return value
 
-def _arg_to_enum_member(
-    argument: str,
-    enum_type: Type[EnumT],
-) -> EnumT:
-    """Attempts to convert string argument to a supplied enum member.
-
-    Args:
-        argument (str): Possible name of enum member.
-        enum_type (type[EnumT]): Enum type.
-
-    Returns:
-        EnumT: Member from specified enum.
-
-    Raises:
-        ValueError: Raised if enum member does not exist.
-    """
-    # Attempt to convert string argument to enum member
-    try:
-        return enum_type[argument]
-    except KeyError as exc:
-        raise ValueError from exc
+    # Return Caster
+    return __arg_to_enum_member
 
 
-def _enum_choices_metavar(enum_type: Type[EnumT]) -> str:
+def _enum_choices_metavar(enum_type: Type[enum.Enum]) -> str:
     """Generates a string metavar from enum choices.
 
     Args:
-        enum_type (type[EnumT]): Enum type to generate metavar for.
+        enum_type (type[enum.Enum]): Enum type to generate metavar for.
 
     Returns:
         str: Generated metavar

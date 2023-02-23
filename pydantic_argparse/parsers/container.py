@@ -15,6 +15,9 @@ import enum
 # Third-Party
 import pydantic
 
+# Typing
+from typing import Optional
+
 # Local
 from pydantic_argparse import utils
 
@@ -38,12 +41,15 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-) -> None:
+) -> Optional[utils.types.ValidatorT]:
     """Adds container pydantic field to argument parser.
 
     Args:
         parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
+
+    Returns:
+        Optional[utils.types.ValidatorT]: Possible validator casting function.
     """
     # Get Default
     default = field.get_default()
@@ -72,3 +78,6 @@ def parse_field(
             metavar=field.alias.upper(),
             required=False,
         )
+
+    # Return
+    return None

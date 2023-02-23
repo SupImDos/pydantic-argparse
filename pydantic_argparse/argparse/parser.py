@@ -29,7 +29,7 @@ from pydantic_argparse.argparse import actions
 from pydantic_argparse.argparse import patches  # noqa: F401
 
 # Typing
-from typing import Any, Generic, List, NoReturn, Optional, Type, TypeVar
+from typing import Any, Dict, Generic, List, NoReturn, Optional, Type, TypeVar
 
 
 # Constants
@@ -109,16 +109,10 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
                 argument_default=argparse.SUPPRESS,  # Allow `pydantic` to handle defaults.
             )
 
-        # Set Model
-        self.model = model
-
-        # Set Add Help and Exit on Error Flag
+        # Set Version, Add Help and Exit on Error Flag
+        self.version = version
         self.add_help = add_help
         self.exit_on_error = exit_on_error
-
-        # Set Version and Model
-        self.version = version
-        self.model = model
 
         # Add Arguments Groups
         self._subcommands: Optional[argparse._SubParsersAction] = None
@@ -133,7 +127,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             self._add_version_flag()
 
         # Add Arguments from Model
-        self._add_model(model)
+        self.model = self._add_model(model)
 
     def parse_typed_args(
         self,
@@ -165,8 +159,8 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             # Convert Namespace to Pydantic Model
             model = self.model.parse_obj(arguments)
 
-        except pydantic.ValidationError as exc:
-            # Catch exception, and use the ArgumentParser.error() method
+        except (pydantic.ValidationError, pydantic.env_settings.SettingsError) as exc:
+            # Catch exceptions, and use the ArgumentParser.error() method
             # to report it to the user
             self.error(utils.errors.format(exc))
 
@@ -264,49 +258,71 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             help="show program's version number and exit",
         )
 
-    def _add_model(self, model: Type[PydanticModelT]) -> None:
-        """Adds pydantic model to argument parser.
+    def _add_model(self, model: Type[PydanticModelT]) -> Type[PydanticModelT]:
+        """Adds the `pydantic` model to the argument parser.
+
+        This method also generates "validators" for the arguments derived from
+        the `pydantic` model, and generates a new subclass from the model
+        containing these validators.
 
         Args:
             model (type[PydanticModelT]): Pydantic model class to add to the
                 argument parser.
+
+        Returns:
+            type[PydanticModelT]: Pydantic model possibly with new validators.
         """
+        # Initialise validators dictionary
+        validators: Dict[str, utils.pydantic.PydanticValidator] = {}
+
         # Loop through fields in model
         for field in model.__fields__.values():
-            # Add Field
-            self._add_field(field)
+            # Add field
+            validator = self._add_field(field)
 
-    def _add_field(self, field: pydantic.fields.ModelField) -> None:
-        """Adds pydantic field to argument parser.
+            # Update validators
+            utils.pydantic.update_validators(validators, field.alias, validator)
+
+        # Construct and return model with validators
+        return utils.pydantic.model_with_validators(model, validators)
+
+    def _add_field(self, field: pydantic.fields.ModelField) -> Optional[utils.types.ValidatorT]:
+        """Adds `pydantic` field to argument parser.
 
         Args:
             field (pydantic.fields.ModelField): Field to be added to parser.
+
+        Returns:
+            Optional[utils.types.ValidatorT]: Possible validator function.
         """
         # Switch on Field Type
         if parsers.command.should_parse(field):
             # Add Command
-            parsers.command.parse_field(self._commands(), field)
+            validator = parsers.command.parse_field(self._commands(), field)
 
         elif parsers.boolean.should_parse(field):
             # Add Boolean Field
-            parsers.boolean.parse_field(self, field)
+            validator = parsers.boolean.parse_field(self, field)
 
         elif parsers.container.should_parse(field):
             # Add Container Field
-            parsers.container.parse_field(self, field)
+            validator = parsers.container.parse_field(self, field)
 
         elif parsers.mapping.should_parse(field):
             # Add Mapping Field
-            parsers.mapping.parse_field(self, field)
+            validator = parsers.mapping.parse_field(self, field)
 
         elif parsers.literal.should_parse(field):
             # Add Literal Field
-            parsers.literal.parse_field(self, field)
+            validator = parsers.literal.parse_field(self, field)
 
         elif parsers.enum.should_parse(field):
             # Add Enum Field
-            parsers.enum.parse_field(self, field)
+            validator = parsers.enum.parse_field(self, field)
 
         else:
             # Add Standard Field
-            parsers.standard.parse_field(self, field)
+            validator = parsers.standard.parse_field(self, field)
+
+        # Return Validator
+        return validator

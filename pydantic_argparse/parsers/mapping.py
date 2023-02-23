@@ -15,8 +15,15 @@ import collections.abc
 # Third-Party
 import pydantic
 
+# Typing
+from typing import Any, Dict, Optional, Type, TypeVar, Union
+
 # Local
 from pydantic_argparse import utils
+
+
+# Constants
+T = TypeVar("T")
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
@@ -35,16 +42,16 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-) -> None:
+) -> Optional[utils.types.ValidatorT]:
     """Adds mapping pydantic field to argument parser.
 
     Args:
         parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
-    """
-    # Define Custom Type Caster
-    caster = utils.types.caster(field.alias, ast.literal_eval)
 
+    Returns:
+        Optional[utils.types.ValidatorT]: Possible validator casting function.
+    """
     # Get Default
     default = field.get_default()
 
@@ -54,7 +61,6 @@ def parse_field(
         parser.add_argument(
             utils.arguments.name(field.alias),
             action=argparse._StoreAction,
-            type=caster,
             help=utils.arguments.description(field.field_info.description),
             dest=field.alias,
             metavar=field.alias.upper(),
@@ -66,9 +72,19 @@ def parse_field(
         parser.add_argument(
             utils.arguments.name(field.alias),
             action=argparse._StoreAction,
-            type=caster,
             help=utils.arguments.description(field.field_info.description, default),
             dest=field.alias,
             metavar=field.alias.upper(),
             required=False,
         )
+
+    # Define Custom Type Caster
+    def __arg_to_dictionary(cls: Type[Any], value: T) -> Union[T, None, Dict]:
+        if not value:
+            return None
+        if not isinstance(value, str):
+            return value
+        return ast.literal_eval(value)  # type: ignore[no-any-return]
+
+    # Return Caster
+    return __arg_to_dictionary

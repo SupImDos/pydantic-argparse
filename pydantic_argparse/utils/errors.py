@@ -8,15 +8,22 @@ Validation Errors to human readable messages.
 # Third-Party
 import pydantic
 
+# Typing
+from typing import Union
 
-def format(error: pydantic.ValidationError) -> str:  # noqa: A001
-    """Formats a `pydantic` Validation Error into a human readable format.
+
+# Constants
+PydanticError = Union[pydantic.ValidationError, pydantic.env_settings.SettingsError]
+
+
+def format(error: PydanticError) -> str:  # noqa: A001
+    """Formats a `pydantic` error into a human readable format.
 
     Args:
-        error (pydantic.ValidationError): Validation Error to be formatted.
+        error (PydanticError): `pydantic` error to be formatted.
 
     Returns:
-        str: `pydantic` Validation error in a human readable format.
+        str: `pydantic` error in a human readable format.
     """
     # Format and Return
     return str(error)

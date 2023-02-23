@@ -13,6 +13,9 @@ import argparse
 # Third-Party
 import pydantic
 
+# Typing
+from typing import Optional
+
 # Local
 from pydantic_argparse import utils
 
@@ -33,12 +36,15 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     subparser: argparse._SubParsersAction,
     field: pydantic.fields.ModelField,
-) -> None:
+) -> Optional[utils.types.ValidatorT]:
     """Adds command pydantic field to argument parser.
 
     Args:
         subparser (argparse._SubParsersAction): Sub-parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
+
+    Returns:
+        Optional[utils.types.ValidatorT]: Possible validator casting function.
     """
     # Add Command
     subparser.add_parser(
@@ -47,3 +53,6 @@ def parse_field(
         model=field.outer_type_,  # type: ignore[call-arg]
         exit_on_error=False,  # Allow top level parser to handle exiting
     )
+
+    # Return
+    return None
