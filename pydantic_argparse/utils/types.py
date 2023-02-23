@@ -7,7 +7,6 @@ the types of `pydantic fields.
 
 
 # Standard
-import functools
 import sys
 
 # Third-Party
@@ -25,30 +24,8 @@ else:  # pragma: >=3.8 cover
 
 # Constants
 T = TypeVar("T")
-
-
-def caster(
-    name: str,
-    function: Callable[..., T],
-    **kwargs: Any,
-) -> Callable[[str], T]:
-    """Wraps a function to provide a type caster.
-
-    Args:
-        name (str): Name of the type caster (for nicer error messages)
-        function (Callable[..., T]): Callable function for type caster.
-        **kwargs (Any): Keyword arguments to pass to function.
-
-    Returns:
-        Callable[[str], T]: Type caster named partial function.
-    """
-    # Set Name, Create Partial Function and Update Wrapper
-    function.__name__ = name
-    partial = functools.partial(function, **kwargs)
-    functools.update_wrapper(partial, function)
-
-    # Return
-    return partial
+U = TypeVar("U")
+ValidatorT = Callable[[type, U], T]
 
 
 def is_field_a(

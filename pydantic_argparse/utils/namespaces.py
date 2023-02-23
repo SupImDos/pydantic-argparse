@@ -19,7 +19,7 @@ def to_dict(namespace: argparse.Namespace) -> Dict[str, Any]:
         namespace (argparse.Namespace): Namespace object to convert.
 
     Returns:
-        dict[str, Any]: Nested dictionary generated from namespace.
+        Dict[str, Any]: Nested dictionary generated from namespace.
     """
     # Get Dictionary from Namespace Vars
     dictionary = vars(namespace)

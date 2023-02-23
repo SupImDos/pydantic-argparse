@@ -18,4 +18,5 @@ modules each containing helper functions.
 from pydantic_argparse.utils import arguments
 from pydantic_argparse.utils import errors
 from pydantic_argparse.utils import namespaces
+from pydantic_argparse.utils import pydantic
 from pydantic_argparse.utils import types

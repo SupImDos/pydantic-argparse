@@ -29,19 +29,6 @@ else:  # pragma: >=3.8 cover
     from typing import Literal
 
 
-def test_type_caster() -> None:
-    """Tests utils.type_caster Function."""
-    # Create Lambda to Test
-    test = lambda x, y, z: x + y + z  # noqa: E731
-
-    # Generate Type Caster
-    result = utils.types.caster("abc", test, y="y", z="z")
-
-    # Assert
-    assert result.__name__ == "abc"
-    assert result("x") == "xyz"
-
-
 @pytest.mark.parametrize(
     (
         "field_type",

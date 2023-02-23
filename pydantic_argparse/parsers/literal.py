@@ -18,7 +18,7 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import Any, Iterable, List, TypeVar
+from typing import Any, Iterable, Optional, Type, TypeVar, Union
 
 # Version-Guarded
 if sys.version_info < (3, 8):  # pragma: <3.8 cover
@@ -47,18 +47,18 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-) -> None:
+) -> Optional[utils.types.ValidatorT]:
     """Adds enum pydantic field to argument parser.
 
     Args:
         parser (argparse.ArgumentParser): Argument parser to add to.
         field (pydantic.fields.ModelField): Field to be added to parser.
+
+    Returns:
+        Optional[utils.types.ValidatorT]: Possible validator casting function.
     """
     # Get choices from literal
     choices = list(get_args(field.outer_type_))
-
-    # Define Custom Type Caster
-    caster = utils.types.caster(field.alias, _arg_to_choice, choices=choices)
 
     # Get Default
     default = field.get_default()
@@ -69,8 +69,6 @@ def parse_field(
         parser.add_argument(
             utils.arguments.name(field.alias),
             action=argparse._StoreAction,
-            type=caster,
-            choices=choices,
             help=utils.arguments.description(field.field_info.description),
             dest=field.alias,
             metavar=_iterable_choices_metavar(choices),
@@ -82,8 +80,6 @@ def parse_field(
         parser.add_argument(
             utils.arguments.name(field.alias),
             action=argparse._StoreAction,
-            type=caster,
-            choices=choices,
             help=utils.arguments.description(field.field_info.description, default),
             dest=field.alias,
             metavar=_iterable_choices_metavar(choices),
@@ -114,30 +110,17 @@ def parse_field(
             required=False,
         )
 
+    # Define Custom Type Caster
+    def __arg_to_choice(cls: Type[Any], value: T) -> Union[T, None, Any]:
+        if not value:
+            return None
+        for choice in choices:
+            if str(choice) == value:
+                return choice
+        return value
 
-def _arg_to_choice(
-    argument: str,
-    choices: List[T],
-) -> T:
-    """Attempts to convert string argument to a supplied choice.
-
-    Args:
-        argument (str): Possible choice.
-        choices (list[T]): List of choices.
-
-    Returns:
-        T: Selected choice.
-
-    Raises:
-        ValueError: Raised if argument is not one of the choices.
-    """
-    # Attempt to convert string argument to one of choices
-    for choice in choices:
-        if str(choice) == argument:
-            return choice
-
-    # Raise Error
-    raise ValueError
+    # Return Caster
+    return __arg_to_choice
 
 
 def _iterable_choices_metavar(iterable: Iterable[Any]) -> str:
