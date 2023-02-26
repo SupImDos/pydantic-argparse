@@ -13,19 +13,13 @@ import sys
 import pydantic
 
 # Typing
-from typing import Any, Callable, Tuple, TypeVar, Union
+from typing import Any, Tuple, Union
 
 # Version-Guarded
 if sys.version_info < (3, 8):  # pragma: <3.8 cover
     from typing_extensions import get_origin
 else:  # pragma: >=3.8 cover
     from typing import get_origin
-
-
-# Constants
-T = TypeVar("T")
-U = TypeVar("U")
-ValidatorT = Callable[[type, U], T]
 
 
 def is_field_a(

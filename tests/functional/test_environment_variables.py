@@ -156,6 +156,22 @@ ArgumentT = TypeVar("ArgumentT")
         (Optional[Literal["A"]],         "A",                   "",      "A"),
         (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "TEST=", None),
         (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "",      conf.TestEnumSingle.D),
+
+        # Missing Optional Argument Values
+        (Optional[int],                  None, "TEST=", None),
+        (Optional[float],                None, "TEST=", None),
+        (Optional[str],                  None, "TEST=", None),
+        (Optional[bytes],                None, "TEST=", None),
+        (Optional[List[int]],            None, "TEST=", None),
+        (Optional[Tuple[int, int, int]], None, "TEST=", None),
+        (Optional[Set[int]],             None, "TEST=", None),
+        (Optional[FrozenSet[int]],       None, "TEST=", None),
+        (Optional[Deque[int]],           None, "TEST=", None),
+        (Optional[Dict[str, int]],       None, "TEST=", None),
+        (Optional[dt.date],              None, "TEST=", None),
+        (Optional[dt.datetime],          None, "TEST=", None),
+        (Optional[dt.time],              None, "TEST=", None),
+        (Optional[dt.timedelta],         None, "TEST=", None),
     ],
 )
 def test_valid_environment_variables(
@@ -281,21 +297,6 @@ def test_valid_environment_variables(
         (Optional[Literal["A", 1]],      None, "TEST=invalid"),
         (Optional[conf.TestEnumSingle],  None, "TEST=invalid"),
         (Optional[conf.TestEnum],        None, "TEST=invalid"),
-
-        # Missing Optional Argument Values
-        # TODO -> These should be valid?
-        (Optional[int],                  None, "TEST="),
-        (Optional[float],                None, "TEST="),
-        (Optional[List[int]],            None, "TEST="),
-        (Optional[Tuple[int, int, int]], None, "TEST="),
-        (Optional[Set[int]],             None, "TEST="),
-        (Optional[FrozenSet[int]],       None, "TEST="),
-        (Optional[Deque[int]],           None, "TEST="),
-        (Optional[Dict[str, int]],       None, "TEST="),
-        (Optional[dt.date],              None, "TEST="),
-        (Optional[dt.datetime],          None, "TEST="),
-        (Optional[dt.time],              None, "TEST="),
-        (Optional[dt.timedelta],         None, "TEST="),
     ],
 )
 @pytest.mark.parametrize(

@@ -16,7 +16,7 @@ import collections.abc
 import pydantic
 
 # Typing
-from typing import Any, Dict, Optional, Type, TypeVar, Union
+from typing import Optional, TypeVar
 
 # Local
 from pydantic_argparse import utils
@@ -42,7 +42,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-) -> Optional[utils.types.ValidatorT]:
+) -> Optional[utils.pydantic.PydanticValidator]:
     """Adds mapping pydantic field to argument parser.
 
     Args:
@@ -50,7 +50,7 @@ def parse_field(
         field (pydantic.fields.ModelField): Field to be added to parser.
 
     Returns:
-        Optional[utils.types.ValidatorT]: Possible validator casting function.
+        Optional[utils.pydantic.PydanticValidator]: Possible validator method.
     """
     # Get Default
     default = field.get_default()
@@ -78,13 +78,5 @@ def parse_field(
             required=False,
         )
 
-    # Define Custom Type Caster
-    def __arg_to_dictionary(cls: Type[Any], value: T) -> Union[T, None, Dict]:
-        if not value:
-            return None
-        if not isinstance(value, str):
-            return value
-        return ast.literal_eval(value)  # type: ignore[no-any-return]
-
-    # Return Caster
-    return __arg_to_dictionary
+    # Construct and Return Validator
+    return utils.pydantic.as_validator(field, lambda v: ast.literal_eval(v))
