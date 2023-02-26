@@ -41,7 +41,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-) -> Optional[utils.types.ValidatorT]:
+) -> Optional[utils.pydantic.PydanticValidator]:
     """Adds container pydantic field to argument parser.
 
     Args:
@@ -49,7 +49,7 @@ def parse_field(
         field (pydantic.fields.ModelField): Field to be added to parser.
 
     Returns:
-        Optional[utils.types.ValidatorT]: Possible validator casting function.
+        Optional[utils.pydantic.PydanticValidator]: Possible validator method.
     """
     # Get Default
     default = field.get_default()
@@ -79,5 +79,5 @@ def parse_field(
             required=False,
         )
 
-    # Return
-    return None
+    # Construct and Return Validator
+    return utils.pydantic.as_validator(field, lambda v: v)

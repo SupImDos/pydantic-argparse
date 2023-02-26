@@ -281,19 +281,19 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
             validator = self._add_field(field)
 
             # Update validators
-            utils.pydantic.update_validators(validators, field.alias, validator)
+            utils.pydantic.update_validators(validators, validator)
 
         # Construct and return model with validators
         return utils.pydantic.model_with_validators(model, validators)
 
-    def _add_field(self, field: pydantic.fields.ModelField) -> Optional[utils.types.ValidatorT]:
+    def _add_field(self, field: pydantic.fields.ModelField) -> Optional[utils.pydantic.PydanticValidator]:
         """Adds `pydantic` field to argument parser.
 
         Args:
             field (pydantic.fields.ModelField): Field to be added to parser.
 
         Returns:
-            Optional[utils.types.ValidatorT]: Possible validator function.
+            Optional[utils.pydantic.PydanticValidator]: Possible validator.
         """
         # Switch on Field Type
         if parsers.command.should_parse(field):

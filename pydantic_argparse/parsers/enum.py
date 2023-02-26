@@ -18,7 +18,7 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import Any, Optional, Type, Union, TypeVar
+from typing import Optional, Type, TypeVar
 
 
 # Constants
@@ -41,7 +41,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-) -> Optional[utils.types.ValidatorT]:
+) -> Optional[utils.pydantic.PydanticValidator]:
     """Adds enum pydantic field to argument parser.
 
     Args:
@@ -49,7 +49,7 @@ def parse_field(
         field (pydantic.fields.ModelField): Field to be added to parser.
 
     Returns:
-        Optional[utils.types.ValidatorT]: Possible validator casting function.
+        Optional[utils.pydantic.PydanticValidator]: Possible validator method.
     """
     # Get Enum Type
     enum_type: Type[enum.Enum] = field.outer_type_
@@ -104,17 +104,8 @@ def parse_field(
             required=False,
         )
 
-    # Define Custom Type Caster
-    def __arg_to_enum_member(cls: Type[Any], value: T) -> Union[T, None, enum.Enum]:
-        if not value:
-            return None
-        try:
-            return enum_type[str(value)]
-        except KeyError:
-            return value
-
-    # Return Caster
-    return __arg_to_enum_member
+    # Construct and Return Validator
+    return utils.pydantic.as_validator(field, lambda v: enum_type[v])
 
 
 def _enum_choices_metavar(enum_type: Type[enum.Enum]) -> str:

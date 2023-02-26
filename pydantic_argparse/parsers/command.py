@@ -36,7 +36,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     subparser: argparse._SubParsersAction,
     field: pydantic.fields.ModelField,
-) -> Optional[utils.types.ValidatorT]:
+) -> Optional[utils.pydantic.PydanticValidator]:
     """Adds command pydantic field to argument parser.
 
     Args:
@@ -44,7 +44,7 @@ def parse_field(
         field (pydantic.fields.ModelField): Field to be added to parser.
 
     Returns:
-        Optional[utils.types.ValidatorT]: Possible validator casting function.
+        Optional[utils.pydantic.PydanticValidator]: Possible validator method.
     """
     # Add Command
     subparser.add_parser(

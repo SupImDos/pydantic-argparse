@@ -18,7 +18,7 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import Any, Iterable, Optional, Type, TypeVar, Union
+from typing import Any, Iterable, Optional, TypeVar
 
 # Version-Guarded
 if sys.version_info < (3, 8):  # pragma: <3.8 cover
@@ -47,7 +47,7 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
 def parse_field(
     parser: argparse.ArgumentParser,
     field: pydantic.fields.ModelField,
-) -> Optional[utils.types.ValidatorT]:
+) -> Optional[utils.pydantic.PydanticValidator]:
     """Adds enum pydantic field to argument parser.
 
     Args:
@@ -55,7 +55,7 @@ def parse_field(
         field (pydantic.fields.ModelField): Field to be added to parser.
 
     Returns:
-        Optional[utils.types.ValidatorT]: Possible validator casting function.
+        Optional[utils.pydantic.PydanticValidator]: Possible validator method.
     """
     # Get choices from literal
     choices = list(get_args(field.outer_type_))
@@ -110,17 +110,12 @@ def parse_field(
             required=False,
         )
 
-    # Define Custom Type Caster
-    def __arg_to_choice(cls: Type[Any], value: T) -> Union[T, None, Any]:
-        if not value:
-            return None
-        for choice in choices:
-            if str(choice) == value:
-                return choice
-        return value
+    # Construct String Representation Mapping of Choices
+    # This allows us O(1) parsing of choices from strings
+    mapping = {str(choice): choice for choice in choices}
 
-    # Return Caster
-    return __arg_to_choice
+    # Construct and Return Validator
+    return utils.pydantic.as_validator(field, lambda v: mapping[v])
 
 
 def _iterable_choices_metavar(iterable: Iterable[Any]) -> str:
