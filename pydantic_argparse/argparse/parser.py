@@ -81,7 +81,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         """Instantiates the Typed Argument Parser with its `pydantic` model.
 
         Args:
-            model (type[PydanticModelT]): Pydantic argument model class.
+            model (Type[PydanticModelT]): Pydantic argument model class.
             prog (Optional[str]): Program name for CLI.
             description (Optional[str]): Program description for CLI.
             version (Optional[str]): Program version string for CLI.
@@ -139,7 +139,7 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         retrieved from the `sys.argv` command-line arguments.
 
         Args:
-            args (Optional[list[str]]): Optional list of arguments to parse.
+            args (Optional[List[str]]): Optional list of arguments to parse.
 
         Returns:
             PydanticModelT: Populated instance of typed arguments model.
@@ -266,11 +266,11 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         containing these validators.
 
         Args:
-            model (type[PydanticModelT]): Pydantic model class to add to the
+            model (Type[PydanticModelT]): Pydantic model class to add to the
                 argument parser.
 
         Returns:
-            type[PydanticModelT]: Pydantic model possibly with new validators.
+            Type[PydanticModelT]: Pydantic model possibly with new validators.
         """
         # Initialise validators dictionary
         validators: Dict[str, utils.pydantic.PydanticValidator] = {}

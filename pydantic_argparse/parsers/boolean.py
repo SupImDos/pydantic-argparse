@@ -47,39 +47,24 @@ def parse_field(
     Returns:
         Optional[utils.pydantic.PydanticValidator]: Possible validator method.
     """
-    # Get Default
-    default = field.get_default()
+    # Compute Argument Intrinsics
+    is_inverted = not field.required and bool(field.get_default())
 
-    # Booleans can be treated as required or optional flags
-    if field.required:
-        # Add Required Boolean Field
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=actions.BooleanOptionalAction,
-            help=utils.arguments.description(field.field_info.description),
-            dest=field.alias,
-            required=True,
-        )
+    # Determine Argument Properties
+    action = (
+        actions.BooleanOptionalAction if field.required
+        else argparse._StoreFalseAction if is_inverted
+        else argparse._StoreTrueAction
+    )
 
-    elif default:
-        # Add Optional Boolean Field (Default True)
-        parser.add_argument(
-            utils.arguments.name(f"no-{field.alias}"),
-            action=argparse._StoreFalseAction,
-            help=utils.arguments.description(field.field_info.description, default),
-            dest=field.alias,
-            required=False,
-        )
-
-    else:
-        # Add Optional Boolean Field (Default False)
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=argparse._StoreTrueAction,
-            help=utils.arguments.description(field.field_info.description, default),
-            dest=field.alias,
-            required=False,
-        )
+    # Add Boolean Field
+    parser.add_argument(
+        utils.arguments.name(field, is_inverted),
+        action=action,
+        help=utils.arguments.description(field),
+        dest=field.alias,
+        required=bool(field.required),
+    )
 
     # Construct and Return Validator
     return utils.pydantic.as_validator(field, lambda v: v)

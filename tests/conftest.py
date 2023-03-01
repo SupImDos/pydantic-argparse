@@ -15,13 +15,12 @@ import sys
 
 # Third-Party
 import pydantic
-import pytest
 
 # Local
 from pydantic_argparse.argparse import actions
 
 # Typing
-from typing import Deque, Dict, FrozenSet, List, Optional, Set, Tuple
+from typing import Any, Deque, Dict, FrozenSet, List, Optional, Set, Tuple, Type
 
 # Version-Guarded
 if sys.version_info < (3, 8):  # pragma: <3.8 cover
@@ -30,22 +29,80 @@ else:  # pragma: >=3.8 cover
     from typing import Literal
 
 
-@pytest.fixture()
-def sub_parsers_action() -> actions.SubParsersAction:
-    """Pytest Fixture for actions.SubParsersAction.
+def create_test_model(
+    name: str = "test",
+    base: Type[pydantic.BaseModel] = pydantic.BaseSettings,
+    **fields: Tuple[Type[Any], Any],
+) -> Any:
+    """Constructs a `pydantic` model with sensible defaults for testing.
+
+    This function returns `Any` instead of `Type[pydantic.BaseModel]` because
+    we cannot accurately type the dynamically constructed fields on the
+    resultant model. As such, it is more convenient to work with the `Any` type
+    in the unit tests.
+
+    Args:
+        name (str): Name of the model.
+        base (Type[pydantic.BaseModel]): Base class for the model.
+        fields (Tuple[Type[Any], Any]): Model fields as `name=(type, default)`.
 
     Returns:
-        actions.SubParsersAction.
+        Any: Dynamically constructed `pydantic` model.
     """
-    # Instantiate Action
-    action = actions.SubParsersAction(
-        option_strings=[],  # Always empty for the SubParsersAction
-        prog="example",
-        parser_class=argparse.ArgumentParser,
+    # Construct Pydantic Model
+    return pydantic.create_model(
+        name,
+        __base__=base,
+        **fields,  # type: ignore[call-overload]
     )
 
-    # Return
-    return action
+
+def create_test_field(
+    name: str = "test",
+    type: Type[Any] = str,  # noqa: A002
+    default: Any = ...,
+    description: Optional[str] = None,
+) -> pydantic.fields.ModelField:
+    """Constructs a `pydantic` field with sensible defaults for testing.
+
+    Args:
+        name (str): Name of the field.
+        type (Type[Any]): Type of the field.
+        default (Any): Default value for the field.
+        description (Optional[str]): Description for the field.
+
+    Returns:
+        pydantic.fields.ModelField: Dynamically constructed `pydantic` model.
+    """
+    # Construct Pydantic Field
+    return pydantic.fields.ModelField.infer(
+        name=name,
+        value=pydantic.Field(default, description=description),  # type: ignore[arg-type]
+        annotation=type,
+        class_validators=None,
+        config=pydantic.BaseConfig,
+    )
+
+
+def create_test_subparser(
+    name: str = "test",
+    parser_class: Type[argparse.ArgumentParser] = argparse.ArgumentParser,
+) -> actions.SubParsersAction:
+    """Constructs a `SubParsersAction` with sensible defaults for testing.
+
+    Args:
+        name (str): Name of the action.
+        parser_class (Type[argparse.ArgumentParser]): Parser for the action.
+
+    Returns:
+        actions.SubParsersAction: Dynamically constructed `SubParsersAction`.
+    """
+    # Construct SubParsersAction
+    return actions.SubParsersAction(
+        option_strings=[],  # Always empty for the `SubParsersAction`
+        prog=name,
+        parser_class=parser_class,
+    )
 
 
 class TestEnum(enum.Enum):

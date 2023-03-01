@@ -51,33 +51,16 @@ def parse_field(
     Returns:
         Optional[utils.pydantic.PydanticValidator]: Possible validator method.
     """
-    # Get Default
-    default = field.get_default()
-
-    # Container Types
-    if field.required:
-        # Add Required Container Field
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=argparse._StoreAction,
-            nargs=argparse.ONE_OR_MORE,
-            help=utils.arguments.description(field.field_info.description),
-            dest=field.alias,
-            metavar=field.alias.upper(),
-            required=True,
-        )
-
-    else:
-        # Add Optional Container Field
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=argparse._StoreAction,
-            nargs=argparse.ONE_OR_MORE,
-            help=utils.arguments.description(field.field_info.description, default),
-            dest=field.alias,
-            metavar=field.alias.upper(),
-            required=False,
-        )
+    # Add Container Field
+    parser.add_argument(
+        utils.arguments.name(field),
+        action=argparse._StoreAction,
+        nargs=argparse.ONE_OR_MORE,
+        help=utils.arguments.description(field),
+        dest=field.alias,
+        metavar=field.alias.upper(),
+        required=bool(field.required),
+    )
 
     # Construct and Return Validator
     return utils.pydantic.as_validator(field, lambda v: v)

@@ -24,7 +24,7 @@ parser = pydantic_argparse.ArgumentParser(
 ### Required Parameters
 The *required* parameters for the `ArgumentParser` are outlined below:
 
-* `model` (`type[pydantic.BaseModel]`):
+* `model` (`Type[pydantic.BaseModel]`):
     The model that defines the command-line arguments
 
 ### Optional Parameters
@@ -56,5 +56,5 @@ args = parser.parse_typed_args()
 ### Optional Parameters
 The *optional* parameters for the `parse_typed_args` method are outlined below:
 
-* `args` (`Optional[list[str]]`):
+* `args` (`Optional[List[str]]`):
     Optional list of arguments to parse *instead* of `sys.argv`

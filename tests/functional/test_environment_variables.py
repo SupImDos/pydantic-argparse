@@ -13,7 +13,6 @@ import os
 import sys
 
 # Third-Party
-import pydantic
 import pytest
 import pytest_mock
 
@@ -22,7 +21,7 @@ import pydantic_argparse
 import tests.conftest as conf
 
 # Typing
-from typing import Any, Deque, Dict, FrozenSet, List, Optional, Set, Tuple, Type, TypeVar
+from typing import Deque, Dict, FrozenSet, List, Optional, Set, Tuple, Type, TypeVar
 
 # Version-Guarded
 if sys.version_info < (3, 8):  # pragma: <3.8 cover
@@ -44,48 +43,48 @@ ArgumentT = TypeVar("ArgumentT")
     ),
     [
         # Required Arguments
-        (int,                    ..., "TEST=123",              123),
-        (float,                  ..., "TEST=4.56",             4.56),
-        (str,                    ..., "TEST=hello",            "hello"),
-        (bytes,                  ..., "TEST=bytes",            b"bytes"),
-        (List[str],              ..., 'TEST=["a","b","c"]',    list(("a", "b", "c"))),
-        (Tuple[str, str, str],   ..., 'TEST=["a","b","c"]',    tuple(("a", "b", "c"))),
-        (Set[str],               ..., 'TEST=["a","b","c"]',    set(("a", "b", "c"))),
-        (FrozenSet[str],         ..., 'TEST=["a","b","c"]',    frozenset(("a", "b", "c"))),
-        (Deque[str],             ..., 'TEST=["a","b","c"]',    coll.deque(("a", "b", "c"))),
-        (Dict[str, int],         ..., 'TEST={"a":2}',          dict(a=2)),
-        (dt.date,                ..., "TEST=2021-12-25",       dt.date(2021, 12, 25)),
-        (dt.datetime,            ..., "TEST=2021-12-25T12:34", dt.datetime(2021, 12, 25, 12, 34)),
-        (dt.time,                ..., "TEST=12:34",            dt.time(12, 34)),
-        (dt.timedelta,           ..., "TEST=PT12H",            dt.timedelta(hours=12)),
-        (bool,                   ..., "TEST=true",             True),
-        (bool,                   ..., "TEST=false",            False),
-        (Literal["A"],           ..., "TEST=A",                "A"),
-        (Literal["A", 1],        ..., "TEST=1",                1),
-        (conf.TestEnumSingle,    ..., "TEST=D",                conf.TestEnumSingle.D),
-        (conf.TestEnum,          ..., "TEST=C",                conf.TestEnum.C),
+        (int,                  ..., "TEST=123",              123),
+        (float,                ..., "TEST=4.56",             4.56),
+        (str,                  ..., "TEST=hello",            "hello"),
+        (bytes,                ..., "TEST=bytes",            b"bytes"),
+        (List[str],            ..., 'TEST=["a","b","c"]',    list(("a", "b", "c"))),
+        (Tuple[str, str, str], ..., 'TEST=["a","b","c"]',    tuple(("a", "b", "c"))),
+        (Set[str],             ..., 'TEST=["a","b","c"]',    set(("a", "b", "c"))),
+        (FrozenSet[str],       ..., 'TEST=["a","b","c"]',    frozenset(("a", "b", "c"))),
+        (Deque[str],           ..., 'TEST=["a","b","c"]',    coll.deque(("a", "b", "c"))),
+        (Dict[str, int],       ..., 'TEST={"a":2}',          dict(a=2)),
+        (dt.date,              ..., "TEST=2021-12-25",       dt.date(2021, 12, 25)),
+        (dt.datetime,          ..., "TEST=2021-12-25T12:34", dt.datetime(2021, 12, 25, 12, 34)),
+        (dt.time,              ..., "TEST=12:34",            dt.time(12, 34)),
+        (dt.timedelta,         ..., "TEST=PT12H",            dt.timedelta(hours=12)),
+        (bool,                 ..., "TEST=true",             True),
+        (bool,                 ..., "TEST=false",            False),
+        (Literal["A"],         ..., "TEST=A",                "A"),
+        (Literal["A", 1],      ..., "TEST=1",                1),
+        (conf.TestEnumSingle,  ..., "TEST=D",                conf.TestEnumSingle.D),
+        (conf.TestEnum,        ..., "TEST=C",                conf.TestEnum.C),
 
         # Optional Arguments (With Default)
-        (int,                  456,                            "TEST=123",              123),
-        (float,                1.23,                           "TEST=4.56",             4.56),
-        (str,                  "world",                        "TEST=hello",            "hello"),
-        (bytes,                b"bits",                        "TEST=bytes",            b"bytes"),
-        (List[str],            list(("d", "e", "f")),          'TEST=["a","b","c"]',    list(("a", "b", "c"))),
-        (Tuple[str, str, str], tuple(("d", "e", "f")),         'TEST=["a","b","c"]',    tuple(("a", "b", "c"))),
-        (Set[str],             set(("d", "e", "f")),           'TEST=["a","b","c"]',    set(("a", "b", "c"))),
-        (FrozenSet[str],       frozenset(("d", "e", "f")),     'TEST=["a","b","c"]',    frozenset(("a", "b", "c"))),
-        (Deque[str],           coll.deque(("d", "e", "f")),    'TEST=["a","b","c"]',    coll.deque(("a", "b", "c"))),
-        (Dict[str, int],       dict(b=3),                      'TEST={"a":2}',          dict(a=2)),
-        (dt.date,              dt.date(2021, 7, 21),           "TEST=2021-12-25",       dt.date(2021, 12, 25)),
-        (dt.datetime,          dt.datetime(2021, 7, 21, 3),    "TEST=2021-04-03T02:00", dt.datetime(2021, 4, 3, 2)),
-        (dt.time,              dt.time(3, 21),                 "TEST=12:34",            dt.time(12, 34)),
-        (dt.timedelta,         dt.timedelta(hours=6),          "TEST=PT12H",            dt.timedelta(hours=12)),
-        (bool,                 False,                          "TEST=true",             True),
-        (bool,                 True,                           "TEST=false",            False),
-        (Literal["A"],         "A",                            "TEST=A",                "A"),
-        (Literal["A", 1],      "A",                            "TEST=1",                1),
-        (conf.TestEnumSingle,  conf.TestEnumSingle.D,          "TEST=D",                conf.TestEnumSingle.D),
-        (conf.TestEnum,        conf.TestEnum.B,                "TEST=C",                conf.TestEnum.C),
+        (int,                  456,                         "TEST=123",              123),
+        (float,                1.23,                        "TEST=4.56",             4.56),
+        (str,                  "world",                     "TEST=hello",            "hello"),
+        (bytes,                b"bits",                     "TEST=bytes",            b"bytes"),
+        (List[str],            list(("d", "e", "f")),       'TEST=["a","b","c"]',    list(("a", "b", "c"))),
+        (Tuple[str, str, str], tuple(("d", "e", "f")),      'TEST=["a","b","c"]',    tuple(("a", "b", "c"))),
+        (Set[str],             set(("d", "e", "f")),        'TEST=["a","b","c"]',    set(("a", "b", "c"))),
+        (FrozenSet[str],       frozenset(("d", "e", "f")),  'TEST=["a","b","c"]',    frozenset(("a", "b", "c"))),
+        (Deque[str],           coll.deque(("d", "e", "f")), 'TEST=["a","b","c"]',    coll.deque(("a", "b", "c"))),
+        (Dict[str, int],       dict(b=3),                   'TEST={"a":2}',          dict(a=2)),
+        (dt.date,              dt.date(2021, 7, 21),        "TEST=2021-12-25",       dt.date(2021, 12, 25)),
+        (dt.datetime,          dt.datetime(2021, 7, 21, 3), "TEST=2021-04-03T02:00", dt.datetime(2021, 4, 3, 2)),
+        (dt.time,              dt.time(3, 21),              "TEST=12:34",            dt.time(12, 34)),
+        (dt.timedelta,         dt.timedelta(hours=6),       "TEST=PT12H",            dt.timedelta(hours=12)),
+        (bool,                 False,                       "TEST=true",             True),
+        (bool,                 True,                        "TEST=false",            False),
+        (Literal["A"],         "A",                         "TEST=A",                "A"),
+        (Literal["A", 1],      "A",                         "TEST=1",                1),
+        (conf.TestEnumSingle,  conf.TestEnumSingle.D,       "TEST=D",                conf.TestEnumSingle.D),
+        (conf.TestEnum,        conf.TestEnum.B,             "TEST=C",                conf.TestEnum.C),
 
         # Optional Arguments (With Default) (No Value Given)
         (int,                  456,                            "", 456),
@@ -152,10 +151,10 @@ ArgumentT = TypeVar("ArgumentT")
         (Optional[conf.TestEnum],        None, "", None),
 
         # Special Enums and Literals Optional Flag Behaviour
-        (Optional[Literal["A"]],         "A",                   "TEST=", None),
-        (Optional[Literal["A"]],         "A",                   "",      "A"),
-        (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "TEST=", None),
-        (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "",      conf.TestEnumSingle.D),
+        (Optional[Literal["A"]],        "A",                   "TEST=", None),
+        (Optional[Literal["A"]],        "A",                   "",      "A"),
+        (Optional[conf.TestEnumSingle], conf.TestEnumSingle.D, "TEST=", None),
+        (Optional[conf.TestEnumSingle], conf.TestEnumSingle.D, "",      conf.TestEnumSingle.D),
 
         # Missing Optional Argument Values
         (Optional[int],                  None, "TEST=", None),
@@ -184,18 +183,14 @@ def test_valid_environment_variables(
     """Tests ArgumentParser Valid Arguments as Environment Variables.
 
     Args:
-        argument_type (type[ArgumentT]): Type of the argument.
+        argument_type (Type[ArgumentT]): Type of the argument.
         argument_default (ArgumentT): Default for the argument.
         env (str): An example string of environment variables for testing.
         result (ArgumentT): Result from parsing the argument.
         mocker (pytest_mock.MockerFixture): PyTest Mocker Fixture.
     """
-    # Dynamically Create Pydantic Model
-    model: Any = pydantic.create_model(
-        "model",
-        __base__=pydantic.BaseSettings,
-        test=(argument_type, argument_default),
-    )
+    # Construct Pydantic Model
+    model = conf.create_test_model(test=(argument_type, argument_default))
 
     # Create ArgumentParser
     parser = pydantic_argparse.ArgumentParser(model)
@@ -320,19 +315,15 @@ def test_invalid_environment_variables(
     """Tests ArgumentParser Invalid Arguments as Environment Variables.
 
     Args:
-        argument_type (type[ArgumentT]): Type of the argument.
+        argument_type (Type[ArgumentT]): Type of the argument.
         argument_default (ArgumentT): Default for the argument.
         env (str): An example string of environment variables for testing.
         exit_on_error (bool): Whether to raise or exit on error.
-        error (type[Exception]): Exception that should be raised for testing.
+        error (Type[Exception]): Exception that should be raised for testing.
         mocker (pytest_mock.MockerFixture): PyTest Mocker Fixture.
     """
-    # Dynamically Create Pydantic Model
-    model: Any = pydantic.create_model(
-        "model",
-        __base__=pydantic.BaseSettings,
-        test=(argument_type, argument_default),
-    )
+    # Construct Pydantic Model
+    model = conf.create_test_model(test=(argument_type, argument_default))
 
     # Create ArgumentParser
     parser = pydantic_argparse.ArgumentParser(model, exit_on_error=exit_on_error)

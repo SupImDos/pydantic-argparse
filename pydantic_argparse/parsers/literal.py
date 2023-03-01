@@ -18,7 +18,7 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import Any, Iterable, Optional, TypeVar
+from typing import Optional, TypeVar
 
 # Version-Guarded
 if sys.version_info < (3, 8):  # pragma: <3.8 cover
@@ -57,58 +57,35 @@ def parse_field(
     Returns:
         Optional[utils.pydantic.PydanticValidator]: Possible validator method.
     """
-    # Get choices from literal
-    choices = list(get_args(field.outer_type_))
+    # Extract Choices
+    choices = get_args(field.outer_type_)
 
-    # Get Default
-    default = field.get_default()
+    # Compute Argument Intrinsics
+    is_flag = len(choices) == 1 and not bool(field.required)
+    is_inverted = is_flag and field.get_default() is not None and field.allow_none
 
-    # Literals are treated as constant flags, or choices
-    if field.required:
-        # Add Required Literal Field
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=argparse._StoreAction,
-            help=utils.arguments.description(field.field_info.description),
-            dest=field.alias,
-            metavar=_iterable_choices_metavar(choices),
-            required=True,
-        )
+    # Determine Argument Properties
+    metavar = f"{{{', '.join(str(c) for c in choices)}}}"
+    action = (
+        argparse._StoreConstAction if is_flag
+        else argparse._StoreAction
+    )
+    const = (
+        {} if not is_flag
+        else {"const": None} if is_inverted
+        else {"const": choices[0]}
+    )
 
-    elif len(choices) > 1:
-        # Add Optional Choice
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=argparse._StoreAction,
-            help=utils.arguments.description(field.field_info.description, default),
-            dest=field.alias,
-            metavar=_iterable_choices_metavar(choices),
-            required=False,
-        )
-
-    elif default is not None and field.allow_none:
-        # Add Optional Flag (Default Not None)
-        parser.add_argument(
-            utils.arguments.name(f"no-{field.alias}"),
-            action=argparse._StoreConstAction,
-            const=None,
-            help=utils.arguments.description(field.field_info.description, default),
-            dest=field.alias,
-            metavar=field.alias.upper(),
-            required=False,
-        )
-
-    else:
-        # Add Optional Flag (Default None)
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=argparse._StoreConstAction,
-            const=choices[0],
-            help=utils.arguments.description(field.field_info.description, default),
-            dest=field.alias,
-            metavar=field.alias.upper(),
-            required=False,
-        )
+    # Add Literal Field
+    parser.add_argument(
+        utils.arguments.name(field, is_inverted),
+        action=action,
+        help=utils.arguments.description(field),
+        dest=field.alias,
+        metavar=metavar,
+        required=bool(field.required),
+        **const,  # type: ignore[arg-type]
+    )
 
     # Construct String Representation Mapping of Choices
     # This allows us O(1) parsing of choices from strings
@@ -116,16 +93,3 @@ def parse_field(
 
     # Construct and Return Validator
     return utils.pydantic.as_validator(field, lambda v: mapping[v])
-
-
-def _iterable_choices_metavar(iterable: Iterable[Any]) -> str:
-    """Generates a string metavar from iterable choices.
-
-    Args:
-        iterable (Iterable[Any]): Iterable object to generate metavar for.
-
-    Returns:
-        str: Generated metavar
-    """
-    # Generate and Return
-    return f"{{{', '.join(str(i) for i in iterable)}}}"
