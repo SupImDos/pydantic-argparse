@@ -23,7 +23,7 @@ import pydantic_argparse
 import tests.conftest as conf
 
 # Typing
-from typing import Any, Deque, Dict, FrozenSet, List, Optional, Set, Tuple, Type, TypeVar
+from typing import Deque, Dict, FrozenSet, List, Optional, Set, Tuple, Type, TypeVar
 
 # Version-Guarded
 if sys.version_info < (3, 8):  # pragma: <3.8 cover
@@ -106,26 +106,26 @@ def test_create_argparser(
         (conf.TestEnum,          ..., "--test C",                conf.TestEnum.C),
 
         # Optional Arguments (With Default)
-        (int,                  456,                            "--test 123",              123),
-        (float,                1.23,                           "--test 4.56",             4.56),
-        (str,                  "world",                        "--test hello",            "hello"),
-        (bytes,                b"bits",                        "--test bytes",            b"bytes"),
-        (List[str],            list(("d", "e", "f")),          "--test a b c",            list(("a", "b", "c"))),
-        (Tuple[str, str, str], tuple(("d", "e", "f")),         "--test a b c",            tuple(("a", "b", "c"))),
-        (Set[str],             set(("d", "e", "f")),           "--test a b c",            set(("a", "b", "c"))),
-        (FrozenSet[str],       frozenset(("d", "e", "f")),     "--test a b c",            frozenset(("a", "b", "c"))),
-        (Deque[str],           coll.deque(("d", "e", "f")),    "--test a b c",            coll.deque(("a", "b", "c"))),
-        (Dict[str, int],       dict(b=3),                      "--test {'a':2}",          dict(a=2)),
-        (dt.date,              dt.date(2021, 7, 21),           "--test 2021-12-25",       dt.date(2021, 12, 25)),
-        (dt.datetime,          dt.datetime(2021, 7, 21, 3),    "--test 2021-04-03T02:00", dt.datetime(2021, 4, 3, 2)),
-        (dt.time,              dt.time(3, 21),                 "--test 12:34",            dt.time(12, 34)),
-        (dt.timedelta,         dt.timedelta(hours=6),          "--test PT12H",            dt.timedelta(hours=12)),
-        (bool,                 False,                          "--test",                  True),
-        (bool,                 True,                           "--no-test",               False),
-        (Literal["A"],         "A",                            "--test",                  "A"),
-        (Literal["A", 1],      "A",                            "--test 1",                1),
-        (conf.TestEnumSingle,  conf.TestEnumSingle.D,          "--test",                  conf.TestEnumSingle.D),
-        (conf.TestEnum,        conf.TestEnum.B,                "--test C",                conf.TestEnum.C),
+        (int,                  456,                         "--test 123",              123),
+        (float,                1.23,                        "--test 4.56",             4.56),
+        (str,                  "world",                     "--test hello",            "hello"),
+        (bytes,                b"bits",                     "--test bytes",            b"bytes"),
+        (List[str],            list(("d", "e", "f")),       "--test a b c",            list(("a", "b", "c"))),
+        (Tuple[str, str, str], tuple(("d", "e", "f")),      "--test a b c",            tuple(("a", "b", "c"))),
+        (Set[str],             set(("d", "e", "f")),        "--test a b c",            set(("a", "b", "c"))),
+        (FrozenSet[str],       frozenset(("d", "e", "f")),  "--test a b c",            frozenset(("a", "b", "c"))),
+        (Deque[str],           coll.deque(("d", "e", "f")), "--test a b c",            coll.deque(("a", "b", "c"))),
+        (Dict[str, int],       dict(b=3),                   "--test {'a':2}",          dict(a=2)),
+        (dt.date,              dt.date(2021, 7, 21),        "--test 2021-12-25",       dt.date(2021, 12, 25)),
+        (dt.datetime,          dt.datetime(2021, 7, 21, 3), "--test 2021-04-03T02:00", dt.datetime(2021, 4, 3, 2)),
+        (dt.time,              dt.time(3, 21),              "--test 12:34",            dt.time(12, 34)),
+        (dt.timedelta,         dt.timedelta(hours=6),       "--test PT12H",            dt.timedelta(hours=12)),
+        (bool,                 False,                       "--test",                  True),
+        (bool,                 True,                        "--no-test",               False),
+        (Literal["A"],         "A",                         "--test",                  "A"),
+        (Literal["A", 1],      "A",                         "--test 1",                1),
+        (conf.TestEnumSingle,  conf.TestEnumSingle.D,       "--test",                  conf.TestEnumSingle.D),
+        (conf.TestEnum,        conf.TestEnum.B,             "--test C",                conf.TestEnum.C),
 
         # Optional Arguments (With Default) (No Value Given)
         (int,                  456,                            "", 456),
@@ -192,10 +192,10 @@ def test_create_argparser(
         (Optional[conf.TestEnum],        None, "", None),
 
         # Special Enums and Literals Optional Flag Behaviour
-        (Optional[Literal["A"]],         "A",                   "--no-test", None),
-        (Optional[Literal["A"]],         "A",                   "",          "A"),
-        (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "--no-test", None),
-        (Optional[conf.TestEnumSingle],  conf.TestEnumSingle.D, "",          conf.TestEnumSingle.D),
+        (Optional[Literal["A"]],        "A",                   "--no-test", None),
+        (Optional[Literal["A"]],        "A",                   "",          "A"),
+        (Optional[conf.TestEnumSingle], conf.TestEnumSingle.D, "--no-test", None),
+        (Optional[conf.TestEnumSingle], conf.TestEnumSingle.D, "",          conf.TestEnumSingle.D),
 
         # Commands
         (conf.TestCommand,            ..., "test",               conf.TestCommand()),
@@ -223,16 +223,13 @@ def test_valid_arguments(
     """Tests ArgumentParser Valid Arguments.
 
     Args:
-        argument_type (type[ArgumentT]): Type of the argument.
+        argument_type (Type[ArgumentT]): Type of the argument.
         argument_default (ArgumentT): Default for the argument.
         arguments (str): An example string of arguments for testing.
         result (ArgumentT): Result from parsing the argument.
     """
-    # Dynamically Create Pydantic Model
-    model: Any = pydantic.create_model(
-        "model",
-        test=(argument_type, argument_default),
-    )
+    # Construct Pydantic Model
+    model = conf.create_test_model(test=(argument_type, argument_default))
 
     # Create ArgumentParser
     parser = pydantic_argparse.ArgumentParser(model)
@@ -380,17 +377,14 @@ def test_invalid_arguments(
     """Tests ArgumentParser Invalid Arguments.
 
     Args:
-        argument_type (type[ArgumentT]): Type of the argument.
+        argument_type (Type[ArgumentT]): Type of the argument.
         argument_default (ArgumentT): Default for the argument.
         arguments (str): An example string of arguments for testing.
         exit_on_error (bool): Whether to raise or exit on error.
-        error (type[Exception]): Exception that should be raised for testing.
+        error (Type[Exception]): Exception that should be raised for testing.
     """
-    # Dynamically Create Pydantic Model
-    model: Any = pydantic.create_model(
-        "model",
-        test=(argument_type, argument_default),
-    )
+    # Construct Pydantic Model
+    model = conf.create_test_model(test=(argument_type, argument_default))
 
     # Create ArgumentParser
     parser = pydantic_argparse.ArgumentParser(model, exit_on_error=exit_on_error)
@@ -407,8 +401,8 @@ def test_help_message(capsys: pytest.CaptureFixture[str]) -> None:
     Args:
         capsys (pytest.CaptureFixture[str]): Fixture to capture STDOUT/STDERR.
     """
-    # Dynamically Create Pydantic Model
-    model: Any = pydantic.create_model("model")
+    # Construct Pydantic Model
+    model = conf.create_test_model()
 
     # Create ArgumentParser
     parser = pydantic_argparse.ArgumentParser(
@@ -447,8 +441,8 @@ def test_version_message(capsys: pytest.CaptureFixture[str]) -> None:
     Args:
         capsys (pytest.CaptureFixture[str]): Fixture to capture STDOUT/STDERR.
     """
-    # Dynamically Create Pydantic Model
-    model: Any = pydantic.create_model("model")
+    # Construct Pydantic Model
+    model = conf.create_test_model()
 
     # Create ArgumentParser
     parser = pydantic_argparse.ArgumentParser(

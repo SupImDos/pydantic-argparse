@@ -39,7 +39,7 @@ def is_field_a(
 
     Args:
         field (pydantic.fields.ModelField): Subject field to check type of.
-        types (Union[Any, tuple[Any, ...]]): Type(s) to compare field against.
+        types (Union[Any, Tuple[Any, ...]]): Type(s) to compare field against.
 
     Returns:
         bool: Whether the field *is* considered one of the types.

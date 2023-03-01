@@ -5,57 +5,38 @@ names and formatting argument descriptions.
 """
 
 
-# Typing
-from typing import Any, Optional, TypeVar
+# Third-Party
+import pydantic
 
 
-# Constants
-# Arbitrary `MISSING` object is required for functions where `None` is a valid
-# and possible argument to specify.
-MISSING = TypeVar("MISSING")
-
-
-def name(name: str) -> str:
+def name(field: pydantic.fields.ModelField, invert: bool = False) -> str:
     """Standardises argument name.
 
-    Examples:
-        ```python
-        argument_name("hello") == "--hello"
-        argument_name("hello_world") == "--hello-world"
-        ```
-
     Args:
-        name (str): Name of the argument.
+        field (pydantic.fields.ModelField): Field to construct name for.
+        invert (bool): Whether to invert the name by prepending `--no-`.
 
     Returns:
         str: Standardised name of the argument.
     """
-    # Prepend '--', replace '_' with '-'
-    return f"--{name.replace('_', '-')}"
+    # Construct Prefix
+    prefix = "--no-" if invert else "--"
+
+    # Prepend prefix, replace '_' with '-'
+    return f"{prefix}{field.alias.replace('_', '-')}"
 
 
-def description(
-    description: Optional[str],
-    default: Optional[Any] = MISSING,
-) -> str:
+def description(field: pydantic.fields.ModelField) -> str:
     """Standardises argument description.
 
-    Examples:
-        ```python
-        argument_description("hello") == "hello"
-        argument_description("hello", None) == "hello (default: None)"
-        argument_description("hello", 42) == "hello (default: 42)"
-        ```
-
     Args:
-        description (Optional[str]): Optional description for argument.
-        default (Optional[Any]): Default value for argument if applicable.
+        field (pydantic.fields.ModelField): Field to construct description for.
 
     Returns:
         str: Standardised description of the argument.
     """
     # Construct Default String
-    default = f"(default: {default})" if default is not MISSING else None
+    default = f"(default: {field.get_default()})" if not field.required else None
 
     # Return Standardised Description String
-    return " ".join(filter(None, [description, default]))
+    return " ".join(filter(None, [field.field_info.description, default]))

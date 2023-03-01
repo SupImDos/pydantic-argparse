@@ -51,71 +51,35 @@ def parse_field(
     Returns:
         Optional[utils.pydantic.PydanticValidator]: Possible validator method.
     """
-    # Get Enum Type
+    # Extract Enum
     enum_type: Type[enum.Enum] = field.outer_type_
 
-    # Get Default
-    default = field.get_default()
+    # Compute Argument Intrinsics
+    is_flag = len(enum_type) == 1 and not bool(field.required)
+    is_inverted = is_flag and field.get_default() is not None and field.allow_none
 
-    # Enums are treated as choices
-    if field.required:
-        # Add Required Enum Field
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=argparse._StoreAction,
-            help=utils.arguments.description(field.field_info.description),
-            dest=field.alias,
-            metavar=_enum_choices_metavar(enum_type),
-            required=True,
-        )
+    # Determine Argument Properties
+    metavar = f"{{{', '.join(e.name for e in enum_type)}}}"
+    action = (
+        argparse._StoreConstAction if is_flag
+        else argparse._StoreAction
+    )
+    const = (
+        {} if not is_flag
+        else {"const": None} if is_inverted
+        else {"const": list(enum_type)[0]}
+    )
 
-    elif len(enum_type) > 1:
-        # Add Optional Choice
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=argparse._StoreAction,
-            help=utils.arguments.description(field.field_info.description, default),
-            dest=field.alias,
-            metavar=_enum_choices_metavar(enum_type),
-            required=False,
-        )
-
-    elif default is not None and field.allow_none:
-        # Add Optional Flag (Default Not None)
-        parser.add_argument(
-            utils.arguments.name(f"no-{field.alias}"),
-            action=argparse._StoreConstAction,
-            const=None,
-            help=utils.arguments.description(field.field_info.description, default),
-            dest=field.alias,
-            metavar=field.alias.upper(),
-            required=False,
-        )
-
-    else:
-        # Add Optional Flag (Default None)
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=argparse._StoreConstAction,
-            const=list(enum_type)[0],
-            help=utils.arguments.description(field.field_info.description, default),
-            dest=field.alias,
-            metavar=field.alias.upper(),
-            required=False,
-        )
+    # Add Enum Field
+    parser.add_argument(
+        utils.arguments.name(field, is_inverted),
+        action=action,
+        help=utils.arguments.description(field),
+        dest=field.alias,
+        metavar=metavar,
+        required=bool(field.required),
+        **const,  # type: ignore[arg-type]
+    )
 
     # Construct and Return Validator
     return utils.pydantic.as_validator(field, lambda v: enum_type[v])
-
-
-def _enum_choices_metavar(enum_type: Type[enum.Enum]) -> str:
-    """Generates a string metavar from enum choices.
-
-    Args:
-        enum_type (type[enum.Enum]): Enum type to generate metavar for.
-
-    Returns:
-        str: Generated metavar
-    """
-    # Generate and Return
-    return f"{{{', '.join(e.name for e in enum_type)}}}"

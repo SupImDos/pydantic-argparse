@@ -52,31 +52,15 @@ def parse_field(
     Returns:
         Optional[utils.pydantic.PydanticValidator]: Possible validator method.
     """
-    # Get Default
-    default = field.get_default()
-
-    # Mapping
-    if field.required:
-        # Add Required Mapping Field
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=argparse._StoreAction,
-            help=utils.arguments.description(field.field_info.description),
-            dest=field.alias,
-            metavar=field.alias.upper(),
-            required=True,
-        )
-
-    else:
-        # Add Optional Mapping Field
-        parser.add_argument(
-            utils.arguments.name(field.alias),
-            action=argparse._StoreAction,
-            help=utils.arguments.description(field.field_info.description, default),
-            dest=field.alias,
-            metavar=field.alias.upper(),
-            required=False,
-        )
+    # Add Mapping Field
+    parser.add_argument(
+        utils.arguments.name(field),
+        action=argparse._StoreAction,
+        help=utils.arguments.description(field),
+        dest=field.alias,
+        metavar=field.alias.upper(),
+        required=bool(field.required),
+    )
 
     # Construct and Return Validator
     return utils.pydantic.as_validator(field, lambda v: ast.literal_eval(v))

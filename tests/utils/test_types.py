@@ -79,13 +79,8 @@ def test_is_field_a(field_type: Any, expected_type: Any) -> None:
         field_type (Any): Field type to test.
         expected_type (Any): Expected type to check for the field.
     """
-    # Dynamically Create Field
-    field = pydantic.fields.ModelField(
-        name="test",
-        type_=field_type,
-        class_validators=None,
-        model_config=pydantic.BaseConfig,
-    )
+    # Construct Pydantic Field
+    field = conf.create_test_field(type=field_type)
 
     # Check and Assert Field Type
     assert utils.types.is_field_a(field, expected_type)
