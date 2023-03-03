@@ -59,4 +59,4 @@ This project is made possible by [`pydantic`][1].
 This project is licensed under the terms of the MIT license.
 
 <!--- Reference -->
-[1]: https://pydantic-docs.helpmanual.io/
+[1]: https://docs.pydantic.dev/

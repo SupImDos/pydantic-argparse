@@ -149,5 +149,5 @@ integer
     `pydantic` returns to the user with a `ValidationError`
 
 <!--- Reference -->
-[1]: https://pydantic-docs.helpmanual.io/usage/models/
-[2]: https://pydantic-docs.helpmanual.io/usage/schema/#field-customization
+[1]: https://docs.pydantic.dev/usage/models/
+[2]: https://docs.pydantic.dev/usage/schema/#field-customization
