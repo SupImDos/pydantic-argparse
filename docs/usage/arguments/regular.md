@@ -150,5 +150,5 @@ Outcomes:
 * Omitting this argument will set `args.arg` to `42` (the default).
 
 <!--- Reference -->
-[1]: https://pydantic-docs.helpmanual.io/usage/types/#standard-library-types
-[2]: https://pydantic-docs.helpmanual.io/usage/types/#pydantic-types
+[1]: https://docs.pydantic.dev/usage/types/#standard-library-types
+[2]: https://docs.pydantic.dev/usage/types/#pydantic-types

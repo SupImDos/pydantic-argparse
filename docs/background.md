@@ -129,6 +129,7 @@ A feature comparison matrix of the alternatives outlined above is shown below.
 | **Extra Features**                                                                                                   |
 | *Typing Hinting*                |                    | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
 | *Shell Completion*              |                    | :white_check_mark: | :white_check_mark: |                     |
+| *Environment Variables*         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
 
 <!--- Reference -->
 [1]: https://docs.python.org/3/library/argparse.html
