@@ -111,6 +111,40 @@ class Arguments(BaseModel):
     You can see the list of reserved keywords in Python at any time by typing
     `:::python help("keywords")` into the Python interpreter.
 
+## Environment Variables
+Functionality to parse both required and optional arguments from environment
+variables is provided via the `pydantic.BaseSettings` base class.
+
+Simply inherit from `pydantic.BaseSettings` instead of `pydantic.BaseModel`:
+
+```python
+class Arguments(BaseSettings):
+    integer: int
+```
+
+Arguments can then be provided via environment variables:
+
+```console
+$ export INTEGER=123
+$ python3 example.py
+Arguments(integer=123)
+
+$ INTEGER=456 python3 example.py
+Arguments(integer=456)
+```
+
+Arguments supplied via the command-line take precedence over environment
+variables:
+
+```console
+$ export INTEGER=123
+$ python3 example.py --integer 42
+Arguments(integer=42)
+
+$ INTEGER=456 python3 example.py --integer 42
+Arguments(integer=42)
+```
+
 ## Validation
 When parsing command-line arguments with `parser.parse_typed_args()`, the raw
 values are parsed and validated using `pydantic`. The parser has different
@@ -137,6 +171,12 @@ When the provided command-line arguments do not satisfy the `pydantic` model,
 the `ArgumentParser` will provide an error to the user. For example:
 
 ```console
+$ python3 example.py
+usage: example.py [-h] --integer INTEGER
+example.py: error: 1 validation error for Arguments
+integer
+  field required (type=value_error.missing)
+
 $ python3 example.py --integer hello
 usage: example.py [-h] --integer INTEGER
 example.py: error: 1 validation error for Arguments
@@ -146,8 +186,47 @@ integer
 
 !!! note
     The validation error shown to the user is the same as the error that
-    `pydantic` returns to the user with a `ValidationError`
+    `pydantic` provides with its `pydantic.ValidationError`.
+
+### Under the Hood
+Under the hood `pydantic-argparse` dynamically generates *extra* custom
+`@pydantic.validator` class methods for each of your argument fields.
+
+These validators behave slightly differently for each argument type, but in
+general they:
+
+* Parse empty `str` values to `None`.
+* Parse *choices* (i.e., `Enum`s or `Literal`s) from `str`s to their respective
+  types (if applicable).
+* Otherwise, pass values through unchanged.
+
+The validators are constructed with the `pre=True` argument, ensuring that they
+are called *before* any of the user's `@pydantic.validator` class methods and
+the built-in `pydantic` field validation. This means they are provided with the
+most raw input data possible.
+
+After the generated validators have been called, the fields are parsed as per
+usual by the built-in `pydantic` field validation for their respective types.
+
+!!! note
+    `pydantic-argparse` also enhances `pydantic`'s built-in
+    [environment variable parsing][3] capabilities.
+
+    By default, `pydantic` attempts to parse complex types as `json` values. If
+    this parsing fails a `pydantic.env_settings.SettingsError` is raised and
+    the argument parsing fails immediately with an obscure error message. This
+    means the values never reach the generated `pydantic-argparse` validators,
+    the user's custom validators or the built-in `pydantic` field validation.
+
+    As a solution, `pydantic-argparse` wraps the existing
+    `pydantic.BaseSettings.parse_env_var()` environment variable parsing class
+    method to handle this situation. The wrapped parser passes through raw
+    `str` values *unchanged* if the `json` parsing fails. This allows the raw
+    string values to be parsed, validated and handled by the generated
+    `pydantic-argparse` validators and the built-in `pydantic` field validators
+    if applicable.
 
 <!--- Reference -->
 [1]: https://docs.pydantic.dev/usage/models/
 [2]: https://docs.pydantic.dev/usage/schema/#field-customization
+[3]: https://docs.pydantic.dev/usage/settings/#parsing-environment-variable-values
