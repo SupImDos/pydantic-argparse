@@ -16,14 +16,10 @@ import collections.abc
 import pydantic
 
 # Typing
-from typing import Optional, TypeVar
+from typing import Optional
 
 # Local
 from pydantic_argparse import utils
-
-
-# Constants
-T = TypeVar("T")
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:

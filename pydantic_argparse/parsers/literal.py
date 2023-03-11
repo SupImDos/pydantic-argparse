@@ -18,17 +18,13 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import Optional, TypeVar
+from typing import Optional
 
 # Version-Guarded
 if sys.version_info < (3, 8):  # pragma: <3.8 cover
     from typing_extensions import Literal, get_args
 else:  # pragma: >=3.8 cover
     from typing import Literal, get_args
-
-
-# Constants
-T = TypeVar("T")
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:

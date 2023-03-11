@@ -18,11 +18,7 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import Optional, Type, TypeVar
-
-
-# Constants
-T = TypeVar("T")
+from typing import Optional, Type
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
