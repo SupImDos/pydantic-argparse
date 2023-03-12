@@ -1,8 +1,7 @@
 """Types Utility Functions for Declarative Typed Argument Parsing.
 
-The `types` module contains utility functions used for constructing named
-`functools.partial` type casting functions and for determining and comparing
-the types of `pydantic fields.
+The `types` module contains a utility function used for determining and
+comparing the types of `pydantic fields.
 """
 
 
