@@ -3,12 +3,8 @@
 This package contains helper utility functions for the typed argument parsing
 process, including formatting argument names and descriptions, formatting
 errors, recursively parsing `argparse.Namespace` objects to `dict`s,
-constructing named partial type casting functions and determining the types of
+interacting with the internals of `pydantic` and determining the types of
 `pydantic` fields.
-
-The functionality outlined above is so common throughout the typed argument
-parsing process that the functions have been refactored out into this module as
-utility functions.
 
 The public interface exposed by this package is the various described utility
 modules each containing helper functions.
