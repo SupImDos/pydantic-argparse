@@ -21,7 +21,7 @@ DOT_MD = ".md"
 PREFIX_H1 = "# "
 PREFIX_H2 = "## "
 PREFIX_CODE = "::: "
-ESCAPE_MD = "_", "_\u200B", 1  # Hack to stop underscores being rendered as italics
+ESCAPE_MD = "_", "\\_"
 
 
 def generate(package: pathlib.Path, docs: pathlib.Path) -> None:
@@ -56,7 +56,7 @@ def generate(package: pathlib.Path, docs: pathlib.Path) -> None:
             titles = source.parts
 
         # Docs
-        with files_editor.open(path, "a") as file_object:
+        with files_editor.open(str(path), "a") as file_object:
             # Check if the file is empty
             if not file_object.tell():
                 # Heading
@@ -69,10 +69,10 @@ def generate(package: pathlib.Path, docs: pathlib.Path) -> None:
             file_object.write(reference + "\n")
 
         # Build Nav
-        nav[titles] = path.relative_to(docs)
+        nav[titles] = str(path.relative_to(docs))
 
     # Nav
-    with files_editor.open(docs / FILENAME_NAVIGATION, "w") as file_object:
+    with files_editor.open(str(docs / FILENAME_NAVIGATION), "w") as file_object:
         # Write Nav
         file_object.writelines(nav.build_literate_nav())
 
