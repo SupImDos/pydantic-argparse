@@ -1,6 +1,6 @@
-"""Tests the `utils` Module.
+"""Tests the `types` Module.
 
-This module provides full unit test coverage for the `utils` module, testing
+This module provides full unit test coverage for the `types` module, testing
 all branches of all functions.
 """
 
