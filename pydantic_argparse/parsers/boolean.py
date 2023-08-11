@@ -20,8 +20,8 @@ except ImportError:
 from typing import Optional
 
 # Local
-from pydantic_argparse import utils
-from pydantic_argparse.argparse import actions
+from .. import utils
+from ..argparse import actions
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:

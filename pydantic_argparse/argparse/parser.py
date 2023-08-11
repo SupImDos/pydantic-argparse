@@ -26,10 +26,10 @@ except ImportError:
     import pydantic
 
 # Local
-from pydantic_argparse import parsers
-from pydantic_argparse import utils
-from pydantic_argparse.argparse import actions
-from pydantic_argparse.argparse import patches  # noqa: F401
+from .. import parsers
+from .. import utils
+from . import actions
+from . import patches  # noqa: F401
 
 # Typing
 from typing import Any, Dict, Generic, List, NoReturn, Optional, Type, TypeVar

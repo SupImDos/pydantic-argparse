@@ -9,12 +9,12 @@ The public interface exposed by this package is the declarative and typed
 """
 
 # Local
-from pydantic_argparse.argparse import ArgumentParser
-from pydantic_argparse.__metadata__ import __title__
-from pydantic_argparse.__metadata__ import __description__
-from pydantic_argparse.__metadata__ import __version__
-from pydantic_argparse.__metadata__ import __author__
-from pydantic_argparse.__metadata__ import __license__
+from .argparse import ArgumentParser
+from .__metadata__ import __title__
+from .__metadata__ import __description__
+from .__metadata__ import __version__
+from .__metadata__ import __author__
+from .__metadata__ import __license__
 
 
 # Public Re-Exports

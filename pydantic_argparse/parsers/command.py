@@ -20,7 +20,7 @@ except ImportError:
 from typing import Optional
 
 # Local
-from pydantic_argparse import utils
+from .. import utils
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:

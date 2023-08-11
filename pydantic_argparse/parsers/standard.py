@@ -22,7 +22,7 @@ except ImportError:
 from typing import Optional
 
 # Local
-from pydantic_argparse import utils
+from .. import utils
 
 
 def parse_field(

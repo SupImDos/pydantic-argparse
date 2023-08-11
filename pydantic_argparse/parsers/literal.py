@@ -18,7 +18,7 @@ except ImportError:
     import pydantic
 
 # Local
-from pydantic_argparse import utils
+from .. import utils
 
 # Typing
 from typing import Optional
