@@ -9,7 +9,10 @@ comparing the types of `pydantic fields.
 import sys
 
 # Third-Party
-import pydantic
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
 
 # Typing
 from typing import Any, Tuple, Union
@@ -45,7 +48,7 @@ def is_field_a(
     """
     # Create tuple if only one type was provided
     if not isinstance(types, tuple):
-        types = (types, )
+        types = (types,)
 
     # Get field type, or origin if applicable
     field_type = get_origin(field.outer_type_) or field.outer_type_

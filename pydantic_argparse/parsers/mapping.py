@@ -13,13 +13,16 @@ import ast
 import collections.abc
 
 # Third-Party
-import pydantic
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
 
 # Typing
 from typing import Optional
 
 # Local
-from pydantic_argparse import utils
+from .. import utils
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:

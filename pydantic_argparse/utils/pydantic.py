@@ -11,7 +11,10 @@ dynamically generated validators and environment variable parsers.
 import contextlib
 
 # Third-Party
-import pydantic
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
 
 # Typing
 from typing import Any, Callable, Dict, Optional, Type, TypeVar, Union
@@ -42,6 +45,7 @@ def as_validator(
     Returns:
         PydanticValidator: Constructed field validator function.
     """
+
     # Dynamically construct a `pydantic` validator function for the supplied
     # field. The constructed validator must be `pre=True` so that the validator
     # is called before the built-in `pydantic` field validation occurs and is
@@ -95,7 +99,7 @@ def model_with_validators(
 ) -> Type[PydanticModelT]:
     """Generates a new `pydantic` model class with the supplied validators.
 
-    If the supplied base model is a subclass of `pydantic.BaseSettings`, then 
+    If the supplied base model is a subclass of `pydantic.BaseSettings`, then
     the newly generated model will also have a new `parse_env_var` classmethod
     monkeypatched onto it that suppresses any exceptions raised when initially
     parsing the environment variables. This allows the raw values to still be

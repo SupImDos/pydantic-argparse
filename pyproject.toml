@@ -7,20 +7,12 @@ readme = "README.md"
 license = "MIT"
 homepage = "https://pydantic-argparse.supimdos.com"
 repository = "https://github.com/SupImDos/pydantic-argparse"
-keywords = [
-    "python",
-    "pydantic",
-    "argparse",
-    "typed",
-    "validation",
-]
-include = [
-    "LICENSE.md",
-]
+keywords = ["python", "pydantic", "argparse", "typed", "validation"]
+include = ["LICENSE.md"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-pydantic = "^1.9.0"
+pydantic = ">=1.9.0"
 importlib_metadata = { version = ">=4", python = "<3.8" }
 typing_extensions = { version = ">=4", python = "<3.8" }
 
@@ -51,24 +43,24 @@ docs-publish = "mkdocs gh-deploy --force"
 [tool.ruff]
 line-length = 120
 select = [
-    "F",    # flake8
-    "E",    # pycodestyle errors
-    "W",    # pycodestyle warnings
-    "S",    # flake8-bandit
-    "B",    # flake8-bugbear
-    "A",    # flake8-builtins
-    "D",    # flake8-docstrings
-    "PT",   # flake8-pytest-style
-    "Q",    # flake8-quotes
-    "RUF",  # ruff
+    "F",   # flake8
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "S",   # flake8-bandit
+    "B",   # flake8-bugbear
+    "A",   # flake8-builtins
+    "D",   # flake8-docstrings
+    "PT",  # flake8-pytest-style
+    "Q",   # flake8-quotes
+    "RUF", # ruff
 ]
 ignore = [
-    "D401"  # imperative mood - overly restrictive
+    "D401", # imperative mood - overly restrictive
 ]
 
 [tool.ruff.per-file-ignores]
-"__init__.py" = ["F401"]  # allow unused imports in `__init__.py`
-"tests/*.py" = ["S101"]   # allow asserts in unit tests
+"__init__.py" = ["F401"] # allow unused imports in `__init__.py`
+"tests/*.py" = ["S101"]  # allow asserts in unit tests
 
 [tool.ruff.pydocstyle]
 convention = "google"

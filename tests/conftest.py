@@ -14,7 +14,10 @@ import enum
 import sys
 
 # Third-Party
-import pydantic
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
 
 # Local
 from pydantic_argparse.argparse import actions
@@ -107,6 +110,7 @@ def create_test_subparser(
 
 class TestEnum(enum.Enum):
     """Test Enum for Testing."""
+
     A = enum.auto()
     B = enum.auto()
     C = enum.auto()
@@ -114,16 +118,19 @@ class TestEnum(enum.Enum):
 
 class TestEnumSingle(enum.Enum):
     """Test Enum with Single Member for Testing."""
+
     D = enum.auto()
 
 
 class TestCommand(pydantic.BaseModel):
     """Test Command Model for Testing."""
+
     flag: bool = pydantic.Field(False, description="flag")
 
 
 class TestCommands(pydantic.BaseModel):
     """Test Commands Model for Testing."""
+
     cmd_01: Optional[TestCommand] = pydantic.Field(None, description="cmd_01")
     cmd_02: Optional[TestCommand] = pydantic.Field(None, description="cmd_02")
     cmd_03: Optional[TestCommand] = pydantic.Field(None, description="cmd_03")
@@ -131,6 +138,7 @@ class TestCommands(pydantic.BaseModel):
 
 class TestModel(pydantic.BaseModel):
     """Test Model for Testing."""
+
     # Required Arguments
     arg_01: int = pydantic.Field(description="arg_01")
     arg_02: float = pydantic.Field(description="arg_02")
@@ -160,13 +168,23 @@ class TestModel(pydantic.BaseModel):
     arg_24: List[str] = pydantic.Field(list(("A", "B", "C")), description="arg_24")
     arg_25: Tuple[str, str, str] = pydantic.Field(("A", "B", "C"), description="arg_25")
     arg_26: Set[str] = pydantic.Field(set(("A", "B", "C")), description="arg_26")
-    arg_27: FrozenSet[str] = pydantic.Field(frozenset(("A", "B", "C")), description="arg_27")
-    arg_28: Deque[str] = pydantic.Field(collections.deque(("A", "B", "C")), description="arg_28")
+    arg_27: FrozenSet[str] = pydantic.Field(
+        frozenset(("A", "B", "C")), description="arg_27"
+    )
+    arg_28: Deque[str] = pydantic.Field(
+        collections.deque(("A", "B", "C")), description="arg_28"
+    )
     arg_29: Dict[str, int] = pydantic.Field(dict(A=123), description="arg_29")
-    arg_30: datetime.date = pydantic.Field(datetime.date(2021, 12, 25), description="arg_30")
-    arg_31: datetime.datetime = pydantic.Field(datetime.datetime(2021, 12, 25, 7), description="arg_31")
+    arg_30: datetime.date = pydantic.Field(
+        datetime.date(2021, 12, 25), description="arg_30"
+    )
+    arg_31: datetime.datetime = pydantic.Field(
+        datetime.datetime(2021, 12, 25, 7), description="arg_31"
+    )
     arg_32: datetime.time = pydantic.Field(datetime.time(7, 30), description="arg_32")
-    arg_33: datetime.timedelta = pydantic.Field(datetime.timedelta(hours=5), description="arg_33")
+    arg_33: datetime.timedelta = pydantic.Field(
+        datetime.timedelta(hours=5), description="arg_33"
+    )
     arg_34: bool = pydantic.Field(False, description="arg_34")
     arg_35: bool = pydantic.Field(True, description="arg_35")
     arg_36: Literal["A"] = pydantic.Field("A", description="arg_36")
@@ -199,7 +217,9 @@ class TestModel(pydantic.BaseModel):
     arg_59: Optional[Literal["A"]] = pydantic.Field(description="arg_59")
     arg_60: Optional[Literal["A"]] = pydantic.Field("A", description="arg_60")
     arg_61: Optional[TestEnumSingle] = pydantic.Field(description="arg_61")
-    arg_62: Optional[TestEnumSingle] = pydantic.Field(TestEnumSingle.D, description="arg_62")
+    arg_62: Optional[TestEnumSingle] = pydantic.Field(
+        TestEnumSingle.D, description="arg_62"
+    )
 
     # Commands
     arg_63: Optional[TestCommand] = pydantic.Field(description="arg_63")
