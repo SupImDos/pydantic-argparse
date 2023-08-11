@@ -13,7 +13,10 @@ import collections.abc
 import enum
 
 # Third-Party
-import pydantic
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
 
 # Typing
 from typing import Optional
@@ -32,9 +35,10 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
         bool: Whether the field should be parsed as a `container`.
     """
     # Check and Return
-    return (
-        utils.types.is_field_a(field, collections.abc.Container)
-        and not utils.types.is_field_a(field, (collections.abc.Mapping, enum.Enum, str, bytes))
+    return utils.types.is_field_a(
+        field, collections.abc.Container
+    ) and not utils.types.is_field_a(
+        field, (collections.abc.Mapping, enum.Enum, str, bytes)
     )
 
 

@@ -9,7 +9,10 @@ all branches of all functions.
 import textwrap
 
 # Third-Party
-import pydantic
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
 import pytest
 
 # Local
@@ -44,9 +47,9 @@ ErrorDefinition = Tuple[Exception, Union[str, Tuple[str, ...]]]
         ),
         (
             [
-                (pydantic.errors.IPv4AddressError(), ("a", )),
-                (pydantic.errors.IntegerError(),     ("a", "b")),
-                (pydantic.errors.UUIDError(),        ("a", "b", "c")),
+                (pydantic.errors.IPv4AddressError(), ("a",)),
+                (pydantic.errors.IntegerError(), ("a", "b")),
+                (pydantic.errors.UUIDError(), ("a", "b", "c")),
             ],
             """
             3 validation errors for TestModel
@@ -72,7 +75,9 @@ def test_error_format(
     """
     # Construct Validation Error
     error = pydantic.ValidationError(
-        errors=[pydantic.error_wrappers.ErrorWrapper(exc, loc) for (exc, loc) in errors],
+        errors=[
+            pydantic.error_wrappers.ErrorWrapper(exc, loc) for (exc, loc) in errors
+        ],
         model=conf.TestModel,
     )
 

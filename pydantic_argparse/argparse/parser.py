@@ -20,7 +20,10 @@ import argparse
 import sys
 
 # Third-Party
-import pydantic
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
 
 # Local
 from pydantic_argparse import parsers
@@ -286,7 +289,9 @@ class ArgumentParser(argparse.ArgumentParser, Generic[PydanticModelT]):
         # Construct and return model with validators
         return utils.pydantic.model_with_validators(model, validators)
 
-    def _add_field(self, field: pydantic.fields.ModelField) -> Optional[utils.pydantic.PydanticValidator]:
+    def _add_field(
+        self, field: pydantic.fields.ModelField
+    ) -> Optional[utils.pydantic.PydanticValidator]:
         """Adds `pydantic` field to argument parser.
 
         Args:

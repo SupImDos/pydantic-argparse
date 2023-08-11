@@ -11,7 +11,10 @@ command-line arguments.
 import argparse
 
 # Third-Party
-import pydantic
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
 
 # Typing
 from typing import Optional
@@ -52,8 +55,10 @@ def parse_field(
 
     # Determine Argument Properties
     action = (
-        actions.BooleanOptionalAction if field.required
-        else argparse._StoreFalseAction if is_inverted
+        actions.BooleanOptionalAction
+        if field.required
+        else argparse._StoreFalseAction
+        if is_inverted
         else argparse._StoreTrueAction
     )
 

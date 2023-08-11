@@ -12,7 +12,10 @@ import argparse
 import enum
 
 # Third-Party
-import pydantic
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
 
 # Local
 from pydantic_argparse import utils
@@ -56,13 +59,12 @@ def parse_field(
 
     # Determine Argument Properties
     metavar = f"{{{', '.join(e.name for e in enum_type)}}}"
-    action = (
-        argparse._StoreConstAction if is_flag
-        else argparse._StoreAction
-    )
+    action = argparse._StoreConstAction if is_flag else argparse._StoreAction
     const = (
-        {} if not is_flag
-        else {"const": None} if is_inverted
+        {}
+        if not is_flag
+        else {"const": None}
+        if is_inverted
         else {"const": list(enum_type)[0]}
     )
 

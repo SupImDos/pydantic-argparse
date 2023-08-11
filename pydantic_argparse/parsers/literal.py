@@ -12,7 +12,10 @@ import argparse
 import sys
 
 # Third-Party
-import pydantic
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
 
 # Local
 from pydantic_argparse import utils
@@ -62,14 +65,9 @@ def parse_field(
 
     # Determine Argument Properties
     metavar = f"{{{', '.join(str(c) for c in choices)}}}"
-    action = (
-        argparse._StoreConstAction if is_flag
-        else argparse._StoreAction
-    )
+    action = argparse._StoreConstAction if is_flag else argparse._StoreAction
     const = (
-        {} if not is_flag
-        else {"const": None} if is_inverted
-        else {"const": choices[0]}
+        {} if not is_flag else {"const": None} if is_inverted else {"const": choices[0]}
     )
 
     # Add Literal Field
