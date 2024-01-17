@@ -15,8 +15,11 @@ import sys
 import textwrap
 
 # Third-Party
-import pydantic
 import pytest
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
 
 # Local
 import pydantic_argparse

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pydantic-argparse"
-version = "0.8.0"
+version = "0.9.0"
 description = "Typed Argument Parsing with Pydantic"
 authors = ["Hayden Richards <SupImDos@gmail.com>"]
 readme = "README.md"
@@ -11,10 +11,11 @@ keywords = ["python", "pydantic", "argparse", "typed", "validation"]
 include = ["LICENSE.md"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-pydantic = ">=1.9.0"
+python = "^3.8"
+pydantic = "2.5.3"
 importlib_metadata = { version = ">=4", python = "<3.8" }
 typing_extensions = { version = ">=4", python = "<3.8" }
+pydantic-settings = "^2.1.0"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "^0.18.1"

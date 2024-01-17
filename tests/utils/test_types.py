@@ -12,8 +12,12 @@ import enum
 import sys
 
 # Third-Party
-import pydantic
 import pytest
+try:
+    import pydantic.v1 as pydantic
+except ImportError:
+    import pydantic
+
 
 # Local
 from pydantic_argparse import utils
