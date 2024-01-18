@@ -16,7 +16,7 @@ except ImportError:
     import pydantic
 
 # Local
-from pydantic_argparse import utils
+from pydantic_args import utils
 from tests import conftest as conf
 
 # Typing

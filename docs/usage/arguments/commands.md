@@ -1,5 +1,5 @@
 ## Overview
-`pydantic-argparse` provides functionality for commands. A command is a
+`pydantic-args` provides functionality for commands. A command is a
 positional command-line argument that can be followed by its own specific
 subset of command-line arguments. For example: `command --arg abc`.
 

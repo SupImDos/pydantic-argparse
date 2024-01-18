@@ -1,14 +1,14 @@
 ## Feature Showcase
-This showcase demonstrates how `pydantic-argparse` can be useful, by
+This showcase demonstrates how `pydantic-args` can be useful, by
 highlighting some of its features and showing how they can be utilised.
 
 ### CLI Construction
-The `pydantic-argparse` command-line interface construction is simple.
+The `pydantic-args` command-line interface construction is simple.
 
 === "Pydantic Argparse"
     ```python
     import pydantic
-    import pydantic_argparse
+    import pydantic_args
 
     # Declare Arguments
     class Arguments(pydantic.BaseModel):
@@ -22,7 +22,7 @@ The `pydantic-argparse` command-line interface construction is simple.
         third_flag: bool = pydantic.Field(True, description="an optional flag")
 
     # Create Parser
-    parser = pydantic_argparse.ArgumentParser(
+    parser = pydantic_args.ArgumentParser(
         model=Arguments,
         prog="Example Program",
         description="Example Description",
@@ -103,7 +103,7 @@ The `pydantic-argparse` command-line interface construction is simple.
     ```
 
 ### Auto Completion
-The `pydantic-argparse` parsed `args` support auto-completion in your IDE.
+The `pydantic-args` parsed `args` support auto-completion in your IDE.
 
 === "Pydantic Argparse"
     ![Pydantic Argparse - Auto Completion](assets/images/showcase_01.png)
@@ -112,7 +112,7 @@ The `pydantic-argparse` parsed `args` support auto-completion in your IDE.
     ![Argparse - Auto Completion](assets/images/showcase_02.png)
 
 ### Type Hints
-The `pydantic-argparse` parsed `args` support type-hinting in your IDE.
+The `pydantic-args` parsed `args` support type-hinting in your IDE.
 
 === "Pydantic Argparse"
     ![Pydantic Argparse - Type Hints](assets/images/showcase_03.png)
@@ -121,7 +121,7 @@ The `pydantic-argparse` parsed `args` support type-hinting in your IDE.
     ![Argparse - Type Hints](assets/images/showcase_04.png)
 
 ### Type Safety
-The `pydantic-argparse` parsed `args` support type-safety with `mypy`.
+The `pydantic-args` parsed `args` support type-safety with `mypy`.
 
 === "Pydantic Argparse"
     ![Pydantic Argparse - Type Safety](assets/images/showcase_05.png)

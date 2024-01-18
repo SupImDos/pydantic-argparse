@@ -3,19 +3,19 @@ Before delving into the documentation, examples and code reference, it is first
 necessary to explore and understand why you may want to use this package.
 
 ## Tenets
-The design goals of `pydantic-argparse` are summarised by these core tenets.
+The design goals of `pydantic-args` are summarised by these core tenets.
 
 #### Simple
-:  `pydantic-argparse` has a simple API and code-base.
+:  `pydantic-args` has a simple API and code-base.
 
 #### Opinionated
-:  `pydantic-argparse` is deliberately limited with *one way* of doing things.
+:  `pydantic-args` is deliberately limited with *one way* of doing things.
 
 #### Typed
-:  `pydantic-argparse` fully supports type-hinting and `mypy`.
+:  `pydantic-args` fully supports type-hinting and `mypy`.
 
 ## Rationale
-There are many benefits to using `pydantic-argparse` over a more traditional
+There are many benefits to using `pydantic-args` over a more traditional
 argument parsing package that uses a functional api. Some of the most valuable
 benefits are outlined below.
 
@@ -29,7 +29,7 @@ benefits are outlined below.
 !!! success ""
     Due to the use of `pydantic` models and standard type-hinting, there is
     almost no new syntax or API to learn. Just declare your interface with a
-    *dataclass-like* `pydantic` model, and let `pydantic-argparse` parse your
+    *dataclass-like* `pydantic` model, and let `pydantic-args` parse your
     arguments.
 
 #### Type Hints
@@ -52,22 +52,22 @@ benefits are outlined below.
     about them again.
 
 ## Drawbacks
-There are also some drawbacks to using `pydantic-argparse`, depending on the
+There are also some drawbacks to using `pydantic-args`, depending on the
 size of your project, the features you require and the programming paradigms
 that you agree with. Some of the possible drawbacks are outlined below.
 
 #### Extra Dependencies
 !!! warning ""
-    While `pydantic-argparse` itself depends *only* on `pydantic`, it has a
+    While `pydantic-args` itself depends *only* on `pydantic`, it has a
     number of transient dependencies due to the dependencies of `pydantic`
     itself. If your application is small, it may not be suitable to pull in
     `pydantic` and its dependencies for a simple command-line interface.
 
 #### Opinionated Design
 !!! warning ""
-    `pydantic-argparse` is a very opinionated package by design. It aims for a
+    `pydantic-args` is a very opinionated package by design. It aims for a
     simple API, and to be both full featured while limiting excessive choices.
-    For example, there are no *positional* arguments in `pydantic-argparse`;
+    For example, there are no *positional* arguments in `pydantic-args`;
     only *optional* and *required* arguments. If your opinions do not align
     with these design choices, then you may not want to use the package.
 
@@ -105,7 +105,7 @@ Python. Some of the most popular are outlined below.
 ## Comparison
 A feature comparison matrix of the alternatives outlined above is shown below.
 
-|                                 | `argparse`         | `click`            | `typer`            | `pydantic-argparse` |
+|                                 | `argparse`         | `click`            | `typer`            | `pydantic-args` |
 | ------------------------------: | :----------------: | :----------------: | :----------------: | :-----------------: |
 | **Arguments**                                                                                                        |
 | *Optional Arguments*            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:  |

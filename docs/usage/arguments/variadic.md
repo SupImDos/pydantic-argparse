@@ -1,5 +1,5 @@
 ## Overview
-`pydantic-argparse` provides functionality for variadic arguments. A variadic
+`pydantic-args` provides functionality for variadic arguments. A variadic
 argument is a command-line argument that is followed by one *or more* values.
 For example: `--variadic a b c` or `--variadic 1 2 3 4 5 6`.
 

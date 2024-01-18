@@ -9,7 +9,7 @@ testing all branches of all functions.
 import pytest
 
 # Local
-from pydantic_argparse import utils
+from pydantic_args import utils
 from tests import conftest as conf
 
 # Typing

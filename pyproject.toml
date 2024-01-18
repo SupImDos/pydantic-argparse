@@ -5,8 +5,8 @@ description = "Typed Argument Parsing with Pydantic"
 authors = ["Hayden Richards <SupImDos@gmail.com>", "Anastas Stoyanovsky <contact@anastas.eu>"]
 readme = "README.md"
 license = "MIT"
-homepage = "https://pydantic-argparse.supimdos.com"
-repository = "https://github.com/SupImDos/pydantic-argparse"
+homepage = "https://github.com/anastasds/pydantic-args"
+repository = "https://github.com/anastasds/pydantic-args"
 keywords = ["python", "pydantic", "argparse", "typed", "validation"]
 include = ["LICENSE.md"]
 
@@ -32,9 +32,9 @@ mkdocs-literate-nav = "^0.6.0"
 mkdocs-autorefs = "^0.4.1"
 
 [tool.poe.tasks]
-test = "pytest tests --cov=pydantic_argparse"
-type = "mypy tests docs pydantic_argparse"
-lint = "ruff tests docs pydantic_argparse"
+test = "pytest tests --cov=pydantic_args"
+type = "mypy tests docs pydantic_args"
+lint = "ruff tests docs pydantic_args"
 clean = "rm -rf **/.coverage **/.mypy_cache **/.pytest_cache **/.ruff_cache **/__pycache__"
 build = "poetry build"
 publish = "poetry publish"

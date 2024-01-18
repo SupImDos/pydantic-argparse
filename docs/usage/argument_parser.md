@@ -1,16 +1,16 @@
 ## Overview
-The interface for `pydantic-argparse` is the custom typed
-[`ArgumentParser`][pydantic_argparse.argparse.parser.ArgumentParser] class,
+The interface for `pydantic-args` is the custom typed
+[`ArgumentParser`][pydantic_args.argparse.parser.ArgumentParser] class,
 which provides declarative, typed argument parsing.
 
 This `ArgumentParser` class presents a very *similar* interface to the `python`
-standard library `argparse.ArgumentParser`, in an attempt to provide as close
+standard library `argsparse.ArgumentParser`, in an attempt to provide as close
 to a drop-in-replacement as possible.
 
 ## Parser Instantiation
 To create an instance of the `ArgumentParser`:
 ```python
-parser = pydantic_argparse.ArgumentParser(
+parser = pydantic_args.ArgumentParser(
     model=Arguments,
     prog="Program Name",
     description="Program Description",

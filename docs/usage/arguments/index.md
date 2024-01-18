@@ -1,12 +1,12 @@
 ## Overview
-At the core of `pydantic-argparse` is the `pydantic` *model*, in which
+At the core of `pydantic-args` is the `pydantic` *model*, in which
 arguments are declared with `pydantic` *fields*. This combination of the
 *model* and its *fields* defines the *schema* for your command-line arguments.
 
 ## Pydantic
 ### Models
 A `pydantic` model is simply a *dataclass-like* class that inherits from the
-`pydantic.BaseModel` base class. In `pydantic-argparse`, this model is used to
+`pydantic.BaseModel` base class. In `pydantic-args`, this model is used to
 declaratively define your command-line arguments.
 
 ```python
@@ -29,7 +29,7 @@ resultant model instance will conform to the field types defined on the model.
 
 ### Fields
 A `pydantic` model contains *fields*, which are the model class attributes.
-These fields define each `pydantic-argparse` command-line argument, and they
+These fields define each `pydantic-args` command-line argument, and they
 can be declared either *implicitly* (as above), or *explicitly* (as below).
 
 ```python
@@ -189,7 +189,7 @@ integer
     `pydantic` provides with its `pydantic.ValidationError`.
 
 ### Under the Hood
-Under the hood `pydantic-argparse` dynamically generates *extra* custom
+Under the hood `pydantic-args` dynamically generates *extra* custom
 `@pydantic.validator` class methods for each of your argument fields.
 
 These validators behave slightly differently for each argument type, but in
@@ -209,21 +209,21 @@ After the generated validators have been called, the fields are parsed as per
 usual by the built-in `pydantic` field validation for their respective types.
 
 !!! note
-    `pydantic-argparse` also enhances `pydantic`'s built-in
+    `pydantic-args` also enhances `pydantic`'s built-in
     [environment variable parsing][3] capabilities.
 
     By default, `pydantic` attempts to parse complex types as `json` values. If
     this parsing fails a `pydantic.env_settings.SettingsError` is raised and
     the argument parsing fails immediately with an obscure error message. This
-    means the values never reach the generated `pydantic-argparse` validators,
+    means the values never reach the generated `pydantic-args` validators,
     the user's custom validators or the built-in `pydantic` field validation.
 
-    As a solution, `pydantic-argparse` wraps the existing
+    As a solution, `pydantic-args` wraps the existing
     `pydantic.BaseSettings.parse_env_var()` environment variable parsing class
     method to handle this situation. The wrapped parser passes through raw
     `str` values *unchanged* if the `json` parsing fails. This allows the raw
     string values to be parsed, validated and handled by the generated
-    `pydantic-argparse` validators and the built-in `pydantic` field validators
+    `pydantic-args` validators and the built-in `pydantic` field validators
     if applicable.
 
 <!--- Reference -->

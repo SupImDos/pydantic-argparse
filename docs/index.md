@@ -1,52 +1,49 @@
 <div align="center">
-    <a href="https://pydantic-argparse.supimdos.com">
+    <a href="https://github.com/anastasds/pydantic-args">
         <img src="assets/images/logo.svg" width="50%">
     </a>
     <h1 style="margin-bottom:0;font-size:3em;">
-        Pydantic Argparse
+        Pydantic Args
     </h1>
     <p style="margin-top:0;">
         <em>Typed Argument Parsing with Pydantic</em>
     </p>
-    <a href="https://pypi.python.org/pypi/pydantic-argparse">
+    <a href="https://pypi.python.org/pypi/pydantic-args">
         <img src="https://img.shields.io/pypi/v/pydantic-argparse.svg">
     </a>
-    <a href="https://pepy.tech/project/pydantic-argparse">
-        <img src="https://pepy.tech/badge/pydantic-argparse">
-    </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse">
+    <a href="https://github.com/anastasds/pydantic-args">
         <img src="https://img.shields.io/pypi/pyversions/pydantic-argparse.svg">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/blob/master/LICENSE">
+    <a href="https://github.com/anastasds/pydantic-args/blob/master/LICENSE">
         <img src="https://img.shields.io/github/license/SupImDos/pydantic-argparse.svg">
     </a>
     <br>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/tests.yml">
+    <a href="https://github.com/anastasds/pydantic-args/actions/workflows/tests.yml">
         <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/tests.yml?label=tests">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/tests.yml">
-        <img src="https://img.shields.io/coveralls/github/SupImDos/pydantic-argparse">
+    <a href="https://github.com/anasasds/pydantic-args/actions/workflows/tests.yml">
+        <img src="https://img.shields.io/coveralls/github/anasasds/pydantic-args">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/linting.yml">
+    <a href="https://github.com/anasasds/pydantic-args/actions/workflows/linting.yml">
         <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/linting.yml?label=linting">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/typing.yml">
+    <a href="https://github.com/anasasds/pydantic-args/actions/workflows/typing.yml">
         <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/typing.yml?label=typing">
     </a>
 </div>
 ---
 
 ## Overview
-`pydantic-argparse` is a Python package built on top of [`pydantic`][1] which
+`pydantic-args` is a Python package built on top of [`pydantic`][1] which
 provides declarative *typed* argument parsing using `pydantic` models.
 
 ## Requirements
-`pydantic-argparse` requires Python 3.7+
+`pydantic-args` requires Python 3.7+
 
 ## Installation
 Installation with `pip` is simple:
 ```console
-$ pip install pydantic-argparse
+$ pip install pydantic-args
 ```
 
 ## Quick Start

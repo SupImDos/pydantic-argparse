@@ -66,9 +66,9 @@ def as_validator(
             return value
 
     # Rename the validator uniquely for this field to avoid any collisions. The
-    # leading `__` and prefix of `pydantic_argparse` should guard against any
+    # leading `__` and prefix of `pydantic_args` should guard against any
     # potential collisions with user defined validators.
-    __validator.__name__ = f"__pydantic_argparse_{field.name}"
+    __validator.__name__ = f"__pydantic_args_{field.name}"
 
     # Return the constructed validator
     return __validator

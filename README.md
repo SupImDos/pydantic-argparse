@@ -1,6 +1,6 @@
-<div align="center">
-    <a href="https://pydantic-argparse.supimdos.com">
-        <img src="https://raw.githubusercontent.com/SupImDos/pydantic-argparse/master/docs/assets/images/logo.svg" width="50%">
+e<div align="center">
+    <a href="https://pydantic-args.supimdos.com">
+        <img src="https://raw.githubusercontent.com/SupImDos/pydantic-args/master/docs/assets/images/logo.svg" width="50%">
     </a>
     <h1>
         Pydantic Argparse
@@ -8,46 +8,46 @@
     <p>
         <em>Typed Argument Parsing with Pydantic</em>
     </p>
-    <a href="https://pypi.python.org/pypi/pydantic-argparse">
-        <img src="https://img.shields.io/pypi/v/pydantic-argparse.svg">
+    <a href="https://pypi.python.org/pypi/pydantic-args">
+        <img src="https://img.shields.io/pypi/v/pydantic-args.svg">
     </a>
-    <a href="https://pepy.tech/project/pydantic-argparse">
-        <img src="https://pepy.tech/badge/pydantic-argparse">
+    <a href="https://pepy.tech/project/pydantic-args">
+        <img src="https://pepy.tech/badge/pydantic-args">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse">
-        <img src="https://img.shields.io/pypi/pyversions/pydantic-argparse.svg">
+    <a href="https://github.com/SupImDos/pydantic-args">
+        <img src="https://img.shields.io/pypi/pyversions/pydantic-args.svg">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/blob/master/LICENSE">
-        <img src="https://img.shields.io/github/license/SupImDos/pydantic-argparse.svg">
+    <a href="https://github.com/SupImDos/pydantic-args/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/SupImDos/pydantic-args.svg">
     </a>
     <br>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/tests.yml">
-        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/tests.yml?label=tests">
+    <a href="https://github.com/SupImDos/pydantic-args/actions/workflows/tests.yml">
+        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-args/tests.yml?label=tests">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/tests.yml">
-        <img src="https://img.shields.io/coveralls/github/SupImDos/pydantic-argparse">
+    <a href="https://github.com/SupImDos/pydantic-args/actions/workflows/tests.yml">
+        <img src="https://img.shields.io/coveralls/github/SupImDos/pydantic-args">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/linting.yml">
-        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/linting.yml?label=linting">
+    <a href="https://github.com/SupImDos/pydantic-args/actions/workflows/linting.yml">
+        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-args/linting.yml?label=linting">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/typing.yml">
-        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/typing.yml?label=typing">
+    <a href="https://github.com/SupImDos/pydantic-args/actions/workflows/typing.yml">
+        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-args/typing.yml?label=typing">
     </a>
 </div>
 
 ## Help
-See [documentation](https://pydantic-argparse.supimdos.com) for help.
+See [documentation](https://pydantic-args.supimdos.com) for help.
 
 ## Installation
 Installation with `pip` is simple:
 ```console
-$ pip install pydantic-argparse
+$ pip install pydantic-args
 ```
 
 ## Example
 ```py
 import pydantic
-import pydantic_argparse
+import pydantic_args
 
 
 class Arguments(pydantic.BaseModel):
@@ -63,7 +63,7 @@ class Arguments(pydantic.BaseModel):
 
 def main() -> None:
     # Create Parser and Parse Args
-    parser = pydantic_argparse.ArgumentParser(
+    parser = pydantic_args.ArgumentParser(
         model=Arguments,
         prog="Example Program",
         description="Example Description",
