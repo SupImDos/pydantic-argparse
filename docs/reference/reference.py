@@ -9,7 +9,7 @@ import mkdocs_gen_files
 
 
 # Configuration
-PACKAGE = pathlib.Path("pydantic_argparse")
+PACKAGE = pathlib.Path("src/pydantic_argparse")
 DOCS = pathlib.Path("reference")
 
 # Constants
@@ -37,6 +37,9 @@ def generate(package: pathlib.Path, docs: pathlib.Path) -> None:
 
     # Loop through regular files in the package
     for source in sorted(package.glob(PYTHON_GLOB)):
+        # Ensure file is relative to the parent directory
+        source = source.relative_to(package.parent)
+
         # Generate Reference
         reference = PREFIX_CODE + ".".join(source.with_suffix("").parts)
 

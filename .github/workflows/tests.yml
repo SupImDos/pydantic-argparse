@@ -15,8 +15,8 @@ jobs:
     name: Tests
     strategy:
       matrix:
-        os: [ "ubuntu-latest", "macos-latest", "windows-latest" ]
-        python-version: [ "3.7", "3.8", "3.9", "3.10", "3.11" ]
+        os: [ "ubuntu-latest", "macos-13", "windows-latest" ]
+        python-version: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
       fail-fast: false
     defaults:
       run:
@@ -25,26 +25,26 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Install Poetry
-        run: pipx install poetry
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          cache: poetry
-      - name: Install Dependencies
-        run: poetry install --no-interaction --no-root
-      - name: Install Package
-        run: poetry install --no-interaction
+          cache: pip
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+      - name: Install Hatch
+        run: pip install git+https://github.com/pypa/hatch.git@master
+      - name: Run Build Hooks
+        run: hatch build --hooks-only
       - name: Run Tests
-        run: |
-          poetry run poe test
-          poetry run coverage lcov
+        run: hatch run test && hatch run coverage xml
       - name: Coverage Results
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: coverage.lcov
           flag-name: ${{ matrix.os }}-${{ matrix.python-version }}
           parallel: true
 
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true

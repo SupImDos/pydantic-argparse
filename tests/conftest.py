@@ -11,7 +11,6 @@ import argparse
 import collections
 import datetime
 import enum
-import sys
 
 # Third-Party
 import pydantic
@@ -20,13 +19,7 @@ import pydantic
 from pydantic_argparse.argparse import actions
 
 # Typing
-from typing import Any, Deque, Dict, FrozenSet, List, Optional, Set, Tuple, Type
-
-# Version-Guarded
-if sys.version_info < (3, 8):  # pragma: <3.8 cover
-    from typing_extensions import Literal
-else:  # pragma: >=3.8 cover
-    from typing import Literal
+from typing import Any, Deque, Dict, FrozenSet, List, Literal, Optional, Set, Tuple, Type
 
 
 def create_test_model(
@@ -77,7 +70,7 @@ def create_test_field(
     # Construct Pydantic Field
     return pydantic.fields.ModelField.infer(
         name=name,
-        value=pydantic.Field(default, description=description),  # type: ignore[arg-type]
+        value=pydantic.Field(default, description=description),
         annotation=type,
         class_validators=None,
         config=pydantic.BaseConfig,
