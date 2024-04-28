@@ -25,18 +25,14 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+      - name: Install Hatch
+        run: pipx install hatch
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Setup UV
-        uses: yezz123/setup-uv@v4
-        with:
-          uv-venv: .venv
-      - name: Install Dependencies
-        run: uv pip install  -e . -r pyproject.toml --extra=dev --extra=docs
       - name: Run Tests
-        run: poe test
+        run: hatch run test
       - name: Coverage Results
         uses: coverallsapp/github-action@v2
         with:

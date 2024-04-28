@@ -33,36 +33,38 @@ Documentation = "https://pydantic-argparse.supimdos.com"
 Repository = "https://github.com/SupImDos/pydantic-argparse"
 Issues = "https://github.com/SupImDos/pydantic-argparse/issues"
 
-[project.optional-dependencies]
-dev = [
-    "poethepoet",
-    "ruff",
-    "mypy",
-    "pytest",
-    "pytest-cov",
-    "pytest-mock",
-    "covdefaults",
-    "build",
-    "hatch",
-]
-docs = [
-    "mkdocs-material",
-    "mkdocstrings[python-legacy]",
-    "mkdocs-gen-files",
-    "mkdocs-literate-nav",
-    "mkdocs-autorefs",
-]
-
 [tool.hatch]
 version.source = "vcs"
 build.hooks.vcs.version-file = "src/pydantic_argparse/__metadata__.py"
 build.targets.sdist.include = ["src/*", "LICENSE"]
 
-[tool.poe.tasks]
-test = "pytest tests --cov=src"
-type = "mypy tests docs src"
+[tool.hatch.envs.default]
+installer = "uv"
+dependencies = [
+    # Linting
+    "ruff",
+    # Typing
+    "mypy",
+    # Tests
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+    "covdefaults",
+    # Docs
+    "mkdocs-material",
+    "mkdocstrings[python-legacy]",
+    "mkdocs-gen-files",
+    "mkdocs-literate-nav",
+    "mkdocs-autorefs",
+    # Build
+    "build",
+    "hatch",
+]
+
+[tool.hatch.envs.default.scripts]
 lint = "ruff check tests docs src"
-clean = "rm -rf **/.coverage **/.mypy_cache **/.pytest_cache **/.ruff_cache **/__pycache__"
+type = "mypy tests docs src"
+test = "pytest tests --cov=src"
 build = "hatch build"
 publish = "hatch publish"
 docs-serve = "mkdocs serve"
