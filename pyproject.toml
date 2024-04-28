@@ -27,11 +27,17 @@ classifiers = [
 keywords = ["python", "pydantic", "argparse", "typed", "validation"]
 dynamic = ["version"]
 
+[project.urls]
+Homepage = "https://pydantic-argparse.supimdos.com"
+Documentation = "https://pydantic-argparse.supimdos.com"
+Repository = "https://github.com/SupImDos/pydantic-argparse"
+Issues = "https://github.com/SupImDos/pydantic-argparse/issues"
+
 [project.optional-dependencies]
 dev = [
     "poethepoet",
-    "mypy",
     "ruff",
+    "mypy",
     "pytest",
     "pytest-cov",
     "pytest-mock",
@@ -47,12 +53,6 @@ docs = [
     "mkdocs-autorefs",
 ]
 
-[project.urls]
-Homepage = "https://pydantic-argparse.supimdos.com"
-Documentation = "https://pydantic-argparse.supimdos.com"
-Repository = "https://github.com/SupImDos/pydantic-argparse"
-Issues = "https://github.com/SupImDos/pydantic-argparse/issues"
-
 [tool.hatch]
 version.source = "vcs"
 build.hooks.vcs.version-file = "src/pydantic_argparse/__metadata__.py"
@@ -67,9 +67,6 @@ build = "hatch build"
 publish = "hatch publish"
 docs-serve = "mkdocs serve"
 docs-publish = "mkdocs gh-deploy --force"
-
-[tool.coverage.run]
-plugins = ["covdefaults"]
 
 [tool.ruff]
 line-length = 120
@@ -107,3 +104,6 @@ plugins = ["pydantic.mypy"]
 init_forbid_extra = true
 init_typed = true
 warn_required_dynamic_aliases = true
+
+[tool.coverage.run]
+plugins = ["covdefaults"]
