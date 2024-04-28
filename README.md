@@ -6,7 +6,7 @@
         Pydantic Argparse
     </h1>
     <p>
-        <em>Typed Argument Parsing with Pydantic</em>
+        <em>Typed argument parsing with Pydantic</em>
     </p>
     <a href="https://pypi.python.org/pypi/pydantic-argparse">
         <img src="https://img.shields.io/pypi/v/pydantic-argparse.svg">
