@@ -17,16 +17,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Install Poetry
-        run: pipx install poetry
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
-          cache: poetry
+          python-version: "3.12"
+      - name: Setup UV
+        uses: yezz123/setup-uv@v4
+        with:
+          uv-venv: .venv
       - name: Install Dependencies
-        run: poetry install --no-interaction --no-root
-      - name: Install Package
-        run: poetry install --no-interaction
+        run: uv pip install  -e . -r pyproject.toml --extra=dev build
       - name: Run Linting
-        run: poetry run poe lint
+        run: poe lint
