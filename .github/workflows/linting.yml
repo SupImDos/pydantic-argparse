@@ -28,5 +28,7 @@ jobs:
           key: venv-${{ runner.os }}-3.12-${{ hashFiles('pyproject.toml') }}
       - name: Install Hatch
         run: pip install hatch
+      - name: Run Build Hooks
+        run: hatch build --hooks-only
       - name: Run Linting
         run: hatch run lint
