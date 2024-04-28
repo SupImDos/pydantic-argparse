@@ -5,8 +5,8 @@ converting `argparse.Namespace`s to regular Python `dict`s.
 """
 
 
-# Standard
-import argparse
+# Local
+from pydantic_argparse.compatibility import argparse
 
 # Typing
 from typing import Any, Dict

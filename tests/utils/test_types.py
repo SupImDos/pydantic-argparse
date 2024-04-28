@@ -11,11 +11,11 @@ import collections.abc
 import enum
 
 # Third-Party
-import pydantic.v1 as pydantic
 import pytest
 
 # Local
 from pydantic_argparse import utils
+from pydantic_argparse.compatibility import pydantic
 from tests import conftest as conf
 
 # Typing

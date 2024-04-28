@@ -7,16 +7,14 @@ package without needing to import them.
 
 
 # Standard
-import argparse
 import collections
 import datetime
 import enum
 
-# Third-Party
-import pydantic.v1 as pydantic
-
 # Local
 from pydantic_argparse.argparse import actions
+from pydantic_argparse.compatibility import argparse
+from pydantic_argparse.compatibility import pydantic
 
 # Typing
 from typing import Any, Deque, Dict, FrozenSet, List, Literal, Optional, Set, Tuple, Type

@@ -102,7 +102,7 @@ warn_return_any = true
 warn_unused_ignores = true
 no_implicit_optional = true
 show_error_codes = true
-plugins = ["pydantic.mypy"]
+plugins = ["pydantic.v1.mypy"]
 
 [tool.pydantic-mypy]
 init_forbid_extra = true

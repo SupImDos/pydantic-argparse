@@ -7,19 +7,19 @@ class by testing a large number of expected use-cases.
 
 
 # Standard
-import argparse
 import collections as coll
 import datetime as dt
 import re
 import textwrap
 
 # Third-Party
-import pydantic.v1 as pydantic
 import pytest
 
 # Local
 import pydantic_argparse
-import tests.conftest as conf
+from pydantic_argparse.compatibility import argparse
+from pydantic_argparse.compatibility import pydantic
+from tests import conftest as conf
 
 # Typing
 from typing import Deque, Dict, FrozenSet, List, Literal, Optional, Set, Tuple, Type, TypeVar

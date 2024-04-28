@@ -10,8 +10,8 @@ dynamically generated validators and environment variable parsers.
 # Standard
 import contextlib
 
-# Third-Party
-import pydantic.v1 as pydantic
+# Local
+from pydantic_argparse.compatibility import pydantic
 
 # Typing
 from typing import Any, Callable, Dict, Optional, Type, TypeVar, Union

@@ -5,8 +5,8 @@ names and formatting argument descriptions.
 """
 
 
-# Third-Party
-import pydantic.v1 as pydantic
+# Local
+from pydantic_argparse.compatibility import pydantic
 
 
 def name(field: pydantic.fields.ModelField, invert: bool = False) -> str:

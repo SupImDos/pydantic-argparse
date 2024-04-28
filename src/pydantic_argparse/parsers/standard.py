@@ -9,17 +9,13 @@ that do not match any other types and require no special handling are parsed.
 """
 
 
-# Standard
-import argparse
-
-# Third-Party
-import pydantic.v1 as pydantic
-
 # Typing
 from typing import Optional
 
 # Local
 from pydantic_argparse import utils
+from pydantic_argparse.compatibility import argparse
+from pydantic_argparse.compatibility import pydantic
 
 
 def parse_field(
