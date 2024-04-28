@@ -36,14 +36,11 @@ jobs:
       - name: Install Dependencies
         run: uv pip install  -e . -r pyproject.toml --extra=dev --extra=docs
       - name: Run Tests
-        run: |
-          poe test
-          coverage lcov
+        run: poe test
       - name: Coverage Results
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: coverage.lcov
           flag-name: ${{ matrix.os }}-${{ matrix.python-version }}
           parallel: true
 
@@ -53,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
