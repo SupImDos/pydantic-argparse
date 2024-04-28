@@ -40,6 +40,7 @@ build.targets.sdist.include = ["src/*", "LICENSE"]
 
 [tool.hatch.envs.default]
 installer = "uv"
+path = ".venv"
 dependencies = [
     # Linting
     "ruff",
