@@ -30,6 +30,7 @@ dynamic = ["version"]
 [project.urls]
 Homepage = "https://pydantic-argparse.supimdos.com"
 Documentation = "https://pydantic-argparse.supimdos.com"
+Changelog = "https://github.com/SupImDos/pydantic-argparse/blob/master/CHANGELOG.md"
 Repository = "https://github.com/SupImDos/pydantic-argparse"
 Issues = "https://github.com/SupImDos/pydantic-argparse/issues"
 
