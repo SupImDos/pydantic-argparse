@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pydantic-argparse"
-description = "Typed argument parsing with Pydantic"
+description = "Typed Argument Parsing with Pydantic"
 authors = [{ name = "Hayden Richards", email = "supimdos@gmail.com" }]
 readme = "README.md"
 license = { file = "LICENSE" }
