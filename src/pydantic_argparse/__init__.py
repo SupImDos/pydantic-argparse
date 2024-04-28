@@ -10,4 +10,7 @@ The public interface exposed by this package is the declarative and typed
 
 # Local
 from pydantic_argparse.argparse import ArgumentParser as ArgumentParser
-from pydantic_argparse.__metadata__ import *  # noqa: F403
+from pydantic_argparse.__metadata__ import __version__ as __version__
+from pydantic_argparse.__metadata__ import __version_tuple__ as __version_tuple__
+from pydantic_argparse.__metadata__ import version as version
+from pydantic_argparse.__metadata__ import version_tuple as version_tuple
