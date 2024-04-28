@@ -12,7 +12,7 @@ import contextlib
 
 # Third-Party
 try:  # pragma: no cover
-    import pydantic
+    import pydantic.v1 as pydantic
 except ImportError:  # pragma: no cover
     import pydantic  # type: ignore[no-redef]
 
