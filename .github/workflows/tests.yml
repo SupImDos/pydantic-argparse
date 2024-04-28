@@ -17,7 +17,7 @@ jobs:
       matrix:
         os: [ "ubuntu-latest", "macos-13", "windows-latest" ]
         python-version: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
-        pydantic-version: [ "pydantic>=1,<2", "pydantic>=2,<3" ]
+        pydantic-version: [ "pydantic~=1.0", "pydantic~=2.0" ]
       fail-fast: false
     defaults:
       run:
