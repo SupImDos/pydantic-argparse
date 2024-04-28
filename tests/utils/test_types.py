@@ -9,7 +9,6 @@ all branches of all functions.
 import collections
 import collections.abc
 import enum
-import sys
 
 # Third-Party
 import pydantic
@@ -20,13 +19,7 @@ from pydantic_argparse import utils
 from tests import conftest as conf
 
 # Typing
-from typing import Any, Deque, Dict, FrozenSet, List, Set, Tuple
-
-# Version-Guarded
-if sys.version_info < (3, 8):  # pragma: <3.8 cover
-    from typing_extensions import Literal
-else:  # pragma: >=3.8 cover
-    from typing import Literal
+from typing import Any, Deque, Dict, FrozenSet, List, Literal, Set, Tuple
 
 
 @pytest.mark.parametrize(

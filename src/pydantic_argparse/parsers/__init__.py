@@ -8,10 +8,10 @@ each contain the `should_parse()` and `parse_field()` functions.
 """
 
 # Local
-from pydantic_argparse.parsers import boolean
-from pydantic_argparse.parsers import command
-from pydantic_argparse.parsers import container
-from pydantic_argparse.parsers import enum
-from pydantic_argparse.parsers import literal
-from pydantic_argparse.parsers import mapping
-from pydantic_argparse.parsers import standard
+from pydantic_argparse.parsers import boolean as boolean
+from pydantic_argparse.parsers import command as command
+from pydantic_argparse.parsers import container as container
+from pydantic_argparse.parsers import enum as enum
+from pydantic_argparse.parsers import literal as literal
+from pydantic_argparse.parsers import mapping as mapping
+from pydantic_argparse.parsers import standard as standard

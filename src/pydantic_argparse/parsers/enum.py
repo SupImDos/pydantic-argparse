@@ -63,7 +63,7 @@ def parse_field(
     const = (
         {} if not is_flag
         else {"const": None} if is_inverted
-        else {"const": list(enum_type)[0]}
+        else {"const": next(iter(enum_type))}  # type: ignore[dict-item]
     )
 
     # Add Enum Field

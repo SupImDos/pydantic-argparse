@@ -10,7 +10,6 @@ import argparse
 import collections as coll
 import datetime as dt
 import os
-import sys
 
 # Third-Party
 import pytest
@@ -21,13 +20,7 @@ import pydantic_argparse
 import tests.conftest as conf
 
 # Typing
-from typing import Deque, Dict, FrozenSet, List, Optional, Set, Tuple, Type, TypeVar
-
-# Version-Guarded
-if sys.version_info < (3, 8):  # pragma: <3.8 cover
-    from typing_extensions import Literal
-else:  # pragma: >=3.8 cover
-    from typing import Literal
+from typing import Deque, Dict, FrozenSet, List, Literal, Optional, Set, Tuple, Type, TypeVar
 
 
 # Constants

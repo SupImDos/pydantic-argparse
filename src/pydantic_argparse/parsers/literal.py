@@ -9,7 +9,6 @@ command-line arguments.
 
 # Standard
 import argparse
-import sys
 
 # Third-Party
 import pydantic
@@ -18,13 +17,7 @@ import pydantic
 from pydantic_argparse import utils
 
 # Typing
-from typing import Optional
-
-# Version-Guarded
-if sys.version_info < (3, 8):  # pragma: <3.8 cover
-    from typing_extensions import Literal, get_args
-else:  # pragma: >=3.8 cover
-    from typing import Literal, get_args
+from typing import Optional, Literal, get_args
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:

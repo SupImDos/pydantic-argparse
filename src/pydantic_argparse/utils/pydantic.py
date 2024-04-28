@@ -95,7 +95,7 @@ def model_with_validators(
 ) -> Type[PydanticModelT]:
     """Generates a new `pydantic` model class with the supplied validators.
 
-    If the supplied base model is a subclass of `pydantic.BaseSettings`, then 
+    If the supplied base model is a subclass of `pydantic.BaseSettings`, then
     the newly generated model will also have a new `parse_env_var` classmethod
     monkeypatched onto it that suppresses any exceptions raised when initially
     parsing the environment variables. This allows the raw values to still be
@@ -130,7 +130,7 @@ def model_with_validators(
             return raw_val
 
         # Monkeypatch `parse_env_var`
-        model.__config__.parse_env_var = __parse_env_var  # type: ignore[assignment]
+        model.__config__.parse_env_var = __parse_env_var  # type: ignore[method-assign]
 
     # Return Constructed Model
     return model

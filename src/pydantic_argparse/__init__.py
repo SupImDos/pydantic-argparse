@@ -9,20 +9,5 @@ The public interface exposed by this package is the declarative and typed
 """
 
 # Local
-from pydantic_argparse.argparse import ArgumentParser
-from pydantic_argparse.__metadata__ import __title__
-from pydantic_argparse.__metadata__ import __description__
-from pydantic_argparse.__metadata__ import __version__
-from pydantic_argparse.__metadata__ import __author__
-from pydantic_argparse.__metadata__ import __license__
-
-
-# Public Re-Exports
-__all__ = (
-    "ArgumentParser",
-    "__title__",
-    "__description__",
-    "__version__",
-    "__author__",
-    "__license__",
-)
+from pydantic_argparse.argparse import ArgumentParser as ArgumentParser
+from pydantic_argparse.__metadata__ import *  # noqa: F403

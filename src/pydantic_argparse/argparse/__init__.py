@@ -10,9 +10,4 @@ argument parsing.
 """
 
 # Local
-from pydantic_argparse.argparse.parser import ArgumentParser
-
-# Public Re-Exports
-__all__ = (
-    "ArgumentParser",
-)
+from pydantic_argparse.argparse.parser import ArgumentParser as ArgumentParser
