@@ -28,8 +28,24 @@ keywords = ["python", "pydantic", "argparse", "typed", "validation"]
 dynamic = ["version"]
 
 [project.optional-dependencies]
-dev = ["poethepoet", "mypy", "ruff", "pytest", "pytest-cov", "pytest-mock", "covdefaults", "build", "hatch"]
-docs = ["mkdocs-material", "mkdocstrings[python-legacy]", "mkdocs-gen-files", "mkdocs-literate-nav", "mkdocs-autorefs"]
+dev = [
+    "poethepoet",
+    "mypy",
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+    "covdefaults",
+    "build",
+    "hatch",
+]
+docs = [
+    "mkdocs-material",
+    "mkdocstrings[python-legacy]",
+    "mkdocs-gen-files",
+    "mkdocs-literate-nav",
+    "mkdocs-autorefs",
+]
 
 [project.urls]
 Homepage = "https://pydantic-argparse.supimdos.com"
