@@ -1,7 +1,7 @@
 """Monkey patches for ArgumentParser.
 
-In order to support Python 3.7 and 3.8 while retaining the unit tests, we need
-to backport the bugfix for [`BPO-29298`](https://bugs.python.org/issue29298).
+In order to support Python 3.8 while retaining the unit tests, we need to
+backport the bugfix for [`BPO-29298`](https://bugs.python.org/issue29298).
 """
 
 
@@ -16,7 +16,7 @@ from typing import Optional
 # In Python versions before 3.9, using argparse with required subparsers will
 # cause an unhelpful `TypeError` if the 'dest' parameter is not explicitly
 # specified, and no arguments are provided. This bug was fixed in 3.11 and
-# backported to 3.10 and 3.9. Here, we backport it to 3.7 and 3.8 as well, via
+# backported to 3.10 and 3.9. Here, we backport it to 3.8 as well, via
 # monkey-patching.
 # See: https://github.com/python/cpython/blob/v3.11.1/Lib/argparse.py#L739-L751
 if sys.version_info < (3, 9):  # pragma: <3.9 cover

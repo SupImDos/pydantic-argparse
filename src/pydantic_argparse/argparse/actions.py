@@ -130,8 +130,8 @@ class BooleanOptionalAction(argparse.Action):  # pragma: no cover
 
     This action was added into the Python standard library `argparse` module
     in [`BPO-8538`](https://bugs.python.org/issue8538) and is available in
-    Python 3.9 and above. In order to support Python 3.7 and 3.8 we directly
-    backport the class and make it available here.
+    Python 3.9 and above. In order to support Python 3.8 we directly backport
+    the class and make it available here.
 
     Source:
     <https://github.com/python/cpython/blob/v3.11.0/Lib/argparse.py#L878-L914>

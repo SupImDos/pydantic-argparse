@@ -41,7 +41,7 @@
 provides declarative *typed* argument parsing using `pydantic` models.
 
 ## Requirements
-`pydantic-argparse` requires Python 3.7+
+`pydantic-argparse` requires Python 3.8+
 
 ## Installation
 Installation with `pip` is simple:
