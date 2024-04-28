@@ -13,7 +13,10 @@ import datetime
 import enum
 
 # Third-Party
-import pydantic
+try:  # pragma: no cover
+    import pydantic.v1 as pydantic
+except ImportError:  # pragma: no cover
+    import pydantic  # type: ignore[no-redef]
 
 # Local
 from pydantic_argparse.argparse import actions

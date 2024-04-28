@@ -9,7 +9,7 @@ authors = [{ name = "Hayden Richards", email = "supimdos@gmail.com" }]
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.8"
-dependencies = ["pydantic<2"]
+dependencies = ["pydantic"]
 classifiers = [
     "Development Status :: 4 - Beta",
     'Programming Language :: Python',

@@ -11,7 +11,10 @@ dynamically generated validators and environment variable parsers.
 import contextlib
 
 # Third-Party
-import pydantic
+try:  # pragma: no cover
+    import pydantic.v1 as pydantic
+except ImportError:  # pragma: no cover
+    import pydantic  # type: ignore[no-redef]
 
 # Typing
 from typing import Any, Callable, Dict, Optional, Type, TypeVar, Union
