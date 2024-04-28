@@ -39,7 +39,7 @@ jobs:
       - name: Install Hatch
         run: pip install git+https://github.com/pypa/hatch.git@master
       - name: Install Pydantic
-        run: pip install {{ matrix.pydantic-version }}
+        run: pip install ${{ matrix.pydantic-version }}
       - name: Run Build Hooks
         run: hatch build --hooks-only
       - name: Run Tests
