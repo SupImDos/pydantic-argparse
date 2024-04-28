@@ -26,6 +26,6 @@ jobs:
         with:
           uv-venv: .venv
       - name: Install Dependencies
-        run: uv pip install  -e . -r pyproject.toml --extra=dev build
+        run: uv pip install  -e . -r pyproject.toml --extra=dev --extra=docs
       - name: Run Type Checking
         run: poe type
