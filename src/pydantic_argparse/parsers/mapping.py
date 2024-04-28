@@ -14,7 +14,7 @@ import collections.abc
 
 # Third-Party
 try:  # pragma: no cover
-    import pydantic.v1 as pydantic
+    import pydantic
 except ImportError:  # pragma: no cover
     import pydantic  # type: ignore[no-redef]
 
