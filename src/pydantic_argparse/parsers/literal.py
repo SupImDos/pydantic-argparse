@@ -11,10 +11,7 @@ command-line arguments.
 import argparse
 
 # Third-Party
-try:  # pragma: no cover
-    import pydantic.v1 as pydantic
-except ImportError:  # pragma: no cover
-    import pydantic  # type: ignore[no-redef]
+import pydantic.v1 as pydantic
 
 # Local
 from pydantic_argparse import utils

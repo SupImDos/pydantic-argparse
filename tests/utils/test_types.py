@@ -11,10 +11,7 @@ import collections.abc
 import enum
 
 # Third-Party
-try:  # pragma: no cover
-    import pydantic.v1 as pydantic
-except ImportError:  # pragma: no cover
-    import pydantic  # type: ignore[no-redef]
+import pydantic.v1 as pydantic
 import pytest
 
 # Local
