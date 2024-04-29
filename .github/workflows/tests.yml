@@ -17,7 +17,7 @@ jobs:
       matrix:
         os: [ "ubuntu-latest", "macos-13", "windows-latest" ]
         python-version: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
-        pydantic-version: [ "pydantic~=1.0", "pydantic~=2.0" ]
+        pydantic-version: [ "1.0", "2.0" ]
       fail-fast: false
     defaults:
       run:
@@ -39,7 +39,7 @@ jobs:
       - name: Install Hatch
         run: pip install git+https://github.com/pypa/hatch.git@master
       - name: Install Pydantic
-        run: hatch run uv pip install ${{ matrix.pydantic-version }}
+        run: hatch run uv pip install pydantic~=${{ matrix.pydantic-version }}
       - name: Run Build Hooks
         run: hatch build --hooks-only
       - name: Run Tests
