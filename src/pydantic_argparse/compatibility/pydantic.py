@@ -15,5 +15,11 @@ import the module correctly:
 try:  # pragma: no cover
     from pydantic import v1 as pydantic
     pydantic.fields  # noqa: B018
+    # Test
+    import pydantic  # type: ignore[no-redef]
+    assert pydantic.__version__.startswith("2")
+    from pydantic import v1 as pydantic
 except (ImportError, AttributeError):  # pragma: no cover
     import pydantic  # type: ignore[no-redef]
+    # Test
+    assert pydantic.__version__.startswith("1")
