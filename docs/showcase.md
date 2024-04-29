@@ -7,7 +7,7 @@ The `pydantic-argparse` command-line interface construction is simple.
 
 === "Pydantic Argparse"
     ```python
-    import pydantic
+    import pydantic.v1 as pydantic
     import pydantic_argparse
 
     # Declare Arguments

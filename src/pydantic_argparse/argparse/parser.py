@@ -16,17 +16,14 @@ be compatible with an IDE, linter or type checker.
 
 
 # Standard
-import argparse
 import sys
-
-# Third-Party
-import pydantic
 
 # Local
 from pydantic_argparse import parsers
 from pydantic_argparse import utils
 from pydantic_argparse.argparse import actions
-from pydantic_argparse.argparse import patches  # noqa: F401
+from pydantic_argparse.compatibility import argparse
+from pydantic_argparse.compatibility import pydantic
 
 # Typing
 from typing import Any, Dict, Generic, List, NoReturn, Optional, Type, TypeVar

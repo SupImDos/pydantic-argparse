@@ -5,11 +5,9 @@ testing all branches of all functions.
 """
 
 
-# Standard
-import argparse
-
 # Local
 from pydantic_argparse import utils
+from pydantic_argparse.compatibility import argparse
 
 
 def test_namespace_to_dict() -> None:

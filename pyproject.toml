@@ -9,7 +9,7 @@ authors = [{ name = "Hayden Richards", email = "supimdos@gmail.com" }]
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.8"
-dependencies = ["pydantic<2"]
+dependencies = ["pydantic"]
 classifiers = [
     "Development Status :: 4 - Beta",
     'Programming Language :: Python',
@@ -102,7 +102,7 @@ warn_return_any = true
 warn_unused_ignores = true
 no_implicit_optional = true
 show_error_codes = true
-plugins = ["pydantic.mypy"]
+plugins = ["pydantic.v1.mypy"]
 
 [tool.pydantic-mypy]
 init_forbid_extra = true

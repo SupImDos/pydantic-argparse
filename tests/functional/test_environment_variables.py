@@ -6,7 +6,6 @@ environment variable parsing capabilities.
 
 
 # Standard
-import argparse
 import collections as coll
 import datetime as dt
 import os
@@ -17,7 +16,8 @@ import pytest_mock
 
 # Local
 import pydantic_argparse
-import tests.conftest as conf
+from pydantic_argparse.compatibility import argparse
+from tests import conftest as conf
 
 # Typing
 from typing import Deque, Dict, FrozenSet, List, Literal, Optional, Set, Tuple, Type, TypeVar

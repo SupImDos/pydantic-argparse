@@ -1,4 +1,4 @@
-"""Monkey patches for ArgumentParser.
+"""Compatibility Shim for ArgumentParser.
 
 In order to support Python 3.8 while retaining the unit tests, we need to
 backport the bugfix for [`BPO-29298`](https://bugs.python.org/issue29298).

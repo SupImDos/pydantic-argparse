@@ -6,14 +6,12 @@ class by testing the expected nested namespace functionality.
 """
 
 
-# Standard
-import argparse
-
 # Third-Party
 import pytest
 
 # Local
 from pydantic_argparse.argparse import actions
+from pydantic_argparse.compatibility import argparse
 from tests import conftest as conf
 
 

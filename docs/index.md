@@ -41,7 +41,8 @@
 provides declarative *typed* argument parsing using `pydantic` models.
 
 ## Requirements
-`pydantic-argparse` requires Python 3.8+
+`pydantic-argparse` requires Python 3.8+, and is compatible with the Pydantic
+v1 API.
 
 ## Installation
 Installation with `pip` is simple:

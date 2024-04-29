@@ -5,8 +5,8 @@ comparing the types of `pydantic fields.
 """
 
 
-# Third-Party
-import pydantic
+# Local
+from pydantic_argparse.compatibility import pydantic
 
 # Typing
 from typing import Any, Tuple, Union, get_origin

@@ -17,6 +17,7 @@ jobs:
       matrix:
         os: [ "ubuntu-latest", "macos-13", "windows-latest" ]
         python-version: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
+        pydantic-version: [ "1.0", "2.0" ]
       fail-fast: false
     defaults:
       run:
@@ -34,9 +35,11 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .venv
-          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}-${{ hashFiles('pyproject.toml') }}
       - name: Install Hatch
         run: pip install git+https://github.com/pypa/hatch.git@master
+      - name: Install Pydantic
+        run: hatch run uv pip install pydantic~=${{ matrix.pydantic-version }}
       - name: Run Build Hooks
         run: hatch build --hooks-only
       - name: Run Tests
@@ -45,7 +48,7 @@ jobs:
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: ${{ matrix.os }}-${{ matrix.python-version }}
+          flag-name: ${{ matrix.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}
           parallel: true
 
   coverage:

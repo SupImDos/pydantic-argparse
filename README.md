@@ -38,6 +38,9 @@
 ## Help
 See [documentation](https://pydantic-argparse.supimdos.com) for help.
 
+## Requirements
+Requires Python 3.8+, and is compatible with the Pydantic v1 API.
+
 ## Installation
 Installation with `pip` is simple:
 ```console
@@ -46,7 +49,7 @@ $ pip install pydantic-argparse
 
 ## Example
 ```py
-import pydantic
+import pydantic.v1 as pydantic
 import pydantic_argparse
 
 

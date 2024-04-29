@@ -8,18 +8,16 @@ whether this module should be used to parse the field, as well as the
 
 
 # Standard
-import argparse
 import collections.abc
 import enum
-
-# Third-Party
-import pydantic
 
 # Typing
 from typing import Optional
 
 # Local
 from pydantic_argparse import utils
+from pydantic_argparse.compatibility import argparse
+from pydantic_argparse.compatibility import pydantic
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:

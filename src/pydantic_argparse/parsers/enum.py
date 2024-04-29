@@ -8,14 +8,12 @@ command-line arguments.
 
 
 # Standard
-import argparse
 import enum
-
-# Third-Party
-import pydantic
 
 # Local
 from pydantic_argparse import utils
+from pydantic_argparse.compatibility import argparse
+from pydantic_argparse.compatibility import pydantic
 
 # Typing
 from typing import Optional, Type

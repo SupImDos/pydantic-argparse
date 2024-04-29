@@ -7,8 +7,8 @@ Python standard library `argparse` class of the same name.
 """
 
 
-# Standard
-import argparse
+# Local
+from pydantic_argparse.compatibility import argparse
 
 # Typing
 from typing import Any, Callable, Iterable, List, Optional, Sequence, Tuple, TypeVar, Union, cast

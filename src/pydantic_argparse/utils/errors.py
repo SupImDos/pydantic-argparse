@@ -5,8 +5,8 @@ Validation Errors to human readable messages.
 """
 
 
-# Third-Party
-import pydantic
+# Local
+from pydantic_argparse.compatibility import pydantic
 
 # Typing
 from typing import Union
