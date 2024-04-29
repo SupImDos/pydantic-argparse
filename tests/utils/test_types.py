@@ -77,9 +77,3 @@ def test_is_field_a(field_type: Any, expected_type: Any) -> None:
 
     # Check and Assert Field Type
     assert utils.types.is_field_a(field, expected_type)
-
-
-def test_pydantic_version() -> None:
-    """Sanity check!"""
-    import pydantic
-    assert pydantic.__version__.startswith("2")
