@@ -2,7 +2,7 @@
 
 
 # Third-Party
-import pydantic
+import pydantic.v1 as pydantic
 import pydantic_argparse
 
 

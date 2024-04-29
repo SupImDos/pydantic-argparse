@@ -2,6 +2,7 @@
 
 In order to support both Pydantic v1 and Pydantic v2, we need to make sure we
 import the module correctly:
+
 * For `pydantic~=2.0` there is a working `v1` module.
 * For `pydantic==1.10.15` there is a broken `v1` module (with no `fields`).
 * For `pydantic<1.10.14` there is no `v1` module.
