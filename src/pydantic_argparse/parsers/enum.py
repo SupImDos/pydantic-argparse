@@ -50,9 +50,7 @@ def parse_field(
     # Determine Argument Properties
     metavar = f"{{{', '.join(e.name for e in enum_type)}}}"
     action = argparse._StoreConstAction if is_flag else argparse._StoreAction
-    const = (
-        {} if not is_flag else {"const": None} if is_inverted else {"const": next(iter(enum_type))}  # type: ignore[dict-item]
-    )
+    const = {} if not is_flag else {"const": None} if is_inverted else {"const": next(iter(enum_type))}  # type: ignore
 
     # Add Enum Field
     parser.add_argument(
