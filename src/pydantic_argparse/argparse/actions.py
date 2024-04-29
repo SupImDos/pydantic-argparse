@@ -101,7 +101,8 @@ class SubParsersAction(argparse._SubParsersAction):
         except KeyError as exc:
             # Parser doesn't exist, raise an exception
             raise argparse.ArgumentError(
-                self, f"unknown parser {parser_name} (choices: {', '.join(self._name_parser_map)})"
+                self,
+                f"unknown parser {parser_name} (choices: {', '.join(self._name_parser_map)})",
             ) from exc
 
         # Parse all the remaining options into a sub-namespace, then embed this

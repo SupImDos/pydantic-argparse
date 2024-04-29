@@ -273,7 +273,10 @@ def test_valid_environment_variables(
     ],
 )
 @pytest.mark.parametrize(
-    ("exit_on_error", "error"),
+    (
+        "exit_on_error",
+        "error",
+    ),
     [
         (True, SystemExit),
         (False, argparse.ArgumentError),

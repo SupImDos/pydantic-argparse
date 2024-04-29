@@ -333,7 +333,10 @@ def test_valid_arguments(
     ],
 )
 @pytest.mark.parametrize(
-    ("exit_on_error", "error"),
+    (
+        "exit_on_error",
+        "error",
+    ),
     [
         (True, SystemExit),
         (False, argparse.ArgumentError),
