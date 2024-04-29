@@ -12,13 +12,13 @@
         <meta name="author" content="SupImDos">
       
       
-        <link rel="canonical" href="https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/argparse/">
+        <link rel="canonical" href="https://pydantic-argparse.supimdos.com/reference/pydantic_argparse/compatibility/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../argparse/parser/">
       
       
-        <link rel="next" href="actions/">
+        <link rel="next" href="argparse/">
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>argparse - Pydantic Argparse</title>
+        <title>compatibility - Pydantic Argparse</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#argparse" class="md-skip">
+        <a href="#compatibility" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              argparse
+              compatibility
             
           </span>
         </div>
@@ -774,8 +774,6 @@
                 
   
   
-    
-  
   
   
     
@@ -794,16 +792,16 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_2" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../argparse/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -814,13 +812,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_6_1_2" id="__nav_6_1_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_6_1_2" id="__nav_6_1_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6_1_2">
             <span class="md-nav__icon md-icon"></span>
             argparse
@@ -836,7 +834,7 @@
   
   
     <li class="md-nav__item">
-      <a href="actions/" class="md-nav__link">
+      <a href="../argparse/actions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -857,7 +855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="parser/" class="md-nav__link">
+      <a href="../argparse/parser/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -883,6 +881,8 @@
                 
   
   
+    
+  
   
   
     
@@ -901,16 +901,16 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_3" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../compatibility/" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   <span class="md-ellipsis">
@@ -921,13 +921,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_6_1_3" id="__nav_6_1_3_label" tabindex="0">
+              <label class="md-nav__link md-nav__link--active" for="__nav_6_1_3" id="__nav_6_1_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6_1_3">
             <span class="md-nav__icon md-icon"></span>
             compatibility
@@ -943,7 +943,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../compatibility/argparse/" class="md-nav__link">
+      <a href="argparse/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -964,7 +964,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../compatibility/pydantic/" class="md-nav__link">
+      <a href="pydantic/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1449,7 +1449,7 @@
                   
 
 
-<h1 id="argparse">argparse</h1>
+<h1 id="compatibility">compatibility</h1>
 <h2 id="__init__py">__init__.py</h2>
 
 
@@ -1458,13 +1458,10 @@
 
     <div class="doc doc-contents first">
 
-      <p>Declarative and Typed Argument Parsing.</p>
-<p>This package contains the classes and methods required for declarative and
-typed argument parsing.</p>
-<p>The public interface exposed by this package is the <code>ArgumentParser</code> class,
-which is intended to be a <em>near</em> drop-in replacement for the Python standard
-library <code>argparse.ArgumentParser</code> - while providing declarative and typed
-argument parsing.</p>
+      <p>Compatibiltity Shims for Declarative Typed Argument Parsing.</p>
+<p>This package contains compatibility shims for the <code>pydantic</code> and <code>argparse</code>
+modules, so that we can properly maintain version compatibility in one place.</p>
+<p>The public interface exposed by this package is the module shims themselves.</p>
 
 
     </div>
@@ -1505,7 +1502,7 @@ argument parsing.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: pydantic_argparse">
+          <a href="../argparse/parser/" class="md-footer__link md-footer__link--prev" aria-label="Previous: parser.py">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -1515,20 +1512,20 @@ argument parsing.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                pydantic_argparse
+                parser.py
               </div>
             </div>
           </a>
         
         
           
-          <a href="actions/" class="md-footer__link md-footer__link--next" aria-label="Next: actions.py">
+          <a href="argparse/" class="md-footer__link md-footer__link--next" aria-label="Next: argparse.py">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                actions.py
+                argparse.py
               </div>
             </div>
             <div class="md-footer__button md-icon">
