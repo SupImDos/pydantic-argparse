@@ -374,7 +374,7 @@ def test_help_message(capsys: pytest.CaptureFixture[str]) -> None:
     """Tests ArgumentParser Help Message.
 
     Args:
-        capsys (pytest.CaptureFixture[str]): Fixture to capture STDOUT/STDERR.
+        capsys (pytest.CaptureFixture[str]): Fixture to capture stdout/stderr.
     """
     # Construct Pydantic Model
     model = conf.create_test_model()
@@ -393,22 +393,21 @@ def test_help_message(capsys: pytest.CaptureFixture[str]) -> None:
         # Ask for Help
         parser.parse_typed_args(["--help"])
 
-    # Check STDOUT
-    captured = capsys.readouterr()
+    # Check stdout
     assert (
-        captured.out
+        capsys.readouterr().out
         == textwrap.dedent(
             """
-        usage: AA [-h] [-v]
+            usage: AA [-h] [-v]
 
-        BB
+            BB
 
-        help:
-          -h, --help     show this help message and exit
-          -v, --version  show program's version number and exit
+            help:
+              -h, --help     show this help message and exit
+              -v, --version  show program's version number and exit
 
-        DD
-        """
+            DD
+            """
         ).lstrip()
     )
 
@@ -417,7 +416,7 @@ def test_version_message(capsys: pytest.CaptureFixture[str]) -> None:
     """Tests ArgumentParser Version Message.
 
     Args:
-        capsys (pytest.CaptureFixture[str]): Fixture to capture STDOUT/STDERR.
+        capsys (pytest.CaptureFixture[str]): Fixture to capture stdout/stderr.
     """
     # Construct Pydantic Model
     model = conf.create_test_model()
@@ -436,16 +435,8 @@ def test_version_message(capsys: pytest.CaptureFixture[str]) -> None:
         # Ask for Version
         parser.parse_typed_args(["--version"])
 
-    # Check STDOUT
-    captured = capsys.readouterr()
-    assert (
-        captured.out
-        == textwrap.dedent(
-            """
-        CC
-        """
-        ).lstrip()
-    )
+    # Check stdout
+    assert capsys.readouterr().out == "CC\n"
 
 
 @pytest.mark.parametrize(
@@ -465,7 +456,7 @@ def test_argument_descriptions(
     Args:
         argument_name (str): Argument name.
         argument_field (pydantic.fields.ModelField): Argument pydantic field.
-        capsys (pytest.CaptureFixture[str]): Fixture to capture STDOUT/STDERR.
+        capsys (pytest.CaptureFixture[str]): Fixture to capture stdout/stderr.
     """
     # Create ArgumentParser
     parser = pydantic_argparse.ArgumentParser(conf.TestModel)
@@ -475,14 +466,11 @@ def test_argument_descriptions(
         # Ask for Help
         parser.parse_typed_args(["--help"])
 
-    # Capture STDOUT
-    captured = capsys.readouterr()
-
-    # Process STDOUT
+    # Process stdout
     # Capture all arguments below 'commands:'
     # Capture all arguments below 'required arguments:'
     # Capture all arguments below 'optional arguments:'
-    _, commands, required, optional, _ = re.split(r".+:\n", captured.out)
+    _, commands, required, optional, _ = re.split(r".+:\n", capsys.readouterr().out)
 
     # Check if Command, Required or Optional
     if isinstance(argument_field.outer_type_, pydantic.main.ModelMetaclass):
