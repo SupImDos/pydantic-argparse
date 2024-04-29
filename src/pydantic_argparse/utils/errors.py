@@ -4,13 +4,9 @@ The `errors` module contains a utility function used for formatting `pydantic`
 Validation Errors to human readable messages.
 """
 
-
-# Local
 from pydantic_argparse.compatibility import pydantic
 
-# Typing
 from typing import Union
-
 
 # Constants
 PydanticError = Union[pydantic.ValidationError, pydantic.env_settings.SettingsError]

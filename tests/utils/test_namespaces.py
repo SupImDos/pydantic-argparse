@@ -4,8 +4,6 @@ This module provides full unit test coverage for the `namespaces` module,
 testing all branches of all functions.
 """
 
-
-# Local
 from pydantic_argparse import utils
 from pydantic_argparse.compatibility import argparse
 
@@ -24,8 +22,8 @@ def test_namespace_to_dict() -> None:
                     g=5,
                     h="6",
                     i=7,
-                )
-            )
+                ),
+            ),
         )
     )
 
@@ -40,6 +38,6 @@ def test_namespace_to_dict() -> None:
                 "g": 5,
                 "h": "6",
                 "i": 7,
-            }
-        }
+            },
+        },
     }

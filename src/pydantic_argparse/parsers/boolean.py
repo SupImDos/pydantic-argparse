@@ -6,15 +6,11 @@ function, which parses boolean `pydantic` model fields to `ArgumentParser`
 command-line arguments.
 """
 
-
-# Typing
-from typing import Optional
-
-# Local
 from pydantic_argparse import utils
 from pydantic_argparse.argparse import actions
-from pydantic_argparse.compatibility import argparse
-from pydantic_argparse.compatibility import pydantic
+from pydantic_argparse.compatibility import argparse, pydantic
+
+from typing import Optional
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
@@ -48,8 +44,10 @@ def parse_field(
 
     # Determine Argument Properties
     action = (
-        actions.BooleanOptionalAction if field.required
-        else argparse._StoreFalseAction if is_inverted
+        actions.BooleanOptionalAction
+        if field.required
+        else argparse._StoreFalseAction
+        if is_inverted
         else argparse._StoreTrueAction
     )
 

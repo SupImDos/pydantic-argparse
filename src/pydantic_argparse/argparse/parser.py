@@ -14,20 +14,13 @@ The resultant arguments object returned is an instance of the defined
 be compatible with an IDE, linter or type checker.
 """
 
-
-# Standard
 import sys
 
-# Local
-from pydantic_argparse import parsers
-from pydantic_argparse import utils
+from pydantic_argparse import parsers, utils
 from pydantic_argparse.argparse import actions
-from pydantic_argparse.compatibility import argparse
-from pydantic_argparse.compatibility import pydantic
+from pydantic_argparse.compatibility import argparse, pydantic
 
-# Typing
 from typing import Any, Dict, Generic, List, NoReturn, Optional, Type, TypeVar
-
 
 # Constants
 PydanticModelT = TypeVar("PydanticModelT", bound=pydantic.BaseModel)

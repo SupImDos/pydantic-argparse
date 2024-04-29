@@ -6,18 +6,13 @@ function, which parses mapping `pydantic` model fields to `ArgumentParser`
 command-line arguments.
 """
 
-
-# Standard
 import ast
 import collections.abc
 
-# Typing
-from typing import Optional
-
-# Local
 from pydantic_argparse import utils
-from pydantic_argparse.compatibility import argparse
-from pydantic_argparse.compatibility import pydantic
+from pydantic_argparse.compatibility import argparse, pydantic
+
+from typing import Optional
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:

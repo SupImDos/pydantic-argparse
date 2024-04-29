@@ -4,11 +4,8 @@ The `namespaces` module contains a utility function used for recursively
 converting `argparse.Namespace`s to regular Python `dict`s.
 """
 
-
-# Local
 from pydantic_argparse.compatibility import argparse
 
-# Typing
 from typing import Any, Dict
 
 
@@ -25,7 +22,7 @@ def to_dict(namespace: argparse.Namespace) -> Dict[str, Any]:
     dictionary = vars(namespace)
 
     # Loop Through Dictionary
-    for (key, value) in dictionary.items():
+    for key, value in dictionary.items():
         # Check for Namespace Objects
         if isinstance(value, argparse.Namespace):
             # Recurse

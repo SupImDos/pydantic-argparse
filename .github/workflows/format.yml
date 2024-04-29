@@ -1,4 +1,4 @@
-name: Linting
+name: Format
 
 on:
   pull_request:
@@ -8,11 +8,11 @@ on:
     branches:
       - master
   schedule:
-    - cron: "0 0 * * 0"
+    - cron: 0 0 * * 0
 
 jobs:
-  linting:
-    name: Linting
+  format:
+    name: Format
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -31,5 +31,5 @@ jobs:
         run: pip install git+https://github.com/pypa/hatch.git@master
       - name: Run Build Hooks
         run: hatch build --hooks-only
-      - name: Run Linting
-        run: hatch run lint
+      - name: Run Format
+        run: hatch run format --check

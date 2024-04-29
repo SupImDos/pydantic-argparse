@@ -4,11 +4,8 @@ The `types` module contains a utility function used for determining and
 comparing the types of `pydantic fields.
 """
 
-
-# Local
 from pydantic_argparse.compatibility import pydantic
 
-# Typing
 from typing import Any, Tuple, Union, get_origin
 
 
@@ -36,7 +33,7 @@ def is_field_a(
     """
     # Create tuple if only one type was provided
     if not isinstance(types, tuple):
-        types = (types, )
+        types = (types,)
 
     # Get field type, or origin if applicable
     field_type = get_origin(field.outer_type_) or field.outer_type_

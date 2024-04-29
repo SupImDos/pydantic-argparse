@@ -10,7 +10,6 @@ The public interface exposed by this package is the various described utility
 modules each containing helper functions.
 """
 
-# Local
 from pydantic_argparse.utils import arguments as arguments
 from pydantic_argparse.utils import errors as errors
 from pydantic_argparse.utils import namespaces as namespaces

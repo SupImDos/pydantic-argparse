@@ -6,18 +6,13 @@ whether this module should be used to parse the field, as well as the
 `ArgumentParser` command-line arguments.
 """
 
-
-# Standard
 import collections.abc
 import enum
 
-# Typing
-from typing import Optional
-
-# Local
 from pydantic_argparse import utils
-from pydantic_argparse.compatibility import argparse
-from pydantic_argparse.compatibility import pydantic
+from pydantic_argparse.compatibility import argparse, pydantic
+
+from typing import Optional
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
@@ -30,9 +25,8 @@ def should_parse(field: pydantic.fields.ModelField) -> bool:
         bool: Whether the field should be parsed as a `container`.
     """
     # Check and Return
-    return (
-        utils.types.is_field_a(field, collections.abc.Container)
-        and not utils.types.is_field_a(field, (collections.abc.Mapping, enum.Enum, str, bytes))
+    return utils.types.is_field_a(field, collections.abc.Container) and not utils.types.is_field_a(
+        field, (collections.abc.Mapping, enum.Enum, str, bytes)
     )
 
 

@@ -1,12 +1,8 @@
 """Automatic Code Reference Documentation Generation."""
 
-
-# Standard
 import pathlib
 
-# Third-Party
 import mkdocs_gen_files
-
 
 # Configuration
 PACKAGE = pathlib.Path("src/pydantic_argparse")

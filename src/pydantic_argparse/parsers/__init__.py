@@ -7,7 +7,6 @@ The public interface exposed by this package is the `parsing` modules, which
 each contain the `should_parse()` and `parse_field()` functions.
 """
 
-# Local
 from pydantic_argparse.parsers import boolean as boolean
 from pydantic_argparse.parsers import command as command
 from pydantic_argparse.parsers import container as container

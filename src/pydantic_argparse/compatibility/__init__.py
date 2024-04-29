@@ -6,6 +6,5 @@ modules, so that we can properly maintain version compatibility in one place.
 The public interface exposed by this package is the module shims themselves.
 """
 
-# Local
 from pydantic_argparse.compatibility.argparse import argparse as argparse
 from pydantic_argparse.compatibility.pydantic import pydantic as pydantic

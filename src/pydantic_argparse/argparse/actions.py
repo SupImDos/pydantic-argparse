@@ -6,13 +6,9 @@ contains the `BooleanOptionalAction` class, which is a direct backport of the
 Python standard library `argparse` class of the same name.
 """
 
-
-# Local
 from pydantic_argparse.compatibility import argparse
 
-# Typing
 from typing import Any, Callable, Iterable, List, Optional, Sequence, Tuple, TypeVar, Union, cast
-
 
 # Constants
 T = TypeVar("T")
@@ -105,8 +101,7 @@ class SubParsersAction(argparse._SubParsersAction):
         except KeyError as exc:
             # Parser doesn't exist, raise an exception
             raise argparse.ArgumentError(
-                self,
-                f"unknown parser {parser_name} (choices: {', '.join(self._name_parser_map)})"
+                self, f"unknown parser {parser_name} (choices: {', '.join(self._name_parser_map)})"
             ) from exc
 
         # Parse all the remaining options into a sub-namespace, then embed this
@@ -136,6 +131,7 @@ class BooleanOptionalAction(argparse.Action):  # pragma: no cover
     Source:
     <https://github.com/python/cpython/blob/v3.11.0/Lib/argparse.py#L878-L914>
     """
+
     def __init__(
         self,
         option_strings: Sequence[str],
@@ -145,7 +141,7 @@ class BooleanOptionalAction(argparse.Action):  # pragma: no cover
         choices: Optional[Iterable[T]] = None,
         required: bool = False,
         help: Optional[str] = None,  # noqa: A002
-        metavar: Optional[Union[str, Tuple[str, ...]]] = None
+        metavar: Optional[Union[str, Tuple[str, ...]]] = None,
     ) -> None:
         """Instantiates the Boolean Optional Action.
 
@@ -199,7 +195,7 @@ class BooleanOptionalAction(argparse.Action):  # pragma: no cover
         parser: argparse.ArgumentParser,
         namespace: argparse.Namespace,
         values: Optional[Union[str, Sequence[Any]]],
-        option_string: Optional[str] = None
+        option_string: Optional[str] = None,
     ) -> None:
         """Parses the provided boolean arguments into a namespace.
 
