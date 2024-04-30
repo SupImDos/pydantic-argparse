@@ -7,7 +7,7 @@ name = "pydantic-argparse"
 description = "Typed Argument Parsing with Pydantic"
 authors = [{ name = "Hayden Richards", email = "supimdos@gmail.com" }]
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "MIT"
 requires-python = ">=3.8"
 dependencies = ["pydantic"]
 classifiers = [
