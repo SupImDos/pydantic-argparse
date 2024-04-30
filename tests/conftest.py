@@ -5,18 +5,13 @@ directory. Fixtures defined in a `conftest.py` can be used by any test in the
 package without needing to import them.
 """
 
-
-# Standard
 import collections
 import datetime
 import enum
 
-# Local
 from pydantic_argparse.argparse import actions
-from pydantic_argparse.compatibility import argparse
-from pydantic_argparse.compatibility import pydantic
+from pydantic_argparse.compatibility import argparse, pydantic
 
-# Typing
 from typing import Any, Deque, Dict, FrozenSet, List, Literal, Optional, Set, Tuple, Type
 
 
@@ -98,6 +93,7 @@ def create_test_subparser(
 
 class TestEnum(enum.Enum):
     """Test Enum for Testing."""
+
     A = enum.auto()
     B = enum.auto()
     C = enum.auto()
@@ -105,16 +101,19 @@ class TestEnum(enum.Enum):
 
 class TestEnumSingle(enum.Enum):
     """Test Enum with Single Member for Testing."""
+
     D = enum.auto()
 
 
 class TestCommand(pydantic.BaseModel):
     """Test Command Model for Testing."""
+
     flag: bool = pydantic.Field(False, description="flag")
 
 
 class TestCommands(pydantic.BaseModel):
     """Test Commands Model for Testing."""
+
     cmd_01: Optional[TestCommand] = pydantic.Field(None, description="cmd_01")
     cmd_02: Optional[TestCommand] = pydantic.Field(None, description="cmd_02")
     cmd_03: Optional[TestCommand] = pydantic.Field(None, description="cmd_03")
@@ -122,6 +121,7 @@ class TestCommands(pydantic.BaseModel):
 
 class TestModel(pydantic.BaseModel):
     """Test Model for Testing."""
+
     # Required Arguments
     arg_01: int = pydantic.Field(description="arg_01")
     arg_02: float = pydantic.Field(description="arg_02")

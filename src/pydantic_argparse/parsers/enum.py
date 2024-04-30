@@ -6,16 +6,11 @@ function, which parses enum `pydantic` model fields to `ArgumentParser`
 command-line arguments.
 """
 
-
-# Standard
 import enum
 
-# Local
 from pydantic_argparse import utils
-from pydantic_argparse.compatibility import argparse
-from pydantic_argparse.compatibility import pydantic
+from pydantic_argparse.compatibility import argparse, pydantic
 
-# Typing
 from typing import Optional, Type
 
 
@@ -54,15 +49,8 @@ def parse_field(
 
     # Determine Argument Properties
     metavar = f"{{{', '.join(e.name for e in enum_type)}}}"
-    action = (
-        argparse._StoreConstAction if is_flag
-        else argparse._StoreAction
-    )
-    const = (
-        {} if not is_flag
-        else {"const": None} if is_inverted
-        else {"const": next(iter(enum_type))}  # type: ignore[dict-item]
-    )
+    action = argparse._StoreConstAction if is_flag else argparse._StoreAction
+    const = {} if not is_flag else {"const": None} if is_inverted else {"const": next(iter(enum_type))}  # type: ignore
 
     # Add Enum Field
     parser.add_argument(

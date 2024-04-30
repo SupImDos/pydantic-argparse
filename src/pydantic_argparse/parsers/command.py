@@ -6,14 +6,10 @@ function, which parses nested `pydantic` model fields to `ArgumentParser`
 sub-commands.
 """
 
-
-# Typing
-from typing import Optional
-
-# Local
 from pydantic_argparse import utils
-from pydantic_argparse.compatibility import argparse
-from pydantic_argparse.compatibility import pydantic
+from pydantic_argparse.compatibility import argparse, pydantic
+
+from typing import Optional
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:

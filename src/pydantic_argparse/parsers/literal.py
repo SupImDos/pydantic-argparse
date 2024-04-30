@@ -6,14 +6,10 @@ function, which parses literal `pydantic` model fields to `ArgumentParser`
 command-line arguments.
 """
 
-
-# Local
 from pydantic_argparse import utils
-from pydantic_argparse.compatibility import argparse
-from pydantic_argparse.compatibility import pydantic
+from pydantic_argparse.compatibility import argparse, pydantic
 
-# Typing
-from typing import Optional, Literal, get_args
+from typing import Literal, Optional, get_args
 
 
 def should_parse(field: pydantic.fields.ModelField) -> bool:
@@ -51,15 +47,8 @@ def parse_field(
 
     # Determine Argument Properties
     metavar = f"{{{', '.join(str(c) for c in choices)}}}"
-    action = (
-        argparse._StoreConstAction if is_flag
-        else argparse._StoreAction
-    )
-    const = (
-        {} if not is_flag
-        else {"const": None} if is_inverted
-        else {"const": choices[0]}
-    )
+    action = argparse._StoreConstAction if is_flag else argparse._StoreAction
+    const = {} if not is_flag else {"const": None} if is_inverted else {"const": choices[0]}
 
     # Add Literal Field
     parser.add_argument(

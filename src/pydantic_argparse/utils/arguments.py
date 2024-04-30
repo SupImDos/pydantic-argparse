@@ -4,8 +4,6 @@ The `arguments` module contains utility functions used for formatting argument
 names and formatting argument descriptions.
 """
 
-
-# Local
 from pydantic_argparse.compatibility import pydantic
 
 

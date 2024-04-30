@@ -8,14 +8,10 @@ Unlike the other `parser` modules, the `standard` module does not contain a
 that do not match any other types and require no special handling are parsed.
 """
 
-
-# Typing
-from typing import Optional
-
-# Local
 from pydantic_argparse import utils
-from pydantic_argparse.compatibility import argparse
-from pydantic_argparse.compatibility import pydantic
+from pydantic_argparse.compatibility import argparse, pydantic
+
+from typing import Optional
 
 
 def parse_field(

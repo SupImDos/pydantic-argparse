@@ -9,5 +9,4 @@ library `argparse.ArgumentParser` - while providing declarative and typed
 argument parsing.
 """
 
-# Local
 from pydantic_argparse.argparse.parser import ArgumentParser as ArgumentParser

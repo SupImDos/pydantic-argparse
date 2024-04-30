@@ -1,0 +1,35 @@
+name: Lint
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: 0 0 * * 0
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-3.12-${{ hashFiles('pyproject.toml') }}
+      - name: Install Hatch
+        run: pip install git+https://github.com/pypa/hatch.git@master
+      - name: Run Build Hooks
+        run: hatch build --hooks-only
+      - name: Run Lint
+        run: hatch run lint

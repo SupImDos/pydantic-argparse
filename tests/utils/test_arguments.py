@@ -4,15 +4,11 @@ This module provides full unit test coverage for the `arguments` module,
 testing all branches of all functions.
 """
 
-
-# Third-Party
 import pytest
 
-# Local
 from pydantic_argparse import utils
 from tests import conftest as conf
 
-# Typing
 from typing import Any, Optional
 
 
@@ -23,10 +19,10 @@ from typing import Any, Optional
         "expected",
     ),
     [
-        ("test",     False, "--test"),
-        ("test",     True,  "--no-test"),
+        ("test", False, "--test"),
+        ("test", True, "--no-test"),
         ("test_two", False, "--test-two"),
-        ("test_two", True,  "--no-test-two"),
+        ("test_two", True, "--no-test-two"),
     ],
 )
 def test_argument_name(
@@ -58,14 +54,14 @@ def test_argument_name(
         "expected",
     ),
     [
-        ("A",  "B",  "A (default: B)"),
-        ("A",  5,    "A (default: 5)"),
-        ("A",  None, "A (default: None)"),
-        ("A",  ...,  "A"),
-        (None, "B",  "(default: B)"),
-        (None, 5,    "(default: 5)"),
+        ("A", "B", "A (default: B)"),
+        ("A", 5, "A (default: 5)"),
+        ("A", None, "A (default: None)"),
+        ("A", ..., "A"),
+        (None, "B", "(default: B)"),
+        (None, 5, "(default: 5)"),
         (None, None, "(default: None)"),
-        (None, ...,  ""),
+        (None, ..., ""),
     ],
 )
 def test_argument_description(

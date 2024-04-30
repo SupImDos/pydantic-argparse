@@ -1,4 +1,4 @@
-name: Tests
+name: Test
 
 on:
   pull_request:
@@ -8,11 +8,11 @@ on:
     branches:
       - master
   schedule:
-    - cron: "0 0 * * 0"
+    - cron: 0 0 * * 0
 
 jobs:
-  tests:
-    name: Tests
+  test:
+    name: Test
     strategy:
       matrix:
         os: [ "ubuntu-latest", "macos-13", "windows-latest" ]
@@ -53,7 +53,7 @@ jobs:
 
   coverage:
     name: Coverage
-    needs: tests
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished

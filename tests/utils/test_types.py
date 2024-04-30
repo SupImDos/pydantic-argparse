@@ -4,21 +4,16 @@ This module provides full unit test coverage for the `types` module, testing
 all branches of all functions.
 """
 
-
-# Standard
 import collections
 import collections.abc
 import enum
 
-# Third-Party
 import pytest
 
-# Local
 from pydantic_argparse import utils
 from pydantic_argparse.compatibility import pydantic
 from tests import conftest as conf
 
-# Typing
 from typing import Any, Deque, Dict, FrozenSet, List, Literal, Set, Tuple
 
 
@@ -28,41 +23,41 @@ from typing import Any, Deque, Dict, FrozenSet, List, Literal, Set, Tuple
         "expected_type",
     ),
     [
-        (bool,                   bool),
-        (int,                    int),
-        (float,                  float),
-        (str,                    str),
-        (bytes,                  bytes),
-        (List,                   list),
-        (List,                   collections.abc.Container),
-        (List[str],              list),
-        (List[str],              collections.abc.Container),
-        (Tuple,                  tuple),
-        (Tuple,                  collections.abc.Container),
-        (Tuple[str, ...],        tuple),
-        (Tuple[str, ...],        collections.abc.Container),
-        (Set,                    set),
-        (Set,                    collections.abc.Container),
-        (Set[str],               set),
-        (Set[str],               collections.abc.Container),
-        (FrozenSet,              frozenset),
-        (FrozenSet,              collections.abc.Container),
-        (FrozenSet[str],         frozenset),
-        (FrozenSet[str],         collections.abc.Container),
-        (Deque,                  collections.deque),
-        (Deque,                  collections.abc.Container),
-        (Deque[str],             collections.deque),
-        (Deque[str],             collections.abc.Container),
-        (Dict,                   dict),
-        (Dict,                   collections.abc.Mapping),
-        (Dict[str, int],         dict),
-        (Dict[str, int],         collections.abc.Mapping),
-        (Literal["A"],           Literal),
-        (Literal[1, 2, 3],       Literal),
-        (conf.TestCommand,       pydantic.BaseModel),
-        (conf.TestCommands,      pydantic.BaseModel),
-        (conf.TestEnum,          enum.Enum),
-        (conf.TestEnumSingle,    enum.Enum),
+        (bool, bool),
+        (int, int),
+        (float, float),
+        (str, str),
+        (bytes, bytes),
+        (List, list),
+        (List, collections.abc.Container),
+        (List[str], list),
+        (List[str], collections.abc.Container),
+        (Tuple, tuple),
+        (Tuple, collections.abc.Container),
+        (Tuple[str, ...], tuple),
+        (Tuple[str, ...], collections.abc.Container),
+        (Set, set),
+        (Set, collections.abc.Container),
+        (Set[str], set),
+        (Set[str], collections.abc.Container),
+        (FrozenSet, frozenset),
+        (FrozenSet, collections.abc.Container),
+        (FrozenSet[str], frozenset),
+        (FrozenSet[str], collections.abc.Container),
+        (Deque, collections.deque),
+        (Deque, collections.abc.Container),
+        (Deque[str], collections.deque),
+        (Deque[str], collections.abc.Container),
+        (Dict, dict),
+        (Dict, collections.abc.Mapping),
+        (Dict[str, int], dict),
+        (Dict[str, int], collections.abc.Mapping),
+        (Literal["A"], Literal),
+        (Literal[1, 2, 3], Literal),
+        (conf.TestCommand, pydantic.BaseModel),
+        (conf.TestCommands, pydantic.BaseModel),
+        (conf.TestEnum, enum.Enum),
+        (conf.TestEnumSingle, enum.Enum),
     ],
 )
 def test_is_field_a(field_type: Any, expected_type: Any) -> None:

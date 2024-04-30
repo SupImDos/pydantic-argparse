@@ -4,21 +4,15 @@ This module provides full unit test coverage for the `errors` module, testing
 all branches of all functions.
 """
 
-
-# Standard
 import textwrap
 
-# Third-Party
 import pytest
 
-# Local
 from pydantic_argparse import utils
 from pydantic_argparse.compatibility import pydantic
 from tests import conftest as conf
 
-# Typing
 from typing import Sequence, Tuple, Union
-
 
 # Shortcuts
 # An Error Definition is just a tuple containing an Exception and Location
@@ -44,9 +38,9 @@ ErrorDefinition = Tuple[Exception, Union[str, Tuple[str, ...]]]
         ),
         (
             [
-                (pydantic.errors.IPv4AddressError(), ("a", )),
-                (pydantic.errors.IntegerError(),     ("a", "b")),
-                (pydantic.errors.UUIDError(),        ("a", "b", "c")),
+                (pydantic.errors.IPv4AddressError(), ("a",)),
+                (pydantic.errors.IntegerError(), ("a", "b")),
+                (pydantic.errors.UUIDError(), ("a", "b", "c")),
             ],
             """
             3 validation errors for TestModel

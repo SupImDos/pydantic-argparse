@@ -7,7 +7,7 @@ name = "pydantic-argparse"
 description = "Typed Argument Parsing with Pydantic"
 authors = [{ name = "Hayden Richards", email = "supimdos@gmail.com" }]
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "MIT"
 requires-python = ">=3.8"
 dependencies = ["pydantic"]
 classifiers = [
@@ -64,33 +64,39 @@ dependencies = [
 ]
 
 [tool.hatch.envs.default.scripts]
-lint = "ruff check tests docs src"
-type = "mypy tests docs src"
-test = "pytest tests --cov=src"
-build = "hatch build"
-publish = "hatch publish"
-docs-serve = "mkdocs serve"
-docs-publish = "mkdocs gh-deploy --force"
+format = "ruff format src tests docs examples {args}"
+lint = "ruff check src tests docs examples {args}"
+test = "pytest tests --cov=src {args}"
+type = "mypy src tests docs examples {args}"
+build = "hatch build {args}"
+publish = "hatch publish {args}"
+docs-serve = "mkdocs serve {args}"
+docs-publish = "mkdocs gh-deploy --force {args}"
 
 [tool.ruff]
 line-length = 120
 lint.select = [
-    "F",    # flake8
-    "E",    # pycodestyle errors
-    "W",    # pycodestyle warnings
     "S",    # flake8-bandit
     "B",    # flake8-bugbear
     "A",    # flake8-builtins
-    "D",    # flake8-docstrings
     "PT",   # flake8-pytest-style
     "Q",    # flake8-quotes
+    "I",    # isort
+    "N",    # pep8-naming
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "D",    # pydocstyle
+    "F",    # pyflakes
+    "UP",   # pyupgrade
     "RUF",  # ruff
 ]
 lint.ignore = [
     "D401",  # imperative mood - overly restrictive
     "S101",  # allow assertions
 ]
-lint.pydocstyle = { convention = "google" }
+lint.isort.known-first-party = ["pydantic_argparse", "tests"]
+lint.isort.forced-separate = ["typing"]
+lint.pydocstyle.convention = "google"
 
 [tool.mypy]
 check_untyped_defs = true
