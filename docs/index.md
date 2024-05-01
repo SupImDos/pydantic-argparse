@@ -33,8 +33,8 @@
     <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/format.yml">
         <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/format.yml?label=formatting">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/type.tml">
-        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/type.tml?label=typing">
+    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/type.yml">
+        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/type.yml?label=typing">
     </a>
 </div>
 ---
