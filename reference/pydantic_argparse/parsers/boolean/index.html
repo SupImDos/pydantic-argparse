@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.19">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
     
     
       
@@ -1684,8 +1684,10 @@ command-line arguments.</p>
 
     <span class="c1"># Determine Argument Properties</span>
     <span class="n">action</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">actions</span><span class="o">.</span><span class="n">BooleanOptionalAction</span> <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">required</span>
-        <span class="k">else</span> <span class="n">argparse</span><span class="o">.</span><span class="n">_StoreFalseAction</span> <span class="k">if</span> <span class="n">is_inverted</span>
+        <span class="n">actions</span><span class="o">.</span><span class="n">BooleanOptionalAction</span>
+        <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">required</span>
+        <span class="k">else</span> <span class="n">argparse</span><span class="o">.</span><span class="n">_StoreFalseAction</span>
+        <span class="k">if</span> <span class="n">is_inverted</span>
         <span class="k">else</span> <span class="n">argparse</span><span class="o">.</span><span class="n">_StoreTrueAction</span>
     <span class="p">)</span>
 

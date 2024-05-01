@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.19">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
     
     
       
@@ -1601,9 +1601,8 @@ whether this module should be used to parse the field, as well as the
 <span class="sd">        bool: Whether the field should be parsed as a `container`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Check and Return</span>
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="n">utils</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_field_a</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Container</span><span class="p">)</span>
-        <span class="ow">and</span> <span class="ow">not</span> <span class="n">utils</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_field_a</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Mapping</span><span class="p">,</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_field_a</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Container</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">utils</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_field_a</span><span class="p">(</span>
+        <span class="n">field</span><span class="p">,</span> <span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Mapping</span><span class="p">,</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
     <span class="p">)</span>
 </code></pre></div>
         </details>

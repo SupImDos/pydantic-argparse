@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.19">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
     
     
       
@@ -1666,17 +1666,20 @@
         <img src="https://img.shields.io/github/license/SupImDos/pydantic-argparse.svg">
     </a>
     <br>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/tests.yml">
-        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/tests.yml?label=tests">
+    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/test.yml">
+        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/test.yml?label=tests">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/tests.yml">
+    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/test.yml">
         <img src="https://img.shields.io/coveralls/github/SupImDos/pydantic-argparse">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/linting.yml">
-        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/linting.yml?label=linting">
+    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/lint.yml">
+        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/lint.yml?label=linting">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/typing.yml">
-        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/typing.yml?label=typing">
+    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/format.yml">
+        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/format.yml?label=formatting">
+    </a>
+    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/type.yml">
+        <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/type.yml?label=typing">
     </a>
 </div>
 <hr />
@@ -1694,14 +1697,14 @@ v1 API.</p>
 <h3 id="define-model">Define Model</h3>
 <div class="highlight"><span class="filename">simple.py</span><pre><span></span><code><span class="sd">&quot;&quot;&quot;Simple Example.&quot;&quot;&quot;</span>
 
-
-<span class="c1"># Third-Party</span>
 <span class="kn">import</span> <span class="nn">pydantic.v1</span> <span class="k">as</span> <span class="nn">pydantic</span>
+
 <span class="kn">import</span> <span class="nn">pydantic_argparse</span>
 
 
 <span class="k">class</span> <span class="nc">Arguments</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple Command-Line Arguments.&quot;&quot;&quot;</span>
+
     <span class="c1"># Required Args</span>
     <span class="n">string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;a required string&quot;</span><span class="p">)</span>
     <span class="n">integer</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;a required integer&quot;</span><span class="p">)</span>
