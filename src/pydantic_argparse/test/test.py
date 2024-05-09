@@ -1,6 +1,7 @@
 """This is a test file."""
 
-def test_function() -> None:
+
+def test_function() -> None:  # pragma: <3.9 cover
     """This is a test function."""
     assert 1 + 1 == 2
     assert 2 + 2 == 4
