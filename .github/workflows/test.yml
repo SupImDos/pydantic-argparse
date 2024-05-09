@@ -45,19 +45,6 @@ jobs:
       - name: Run Tests
         run: hatch run test && hatch run coverage xml
       - name: Coverage Results
-        uses: coverallsapp/github-action@v2
+        uses: codecov/codecov-action@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: ${{ matrix.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}
-          parallel: true
-
-  coverage:
-    name: Coverage
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
+          token: ${{ secrets.CODECOV_TOKEN }}
