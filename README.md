@@ -25,7 +25,7 @@
         <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/test.yml?label=tests">
     </a>
     <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/test.yml">
-        <img src="https://img.shields.io/coveralls/github/SupImDos/pydantic-argparse">
+        <img src="https://img.shields.io/codecov/c/github/SupImDos/pydantic-argparse">
     </a>
     <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/lint.yml">
         <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/lint.yml?label=linting">
