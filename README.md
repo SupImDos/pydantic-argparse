@@ -2,8 +2,7 @@
 <!-- Logo -->
 <a href="https://pydantic-argparse.supimdos.com"><img src="https://raw.githubusercontent.com/SupImDos/pydantic-argparse/master/docs/assets/images/logo.svg" width="50%"></a>
 <!-- Headings -->
-<h1>Pydantic Argparse</h1>
-<div style="margin-bottom: -0.5em;"></div>
+<h1>Pydantic Argparse</h1>&nbsp;
 <p><em>Typed Argument Parsing with Pydantic</em></p>
 <!-- Badges (Row 1) -->
 <a href="https://pypi.python.org/pypi/pydantic-argparse"><img src="https://img.shields.io/pypi/v/pydantic-argparse"></a>
