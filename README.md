@@ -9,22 +9,22 @@
         <em>Typed Argument Parsing with Pydantic</em>
     </p>
     <a href="https://pypi.python.org/pypi/pydantic-argparse">
-        <img src="https://img.shields.io/pypi/v/pydantic-argparse.svg">
+        <img src="https://img.shields.io/pypi/v/pydantic-argparse">
     </a>
     <a href="https://pepy.tech/project/pydantic-argparse">
-        <img src="https://pepy.tech/badge/pydantic-argparse">
+        <img src="https://img.shields.io/pepy/dt/pydantic-argparse?color=blue">
     </a>
     <a href="https://github.com/SupImDos/pydantic-argparse">
-        <img src="https://img.shields.io/pypi/pyversions/pydantic-argparse.svg">
+        <img src="https://img.shields.io/pypi/pyversions/pydantic-argparse">
     </a>
     <a href="https://github.com/SupImDos/pydantic-argparse/blob/master/LICENSE">
-        <img src="https://img.shields.io/github/license/SupImDos/pydantic-argparse.svg">
+        <img src="https://img.shields.io/github/license/SupImDos/pydantic-argparse">
     </a>
     <br>
     <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/test.yml">
         <img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/test.yml?label=tests">
     </a>
-    <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/test.yml">
+    <a href="https://app.codecov.io/github/SupImDos/pydantic-argparse">
         <img src="https://img.shields.io/codecov/c/github/SupImDos/pydantic-argparse">
     </a>
     <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/lint.yml">
