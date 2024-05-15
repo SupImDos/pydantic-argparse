@@ -1,7 +1,6 @@
 <div align="center">
 <!-- Logo -->
 <a href="https://pydantic-argparse.supimdos.com"><img src="https://raw.githubusercontent.com/SupImDos/pydantic-argparse/master/docs/assets/images/logo.svg" width="50%"></a>
-<br>
 <!-- Headings -->
 <h1>Pydantic Argparse</h1>
 <p><em>Typed Argument Parsing with Pydantic</em></p>
