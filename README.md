@@ -4,7 +4,7 @@
 <!-- Headings -->
 <h1>
     <strong>Pydantic Argparse</strong>
-    <p><em>Typed Argument Parsing with Pydantic</em></p>
+    <h4><em>Typed Argument Parsing with Pydantic</em></h4>
 </h1>
 <!-- Badges (Row 1) -->
 <a href="https://pypi.python.org/pypi/pydantic-argparse"><img src="https://img.shields.io/pypi/v/pydantic-argparse"></a>
