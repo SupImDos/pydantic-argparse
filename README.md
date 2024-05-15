@@ -3,7 +3,12 @@
 <a href="https://pydantic-argparse.supimdos.com"><img src="https://raw.githubusercontent.com/SupImDos/pydantic-argparse/master/docs/assets/images/logo.svg" width="50%"></a>
 <br>
 <!-- Headings -->
-<svg><text font-size="3em">Pydantic Argparse</text></svg>
+<svg width="200" height="30" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <g class="layer">
+  <title>Layer 1</title>
+  <text fill="#000000" font-family="Sans-serif" font-size="24" id="svg_1" stroke="#000000" stroke-width="0" text-anchor="middle" x="99" xml:space="preserve" y="23">Pydantic Argparse</text>
+ </g>
+</svg>
 <p><em>Typed Argument Parsing with Pydantic</em></p>
 <!-- Badges (Row 1) -->
 <a href="https://pypi.python.org/pypi/pydantic-argparse"><img src="https://img.shields.io/pypi/v/pydantic-argparse"></a>
