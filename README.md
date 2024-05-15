@@ -1,11 +1,11 @@
 <div align="center">
-<h1>
 <!-- Logo -->
 <a href="https://pydantic-argparse.supimdos.com"><img src="https://raw.githubusercontent.com/SupImDos/pydantic-argparse/master/docs/assets/images/logo.svg" width="50%"></a>
-</br>
 <!-- Headings -->
-<p><strong>Pydantic Argparse</strong></p>
-<p><em>Typed Argument Parsing with Pydantic</em></p>
+<h1>
+    <strong>Pydantic Argparse</strong>
+    <p><em>Typed Argument Parsing with Pydantic</em></p>
+</h1>
 <!-- Badges (Row 1) -->
 <a href="https://pypi.python.org/pypi/pydantic-argparse"><img src="https://img.shields.io/pypi/v/pydantic-argparse"></a>
 <a href="https://pepy.tech/project/pydantic-argparse"><img src="https://img.shields.io/pepy/dt/pydantic-argparse?color=blue"></a>
@@ -18,7 +18,6 @@
 <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/lint.yml"><img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/lint.yml?label=linting"></a>
 <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/format.yml"><img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/format.yml?label=formatting"></a>
 <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/type.yml"><img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/type.yml?label=typing"></a>
-</h1>
 </div>
 
 ## Help
