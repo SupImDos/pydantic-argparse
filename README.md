@@ -4,7 +4,9 @@
 </br>
 <!-- Headings -->
 <strong>Pydantic Argparse</strong>
-<small><em>Typed Argument Parsing with Pydantic</em></small>
+</br>
+<h6><em>Typed Argument Parsing with Pydantic</em></h6>
+</br>
 <!-- Badges (Row 1) -->
 <a href="https://pypi.python.org/pypi/pydantic-argparse"><img src="https://img.shields.io/pypi/v/pydantic-argparse"></a>
 <a href="https://pepy.tech/project/pydantic-argparse"><img src="https://img.shields.io/pepy/dt/pydantic-argparse?color=blue"></a>
@@ -18,8 +20,6 @@
 <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/format.yml"><img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/format.yml?label=formatting"></a>
 <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/type.yml"><img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/type.yml?label=typing"></a>
 </h1>
-
----
 
 ## Help
 See [documentation](https://pydantic-argparse.supimdos.com) for help.
