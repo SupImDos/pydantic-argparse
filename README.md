@@ -5,7 +5,7 @@
 <h1>
 <strong>Pydantic Argparse</strong>
 <br>
-<sup><em>Typed Argument Parsing with Pydantic</em></sup>
+<sup><small><em>Typed Argument Parsing with Pydantic</em></small></sup>
 </h1>
 <!-- Badges (Row 1) -->
 <a href="https://pypi.python.org/pypi/pydantic-argparse"><img src="https://img.shields.io/pypi/v/pydantic-argparse"></a>
