@@ -1,11 +1,12 @@
-<h1 align="center">
+<div align="center">
+<h1>
 <!-- Logo -->
 <a href="https://pydantic-argparse.supimdos.com"><img src="https://raw.githubusercontent.com/SupImDos/pydantic-argparse/master/docs/assets/images/logo.svg" width="50%"></a>
 </br>
 <!-- Headings -->
 <strong>Pydantic Argparse</strong>
 </br>
-<h6><em>Typed Argument Parsing with Pydantic</em></h6>
+<h5><em>Typed Argument Parsing with Pydantic</em></h5>
 </br>
 <!-- Badges (Row 1) -->
 <a href="https://pypi.python.org/pypi/pydantic-argparse"><img src="https://img.shields.io/pypi/v/pydantic-argparse"></a>
@@ -20,6 +21,7 @@
 <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/format.yml"><img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/format.yml?label=formatting"></a>
 <a href="https://github.com/SupImDos/pydantic-argparse/actions/workflows/type.yml"><img src="https://img.shields.io/github/actions/workflow/status/supimdos/pydantic-argparse/type.yml?label=typing"></a>
 </h1>
+</div>
 
 ## Help
 See [documentation](https://pydantic-argparse.supimdos.com) for help.
