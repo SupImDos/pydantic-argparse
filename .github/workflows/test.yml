@@ -37,7 +37,7 @@ jobs:
           path: .venv
           key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}-${{ hashFiles('pyproject.toml') }}
       - name: Install Hatch
-        run: pip install hatch
+        uses: pypa/hatch@install
       - name: Install Pydantic
         run: hatch run uv pip install pydantic~=${{ matrix.pydantic-version }}
       - name: Run Build Hooks
