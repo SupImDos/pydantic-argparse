@@ -18,9 +18,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Setup Python
+        id: setup-python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Set Hatch Python Version
+        run: echo "HATCH_PYTHON=${{ steps.setup-python.outputs.python-path }}" >> $GITHUB_ENV
       - name: Cache Dependencies
         uses: actions/cache@v4
         with:
