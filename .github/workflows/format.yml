@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Set Hatch Python Version
-        run: echo "HATCH_PYTHON=$(which python)" >> $GITHUB_ENV
+        run: echo "HATCH_PYTHON=$(where python)" >> $GITHUB_ENV
       - name: Cache Dependencies
         uses: actions/cache@v4
         with:

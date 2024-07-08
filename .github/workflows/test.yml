@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Set Hatch Python Version
-        run: echo "HATCH_PYTHON=$(which python)" >> $GITHUB_ENV
+        run: echo "HATCH_PYTHON=$(where python)" >> $GITHUB_ENV
       - name: Cache Dependencies
         uses: actions/cache@v4
         with:
