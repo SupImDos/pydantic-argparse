@@ -34,6 +34,11 @@ jobs:
           cache: pip
       - name: Set Hatch Python Version
         run: echo "HATCH_PYTHON=${{ steps.setup-python.outputs.python-path }}" >> $GITHUB_ENV
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}-${{ hashFiles('pyproject.toml') }}
       - name: Install Hatch
         uses: pypa/hatch@install
       - name: Install Pydantic
