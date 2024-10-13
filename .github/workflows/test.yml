@@ -43,8 +43,8 @@ jobs:
       - name: Setup Hatch Environment Variables (Windows)
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          echo "HATCH_ENV_TYPE_VIRTUAL_UV_PATH=$(where uv)" >> $GITHUB_ENV
-          echo "HATCH_PYTHON=$(where python)" >> $GITHUB_ENV
+          echo "HATCH_ENV_TYPE_VIRTUAL_UV_PATH=$(where uv)" >> $env:GITHUB_ENV
+          echo "HATCH_PYTHON=$(where python)" >> $env:GITHUB_ENV
       - name: Install Hatch
         uses: pypa/hatch@install
       - name: Install Pydantic
