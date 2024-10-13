@@ -35,17 +35,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Cross-Platform matrix (Linux & MacOS)
-        if: ${{ matrix.os != 'windows-latest' }}
-        run: echo "WHICH=which" >> $GITHUB_ENV
-      - name: Cross-Platform Compatibility (Windows)
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: echo "WHICH=where" >> $GITHUB_ENV
-      - name: Setup Environment Variables
-        if: ${{ matrix.os != 'windows-latest' }}
+      - name: Setup Hatch Environment Variables
         run: |
-          echo "HATCH_ENV_TYPE_VIRTUAL_UV_PATH=$($WHICH uv)" >> $GITHUB_ENV
-          echo "HATCH_PYTHON=$($WHICH python)" >> $GITHUB_ENV
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then find=where; else find=which; fi
+          echo "HATCH_ENV_TYPE_VIRTUAL_UV_PATH=$($find uv)" >> $GITHUB_ENV
+          echo "HATCH_PYTHON=$($find python)" >> $GITHUB_ENV
       - name: Install Hatch
         uses: pypa/hatch@install
       - name: Install Pydantic
