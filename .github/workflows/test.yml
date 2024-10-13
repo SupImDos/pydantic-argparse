@@ -39,8 +39,8 @@ jobs:
         run: |
           echo "HATCH_ENV_TYPE_VIRTUAL_UV_PATH=$(which uv)" >> $GITHUB_ENV
           echo "HATCH_PYTHON=$(which python)" >> $GITHUB_ENV
-          echo "HATCH_ENV_TYPE_VIRTUAL_UV_PATH=$(which uv)"
-          echo "HATCH_PYTHON=$(which python)"
+          echo "HATCH_ENV_TYPE_VIRTUAL_UV_PATH=$(where uv)"
+          echo "HATCH_PYTHON=$(where python)"
       - name: Install Hatch
         uses: pypa/hatch@install
       - name: Install Pydantic
