@@ -27,6 +27,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Setup Hatch Environment Variables
+        shell: bash
         run: |
           echo "HATCH_ENV_TYPE_VIRTUAL_UV_PATH=$(which uv)" >> $GITHUB_ENV
           echo "HATCH_PYTHON=$(which python)" >> $GITHUB_ENV
