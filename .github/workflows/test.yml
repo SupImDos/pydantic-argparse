@@ -26,18 +26,20 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+      - name: Setup uv
+        id: setup-uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
       - name: Setup Python
         id: setup-python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Set Hatch Python Version
-        run: echo "HATCH_PYTHON=${{ steps.setup-python.outputs.python-path }}" >> $GITHUB_ENV
-      - name: Cache Dependencies
-        uses: actions/cache@v4
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}-${{ hashFiles('pyproject.toml') }}
+      - name: Setup Hatch Environment Variables
+        run: |
+          echo "HATCH_PYTHON=${{ steps.setup-python.outputs.python-path }}" >> $GITHUB_ENV
+          echo "HATCH_ENV_TYPE_VIRTUAL_UV_PATH=${{ steps.setup-uv.outputs.uv-path }}" >> $GITHUB_ENV
       - name: Install Hatch
         uses: pypa/hatch@install
       - name: Install Pydantic
