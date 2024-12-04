@@ -15,18 +15,20 @@ from typing import Any, Optional
 @pytest.mark.parametrize(
     (
         "name",
+        "aliases",
         "invert",
         "expected",
     ),
     [
-        ("test", False, "--test"),
-        ("test", True, "--no-test"),
-        ("test_two", False, "--test-two"),
-        ("test_two", True, "--no-test-two"),
+        ("test", ["-t", "-te"], False, ["-t", "-te", "--test"]),
+        ("test", ["-nt"], True, ["-nt", "--no-test"]),
+        ("test_two", [], False, ["--test-two"]),
+        ("test_two", [], True, ["--no-test-two"]),
     ],
 )
-def test_argument_name(
+def test_argument_names(
     name: str,
+    aliases: list[str],
     invert: bool,
     expected: str,
 ) -> None:
@@ -34,14 +36,15 @@ def test_argument_name(
 
     Args:
         name (str): Argument name to test.
+        aliases (list[str]): List of aliases.
         invert (bool): Whether to invert the name.
         expected (str): Expected result of the test.
     """
     # Construct Pydantic Field
-    field = conf.create_test_field(name)
+    field = conf.create_test_field(name, aliases=aliases)
 
     # Generate Argument Name
-    result = utils.arguments.name(field, invert)
+    result = utils.arguments.names(field, invert)
 
     # Assert
     assert result == expected

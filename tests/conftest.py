@@ -48,6 +48,7 @@ def create_test_field(
     type: Type[Any] = str,  # noqa: A002
     default: Any = ...,
     description: Optional[str] = None,
+    aliases: Optional[list[str]] = None,
 ) -> pydantic.fields.ModelField:
     """Constructs a `pydantic` field with sensible defaults for testing.
 
@@ -56,6 +57,7 @@ def create_test_field(
         type (Type[Any]): Type of the field.
         default (Any): Default value for the field.
         description (Optional[str]): Description for the field.
+        aliases (Optional[list[str]]): List of flag aliases.
 
     Returns:
         pydantic.fields.ModelField: Dynamically constructed `pydantic` model.
@@ -63,7 +65,7 @@ def create_test_field(
     # Construct Pydantic Field
     return pydantic.fields.ModelField.infer(
         name=name,
-        value=pydantic.Field(default, description=description),
+        value=pydantic.Field(default, description=description, aliases=aliases),
         annotation=type,
         class_validators=None,
         config=pydantic.BaseConfig,

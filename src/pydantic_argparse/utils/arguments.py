@@ -7,7 +7,7 @@ names and formatting argument descriptions.
 from pydantic_argparse.compatibility import pydantic
 
 
-def name(field: pydantic.fields.ModelField, invert: bool = False) -> str:
+def names(field: pydantic.fields.ModelField, invert: bool = False) -> list[str]:
     """Standardises argument name.
 
     Args:
@@ -20,8 +20,17 @@ def name(field: pydantic.fields.ModelField, invert: bool = False) -> str:
     # Construct Prefix
     prefix = "--no-" if invert else "--"
 
+    flags = []
+
+    # Add custom aliases
+    aliases = field.field_info.extra.get("aliases", [])
+    for alias in aliases:
+        flags.append(f"{prefix}{alias.replace('_', '-')}")
+
     # Prepend prefix, replace '_' with '-'
-    return f"{prefix}{field.alias.replace('_', '-')}"
+    flags.append(f"{prefix}{field.alias.replace('_', '-')}")
+
+    return flags
 
 
 def description(field: pydantic.fields.ModelField) -> str:

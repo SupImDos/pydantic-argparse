@@ -52,7 +52,7 @@ def parse_field(
 
     # Add Literal Field
     parser.add_argument(
-        utils.arguments.name(field, is_inverted),
+        *utils.arguments.names(field, is_inverted),
         action=action,
         help=utils.arguments.description(field),
         dest=field.alias,

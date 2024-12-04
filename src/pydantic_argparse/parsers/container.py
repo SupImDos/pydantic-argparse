@@ -45,7 +45,7 @@ def parse_field(
     """
     # Add Container Field
     parser.add_argument(
-        utils.arguments.name(field),
+        *utils.arguments.names(field),
         action=argparse._StoreAction,
         nargs=argparse.ONE_OR_MORE,
         help=utils.arguments.description(field),
