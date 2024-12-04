@@ -29,7 +29,7 @@ def parse_field(
     """
     # Add Standard Field
     parser.add_argument(
-        utils.arguments.name(field),
+        *utils.arguments.names(field),
         action=argparse._StoreAction,
         help=utils.arguments.description(field),
         dest=field.alias,

@@ -43,7 +43,7 @@ def parse_field(
     """
     # Add Mapping Field
     parser.add_argument(
-        utils.arguments.name(field),
+        *utils.arguments.names(field),
         action=argparse._StoreAction,
         help=utils.arguments.description(field),
         dest=field.alias,
