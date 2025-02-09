@@ -9,7 +9,7 @@ import pytest
 from pydantic_argparse import utils
 from tests import conftest as conf
 
-from typing import Any, Optional
+from typing import Any, List, Optional
 
 
 @pytest.mark.parametrize(
@@ -28,15 +28,15 @@ from typing import Any, Optional
 )
 def test_argument_names(
     name: str,
-    aliases: list[str],
+    aliases: List[str],
     invert: bool,
     expected: str,
 ) -> None:
-    """Tests `utils.arguments.name` Function.
+    """Tests `utils.arguments.names` Function.
 
     Args:
         name (str): Argument name to test.
-        aliases (list[str]): List of aliases.
+        aliases (List[str]): List of aliases.
         invert (bool): Whether to invert the name.
         expected (str): Expected result of the test.
     """
