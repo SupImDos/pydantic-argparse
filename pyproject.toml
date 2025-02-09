@@ -92,6 +92,7 @@ lint.select = [
     "RUF",  # ruff
 ]
 lint.ignore = [
+    "A005",  # allow shadowing of standard-library modules
     "D401",  # imperative mood - overly restrictive
     "S101",  # allow assertions
 ]
