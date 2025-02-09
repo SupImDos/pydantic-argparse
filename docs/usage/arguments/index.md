@@ -111,6 +111,18 @@ class Arguments(BaseModel):
     You can see the list of reserved keywords in Python at any time by typing
     `:::python help("keywords")` into the Python interpreter.
 
+A field can also be provided with a list of `aliases`, which will allow the
+argument to be provided via multiple different (potentially shorter) aliases in
+the command-line interface.
+
+```python
+class Arguments(BaseModel):
+    # We want our argument to be named `my_long_argument_name` (i.e.,
+    # `--my-long-argument-name`), but we also want to provide the argument via
+    # the aliases `-m` and `-mlan`.
+    my_long_argument_name: int = Field(aliases=["-m", "-mlan"])
+```
+
 ## Environment Variables
 Functionality to parse both required and optional arguments from environment
 variables is provided via the `pydantic.BaseSettings` base class.

@@ -9,9 +9,9 @@ class Arguments(pydantic.BaseModel):
     """Simple Command-Line Arguments."""
 
     # Required Args
-    string: str = pydantic.Field(description="a required string")
-    integer: int = pydantic.Field(description="a required integer")
-    flag: bool = pydantic.Field(description="a required flag")
+    string: str = pydantic.Field(description="a required string", aliases=["-s"])
+    integer: int = pydantic.Field(description="a required integer", aliases=["-i"])
+    flag: bool = pydantic.Field(description="a required flag", aliases=["-f"])
 
     # Optional Args
     second_flag: bool = pydantic.Field(False, description="an optional flag")

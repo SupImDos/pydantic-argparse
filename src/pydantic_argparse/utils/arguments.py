@@ -6,30 +6,29 @@ names and formatting argument descriptions.
 
 from pydantic_argparse.compatibility import pydantic
 
+from typing import List
 
-def names(field: pydantic.fields.ModelField, invert: bool = False) -> list[str]:
-    """Standardises argument name.
+
+def names(field: pydantic.fields.ModelField, invert: bool = False) -> List[str]:
+    """Standardises the argument name and any custom aliases.
 
     Args:
         field (pydantic.fields.ModelField): Field to construct name for.
         invert (bool): Whether to invert the name by prepending `--no-`.
 
     Returns:
-        str: Standardised name of the argument.
+        List[str]: Standardised names for the argument.
     """
-    # Construct Prefix
+    # Add any custom aliases first
+    # We trust that the user has provided these correctly
+    flags: List[str] = []
+    flags.extend(field.field_info.extra.get("aliases", []))
+
+    # Construct prefix, prepend it, replace '_' with '-'
     prefix = "--no-" if invert else "--"
-
-    flags = []
-
-    # Add custom aliases
-    aliases = field.field_info.extra.get("aliases", [])
-    for alias in aliases:
-        flags.append(f"{prefix}{alias.replace('_', '-')}")
-
-    # Prepend prefix, replace '_' with '-'
     flags.append(f"{prefix}{field.alias.replace('_', '-')}")
 
+    # Return the standardised name and aliases
     return flags
 
 
