@@ -72,7 +72,7 @@ type = "mypy src tests docs examples {args}"
 build = "hatch build {args}"
 publish = "hatch publish {args}"
 docs-serve = "mkdocs serve {args}"
-docs-publish = "mkdocs gh-deploy --force {args}"
+docs-build = "mkdocs build {args}"
 
 [tool.ruff]
 line-length = 120
