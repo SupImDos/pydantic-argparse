@@ -50,6 +50,6 @@ jobs:
       - name: Run Tests
         run: hatch run test && hatch run coverage xml
       - name: Coverage Results
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
